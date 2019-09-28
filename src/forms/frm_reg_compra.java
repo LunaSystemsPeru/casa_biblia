@@ -44,7 +44,7 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
         initComponents();
         m_empresa.cbx_empresas(cbx_empresa);
         m_tido.cbx_documentos_compra(cbx_tido);
-
+        
         String fecha_hoy = c_varios.getFechaActual();
         txt_fecha.setText(c_varios.fecha_usuario(fecha_hoy));
     }
@@ -62,8 +62,8 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
         c_compra.setTotal(Double.parseDouble(txt_total.getText()));
         c_compra.setGlosa(txt_glosa.getText());
     }
-
-    private void calcular_montos() {
+    
+    private void calcular_montos () {
         double total = Double.parseDouble(txt_total.getText());
         double subtotal = total / 1.18;
         double igv = subtotal * 0.18;
@@ -464,7 +464,6 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         this.dispose();
-        registrar = true;
         frm_ver_compras formulario = new frm_ver_compras();
         c_varios.llamar_ventana(formulario);
     }//GEN-LAST:event_btn_salirActionPerformed
@@ -473,7 +472,7 @@ public class frm_reg_compra extends javax.swing.JInternalFrame {
         llenar();
         if (registrar) {
             c_compra.obtener_codigo();
-            c_compra.registrar();
+            c_compra.insertar();
         } else {
 
         }

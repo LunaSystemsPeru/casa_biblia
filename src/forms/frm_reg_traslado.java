@@ -53,6 +53,7 @@ public class frm_reg_traslado extends javax.swing.JInternalFrame {
     boolean modificar = false;
     int id_almacen = frm_principal.c_almacen.getId();
     int id_usuario = frm_principal.c_usuario.getId_usuario();
+    int id_empresa = frm_principal.c_almacen.getEmpresa();
 
     TextAutoCompleter tac_productos = null;
     DefaultTableModel detalle;
@@ -971,7 +972,7 @@ public class frm_reg_traslado extends javax.swing.JInternalFrame {
                         jd_add_producto.setLocationRelativeTo(null);
                         txt_producto.setText(c_producto.getDescripcion() + " " + c_producto.getMarca());
                         txt_precio.setText(c_varios.formato_numero(c_producto.getPrecio()));
-                        txt_cantidad_actual.setText(c_producto_almacen.getCantidad() + "");
+                        txt_cantidad_actual.setText(c_producto_almacen.getCtotal()+ "");
                         txt_cantidad_enviar.setText("1");
                         txt_cantidad_enviar.setEnabled(true);
                         txt_cantidad_enviar.requestFocus();
@@ -1041,7 +1042,7 @@ public class frm_reg_traslado extends javax.swing.JInternalFrame {
             fila[0] = c_producto.getId();
             fila[1] = c_producto.getDescripcion();
             fila[2] = c_producto.getMarca();
-            fila[3] = c_producto_almacen.getCantidad();
+            fila[3] = c_producto_almacen.getCtotal();
             fila[4] = cenviar;
             fila[5] = c_varios.formato_numero(c_producto.getPrecio());
 
@@ -1124,7 +1125,7 @@ public class frm_reg_traslado extends javax.swing.JInternalFrame {
         txt_producto_seleccionado.setText(descripcion);
         txt_seleccionado_enviado.setText(cenviado);
         txt_seleccionado_precio.setText(cprecio);
-        txt_seleccionado_actual.setText(c_producto_almacen.getCantidad() + "");
+        txt_seleccionado_actual.setText(c_producto_almacen.getCtotal() + "");
 
         jd_recibir_producto.setVisible(true);
     }
@@ -1275,7 +1276,6 @@ public class frm_reg_traslado extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //probando venta
         cl_productos_ventas c_producto_venta = new cl_productos_ventas();
-        c_producto_venta.setId_almacen(id_almacen);
         c_producto_venta.setId_venta(c_venta.getId_venta());
         c_producto_venta.mostrar_traslado(detalle);
         t_traslado.setModel(detalle);

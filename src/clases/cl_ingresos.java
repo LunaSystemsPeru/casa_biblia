@@ -22,7 +22,6 @@ public class cl_ingresos {
     cl_conectar c_conectar = new cl_conectar();
     cl_varios c_varios = new cl_varios();
 
-    private int periodo;
     private int id_ingreso;
     private int id_almacen;
     private String fecha;
@@ -36,14 +35,6 @@ public class cl_ingresos {
     private int id_usuario;
 
     public cl_ingresos() {
-    }
-
-    public int getPeriodo() {
-        return periodo;
-    }
-
-    public void setPeriodo(int periodo) {
-        this.periodo = periodo;
     }
 
     public int getId_ingreso() {
@@ -140,7 +131,7 @@ public class cl_ingresos {
             Statement st = c_conectar.conexion();
             String query = "select * "
                     + "from ingresos "
-                    + "where id_ingreso = '" + id_ingreso + "' and periodo = '" + periodo + "'";
+                    + "where id_ingreso = '" + id_ingreso + "'";
             System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
@@ -192,7 +183,6 @@ public class cl_ingresos {
             if (rs.next()) {
                 existe = true;
                 this.id_ingreso = rs.getInt("id_ingreso");
-                this.periodo = rs.getInt("periodo");
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -204,8 +194,7 @@ public class cl_ingresos {
         try {
             Statement st = c_conectar.conexion();
             String query = "select ifnull(max(id_ingreso) + 1, 1) as codigo "
-                    + "from ingresos "
-                    + "where periodo = '" + periodo + "'";
+                    + "from ingresos ";
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 id_ingreso = rs.getInt("codigo");
@@ -235,7 +224,6 @@ public class cl_ingresos {
             tmodelo.addColumn("Proveedor");
             tmodelo.addColumn("Total");
             tmodelo.addColumn("Usuario");
-            tmodelo.addColumn("_idingreso");
 
             //Creando las filas para el JTable
             while (rs.next()) {
@@ -269,7 +257,7 @@ public class cl_ingresos {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into ingresos "
-                + "values ('" + id_ingreso + "', '" + periodo + "', '" + fecha + "', '" + id_almacen + "', '" + id_proveedor + "', '" + id_tido + "', '" + serie + "', '" + numero + "', "
+                + "values ('" + id_ingreso + "', '" + fecha + "', '" + id_almacen + "', '" + id_proveedor + "', '" + id_tido + "', '" + serie + "', '" + numero + "', "
                 + "'" + total + "', '" + id_moneda + "', '" + tc + "', '" + id_usuario + "')";
         System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);
@@ -283,7 +271,7 @@ public class cl_ingresos {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "delete from ingresos "
-                + "where id_ingreso = '" + id_ingreso + "' and periodo = '" + periodo + "'";
+                + "where id_ingreso = '" + id_ingreso + "'";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;

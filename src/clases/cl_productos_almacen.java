@@ -25,7 +25,8 @@ public class cl_productos_almacen {
 
     private int producto;
     private int almacen;
-    private int cantidad;
+    private double ctotal;
+    private double csunat;
     private String fecha_ingreso;
     private String fecha_salida;
 
@@ -48,12 +49,20 @@ public class cl_productos_almacen {
         this.almacen = almacen;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public double getCtotal() {
+        return ctotal;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setCtotal(double ctotal) {
+        this.ctotal = ctotal;
+    }
+
+    public double getCsunat() {
+        return csunat;
+    }
+
+    public void setCsunat(double csunat) {
+        this.csunat = csunat;
     }
 
     public String getFecha_ingreso() {
@@ -141,8 +150,8 @@ public class cl_productos_almacen {
             mostrar.addColumn("Descripcion");
             mostrar.addColumn("Marca");
             mostrar.addColumn("Cant. Act.");
+            mostrar.addColumn("Cant. Sunat.");
             mostrar.addColumn("Precio");
-            mostrar.addColumn("%");
             mostrar.addColumn("Ult. Ingreso");
             mostrar.addColumn("Ult. Salida");
 
@@ -151,11 +160,11 @@ public class cl_productos_almacen {
             while (rs.next()) {
 
                 fila[0] = rs.getString("id_producto");
-                fila[1] = (rs.getString("descripcion").trim() ).trim();
+                fila[1] = (rs.getString("descripcion").trim() + " x " + rs.getString("um.nombre")).trim();
                 fila[2] = rs.getString("marca").trim();
-                fila[3] = rs.getInt("cactual");
-                fila[4] = c_varios.formato_numero(rs.getDouble("precio"));
-                fila[5] = rs.getDouble("comision");
+                fila[3] = rs.getDouble("cactual");
+                fila[4] = rs.getDouble("csunat");
+                fila[5] = c_varios.formato_numero(rs.getDouble("precio"));
                 String fingreso = rs.getString("f_infreso");
                 if (fingreso.equals("1000-01-01")) {
                     fingreso = "-";
@@ -216,7 +225,7 @@ public class cl_productos_almacen {
             while (rs.next()) {
 
                 fila[0] = rs.getString("id_producto");
-                fila[1] = (rs.getString("descripcion").trim() ).trim();
+                fila[1] = (rs.getString("descripcion").trim()).trim();
                 fila[2] = rs.getString("marca").trim();
                 fila[3] = rs.getInt("cactual");
                 fila[4] = c_varios.formato_numero(rs.getDouble("precio"));
@@ -251,10 +260,11 @@ public class cl_productos_almacen {
             String query = "select * "
                     + "from productos_almacen "
                     + "where id_producto = '" + producto + "' and id_almacen = '" + almacen + "'";
-            System.out.println(query);
+         //   System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
-                cantidad = rs.getInt("cactual");
+                ctotal = rs.getDouble("cactual");
+                csunat = rs.getDouble("csunat");
                 fecha_ingreso = rs.getString("f_infreso");
                 fecha_salida = rs.getString("f_salida");
                 existe = true;
@@ -284,7 +294,7 @@ public class cl_productos_almacen {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "update productos_almacen "
-                + "set cactual = '" + cantidad + "' "
+                + "set cactual = '" + ctotal + "' "
                 + "where id_almacen = '" + almacen + "' and id_producto = '" + producto + "'";
         //System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);

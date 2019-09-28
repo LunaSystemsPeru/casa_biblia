@@ -102,8 +102,8 @@ public class frm_reg_movimiento_caja extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         t_movimientos = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btn_limpiar_caja = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
@@ -239,14 +239,6 @@ public class frm_reg_movimiento_caja extends javax.swing.JInternalFrame {
         jToolBar1.setFloatable(false);
         jToolBar1.setOpaque(false);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/banco.png"))); // NOI18N
-        jButton3.setText("Deposito");
-        jButton3.setEnabled(false);
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
-
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png"))); // NOI18N
         jButton1.setText("Agregar");
         jButton1.setFocusable(false);
@@ -258,6 +250,14 @@ public class frm_reg_movimiento_caja extends javax.swing.JInternalFrame {
             }
         });
         jToolBar1.add(jButton1);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/banco.png"))); // NOI18N
+        jButton3.setText("Deposito");
+        jButton3.setEnabled(false);
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton3);
         jToolBar1.add(jSeparator1);
 
         btn_limpiar_caja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/error.png"))); // NOI18N
@@ -463,6 +463,21 @@ public class frm_reg_movimiento_caja extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btn_j_guardarActionPerformed
 
+    private void limpiar() {
+        c_movimiento.setIngresa(0);
+        c_movimiento.setRetirar(0);
+        txt_motivo.setText("");
+        txt_monto.setText("");
+        cbx_tipo.setEnabled(false);
+        txt_monto.setEnabled(false);
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jd_reg_movimiento.setModal(true);
+        jd_reg_movimiento.setSize(400, 329);
+        jd_reg_movimiento.setLocationRelativeTo(null);
+        jd_reg_movimiento.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -482,21 +497,6 @@ public class frm_reg_movimiento_caja extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btn_limpiar_cajaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        jd_reg_movimiento.setModal(true);
-        jd_reg_movimiento.setSize(400, 329);
-        jd_reg_movimiento.setLocationRelativeTo(null);
-        jd_reg_movimiento.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void limpiar() {
-        c_movimiento.setIngresa(0);
-        c_movimiento.setRetirar(0);
-        txt_motivo.setText("");
-        txt_monto.setText("");
-        cbx_tipo.setEnabled(false);
-        txt_monto.setEnabled(false);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_j_guardar;

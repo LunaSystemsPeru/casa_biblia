@@ -3,3 +3,4 @@ nbdist/
 nbproject/private/
 build/
 nbbuild/
+test/

@@ -11,6 +11,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import render_tablas.render_compras;
 
 /**
  *
@@ -19,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class cl_compra {
 
     cl_conectar c_conectar = new cl_conectar();
+    cl_varios c_varios = new cl_varios();
 
     private int id_compra;
     private String fecha;
@@ -28,12 +30,20 @@ public class cl_compra {
     private int numero;
     private double total;
     private double pagado;
-    private int estado;
-    private int id_usuario;
     private int id_empresa;
+    private int id_usuario;
+    private int estado;
     private String glosa;
 
     public cl_compra() {
+    }
+
+    public cl_conectar getC_conectar() {
+        return c_conectar;
+    }
+
+    public void setC_conectar(cl_conectar c_conectar) {
+        this.c_conectar = c_conectar;
     }
 
     public int getId_compra() {
@@ -100,14 +110,6 @@ public class cl_compra {
         this.pagado = pagado;
     }
 
-    public int getEstado() {
-        return estado;
-    }
-
-    public void setEstado(int estado) {
-        this.estado = estado;
-    }
-
     public int getId_usuario() {
         return id_usuario;
     }
@@ -129,14 +131,14 @@ public class cl_compra {
     }
 
     public void setGlosa(String glosa) {
-        this.glosa = glosa;
+        this.glosa = glosa.toUpperCase();
     }
 
     public void obtener_codigo() {
         try {
             Statement st = c_conectar.conexion();
             String query = "select ifnull(max(id_compra) + 1, 1) as codigo "
-                    + "from compras ";
+                    + "from compras";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
@@ -149,15 +151,17 @@ public class cl_compra {
         }
     }
 
-    public boolean validar_almacen() {
+    public boolean obtener_datos() {
         boolean existe = false;
+
         try {
             Statement st = c_conectar.conexion();
-            String query = "select * "
-                    + "from compras "
-                    + "where id_compra = '" + id_compra + "' ";
+            String query = "select * from "
+                    + "compras "
+                    + "where id_compra = '" + id_compra + "'";
             ResultSet rs = c_conectar.consulta(st, query);
-            if (rs.next()) {
+
+            while (rs.next()) {
                 existe = true;
                 fecha = rs.getString("fecha");
                 id_proveedor = rs.getInt("id_proveedor");
@@ -170,35 +174,20 @@ public class cl_compra {
                 id_usuario = rs.getInt("id_usuarios");
                 id_empresa = rs.getInt("id_empresa");
             }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            c_conectar.cerrar(rs);
+            c_conectar.cerrar(st);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
+
         return existe;
     }
 
-    public boolean validar_documento() {
-        boolean existe = false;
-        try {
-            Statement st = c_conectar.conexion();
-            String query = "select id_compra "
-                    + "from compras "
-                    + "where id_tido = '" + id_tido + "' and serie = '" + serie + "' and numero = '" + numero + "' and id_proveedor = '" + id_proveedor + "' ";
-            ResultSet rs = c_conectar.consulta(st, query);
-            if (rs.next()) {
-                existe = true;
-                id_compra = rs.getInt("id_compra");
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return existe;
-    }
-
-    public boolean registrar() {
+    public boolean insertar() {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into compras "
-                + "Values ('" + id_compra + "', '" + fecha + "', '" + id_proveedor + "', '" + id_tido + "', '" + serie + "', '" + numero + "', '" + total + "', '0', '2', '" + id_usuario + "', '" + id_empresa + "')";
+                + "values ('" + id_compra + "', '" + fecha + "', '" + id_proveedor + "', '" + id_tido + "', '" + serie + "', '" + numero + "', '" + total + "', '0', '2', '" + id_usuario + "', '" + id_empresa + "')";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;
@@ -207,11 +196,10 @@ public class cl_compra {
         return registrado;
     }
 
-    public boolean modificar() {
+    public boolean eliminar() {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
-        String query = "update compras "
-                + "set total = '" + total + "', fecha = '" + fecha + "', id_empresa = '" + id_empresa + "' "
+        String query = "delete from compras "
                 + "where id_compra = '" + id_compra + "'";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
@@ -221,57 +209,88 @@ public class cl_compra {
         return registrado;
     }
 
-    public void mostrar(JTable tabla, String query) {
+    public boolean validar_documento() {
+        boolean existe = false;
         try {
-            DefaultTableModel modelo = new DefaultTableModel() {
+            Statement st = c_conectar.conexion();
+            String query = "select * "
+                    + "from compras "
+                    + "where id_proveedor = '" + id_proveedor + "' and id_tido = '" + id_tido + "' and serie = '" + serie + "' and numero = '" + numero + "'";
+            System.out.println(query);
+            ResultSet rs = c_conectar.consulta(st, query);
+            if (rs.next()) {
+                existe = true;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return existe;
+    }
+
+    public void mostrar(JTable tabla, String query) {
+        DefaultTableModel modelo;
+        try {
+            modelo = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int fila, int columna) {
                     return false;
                 }
             };
-
+            //c_conectar.conectar();
             Statement st = c_conectar.conexion();
             ResultSet rs = c_conectar.consulta(st, query);
 
+            //La cantidad de columnas que tiene la consulta
+            //Establecer como cabezeras el nombre de las colimnas
             modelo.addColumn("Id");
             modelo.addColumn("Empresa");
             modelo.addColumn("Fecha");
             modelo.addColumn("Documento");
             modelo.addColumn("Proveedor");
-            modelo.addColumn("Total");
-            modelo.addColumn("Por Pagar");
+            modelo.addColumn("T. Compra S/");
+            modelo.addColumn("T. Deuda S/");
             modelo.addColumn("Estado");
 
             //Creando las filas para el JTable
             while (rs.next()) {
-                Object[] fila = new Object[6];
-                fila[0] = rs.getInt("id_almacen");
-                fila[1] = rs.getString("nombre");
-                fila[2] = rs.getString("direccion");
-                fila[3] = rs.getString("ruc") + " | " + rs.getString("razon");
-                fila[4] = rs.getString("ciudad");
-                if (rs.getString("estado").equals("1")) {
-                    fila[5] = "ACTIVO";
-                } else {
-                    fila[5] = "-";
+                String documento = rs.getString("doc_sunat") + " | " + rs.getString("serie") + " - " + rs.getString("numero");
+                double dtotal = rs.getDouble("total");
+                double dpagado = rs.getDouble("pagado");
+                double ddeuda = dtotal - dpagado;
+                int iestado = rs.getInt("estado");
+
+                Object[] fila = new Object[8];
+                fila[0] = rs.getInt("id_compra");
+                fila[1] = rs.getString("ruc_empresa");
+                fila[2] = rs.getString("fecha");
+                fila[3] = documento;
+                fila[4] = rs.getString("nro_documento") + " | " + rs.getString("razon_social");
+                fila[5] = c_varios.formato_numero(dtotal);
+                fila[6] = c_varios.formato_numero(ddeuda);
+                if (iestado == 2) {
+                    fila[7] = "POR PAGAR";
+                }
+                if (iestado == 1) {
+                    fila[7] = "-";
                 }
 
                 modelo.addRow(fila);
             }
-
             c_conectar.cerrar(st);
             c_conectar.cerrar(rs);
-
             tabla.setModel(modelo);
             tabla.getColumnModel().getColumn(0).setPreferredWidth(30);
-            tabla.getColumnModel().getColumn(1).setPreferredWidth(150);
-            tabla.getColumnModel().getColumn(2).setPreferredWidth(250);
-            tabla.getColumnModel().getColumn(3).setPreferredWidth(350);
-            tabla.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(450);
             tabla.getColumnModel().getColumn(5).setPreferredWidth(70);
+            tabla.getColumnModel().getColumn(6).setPreferredWidth(70);
+            tabla.getColumnModel().getColumn(7).setPreferredWidth(70);
+            tabla.setDefaultRenderer(Object.class, new render_compras());
         } catch (SQLException e) {
             System.out.print(e);
         }
-
     }
+
 }

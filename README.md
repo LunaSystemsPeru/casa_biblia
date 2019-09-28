@@ -1,8 +1,6 @@
-# Casa de la Biblia  - Chimbote
+# comercial Peña
 Software de Ventas e Inventario Multi Empresa
 - Manejo de productos por tiendas
-- multi tiendas
+- Facturacion electronica (boletas, factura, nota de credito)
+- multi tiendas( no hay contacto entre las tiendas, pero si el almacen )
 - control de dinero
-- ingreso, salida de mercaderia
-- productos afectos a igv y sin igv
-- imprime ticket 

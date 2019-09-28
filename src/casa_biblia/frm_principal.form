@@ -380,7 +380,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="Casa de la Biblia  | Sistema de Gestion de Ventas"/>
+    <Property name="title" type="java.lang.String" value="Comercial Pe&#xf1;a | Sistema de Gestion de Ventas"/>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="cc" green="cc" red="cc" type="rgb"/>
     </Property>
@@ -566,7 +566,6 @@
                   <Border info="null"/>
                 </Property>
                 <Property name="floatable" type="boolean" value="false"/>
-                <Property name="rollover" type="boolean" value="true"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
               </Properties>
               <Constraints>
@@ -799,11 +798,13 @@
                       <Image iconType="3" name="/icons/archiver-512.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Clasificacion"/>
-                    <Property name="enabled" type="boolean" value="false"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                     <Property name="verticalTextPosition" type="int" value="3"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton15ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton13">
                   <Properties>
@@ -856,7 +857,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/icons/shop-78-512.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Guias de Remision"/>
+                    <Property name="text" type="java.lang.String" value="Salidas"/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>
                     <Property name="verticalTextPosition" type="int" value="3"/>
@@ -920,20 +921,6 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="jButton3">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/icons/company_building-512.png"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Empresas"/>
-                    <Property name="focusable" type="boolean" value="false"/>
-                    <Property name="horizontalTextPosition" type="int" value="0"/>
-                    <Property name="verticalTextPosition" type="int" value="3"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JToolBar$Separator" name="jSeparator3">
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton16">
@@ -1013,7 +1000,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Traslados Pendientes:"/>
+            <Property name="text" type="java.lang.String" value="Traslados Pendientes: "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbl_traslados_encontrados">

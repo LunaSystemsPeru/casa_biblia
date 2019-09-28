@@ -43,6 +43,30 @@ public class m_documentos_sunat {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
+    
+    public void cbx_documentos_compra(JComboBox cbx) {
+        try {
+            cbx.removeAllItems();
+
+            Statement st = c_conectar.conexion();
+
+            String query = "select id_tido, descripcion "
+                    + "from documentos_sunat  "
+                    + "where id_tido in (1,2,11) "
+                    + "order by descripcion ";
+            ResultSet rs = c_conectar.consulta(st, query);
+
+            while (rs.next()) {
+                cbx.addItem(new cla_mis_documentos(rs.getInt("id_tido"), rs.getString("descripcion")));
+            }
+
+            c_conectar.cerrar(st);
+            c_conectar.cerrar(rs);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
 
     public void cbx_documentos_ingreso(JComboBox cbx) {
         try {
@@ -68,7 +92,7 @@ public class m_documentos_sunat {
         }
     }
     
-      public void cbx_documentos_compra(JComboBox cbx) {
+    public void cbx_documentos_salida(JComboBox cbx) {
         try {
             cbx.removeAllItems();
 
@@ -76,7 +100,7 @@ public class m_documentos_sunat {
 
             String query = "select id_tido, descripcion "
                     + "from documentos_sunat  "
-                    + "where id_tido in (1,2,11) "
+                    + "where id_tido in (5, 12) "
                     + "order by descripcion ";
             ResultSet rs = c_conectar.consulta(st, query);
 

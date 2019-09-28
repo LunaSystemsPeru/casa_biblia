@@ -16,6 +16,7 @@ import clases_hilos.cl_notificaciones;
 import clases_varios.cl_grafica_mensual;
 import forms.frm_reg_cierre_caja;
 import forms.frm_reg_movimiento_caja;
+import forms.frm_reg_salida;
 import forms.frm_reg_traslado;
 import forms.frm_reg_venta;
 import java.awt.Frame;
@@ -29,6 +30,7 @@ import javax.swing.Timer;
 import nicon.notify.core.Notification;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import vistas.frm_ver_almacenes;
+import vistas.frm_ver_clasificacion_productos;
 import vistas.frm_ver_clientes;
 import vistas.frm_ver_cobros;
 import vistas.frm_ver_compras;
@@ -42,6 +44,7 @@ import vistas.frm_ver_mis_productos2;
 import vistas.frm_ver_productos_tiendas;
 import vistas.frm_ver_productos_todos;
 import vistas.frm_ver_proveedores;
+import vistas.frm_ver_salidas;
 import vistas.frm_ver_traslados;
 import vistas.frm_ver_usuarios;
 import vistas.frm_ver_ventas;
@@ -112,7 +115,7 @@ public class frm_principal extends javax.swing.JFrame {
         try {
             Timer timer = new Timer(60000, new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("mostrando id almacen " + c_almacen.getId());
+                    //System.out.println("mostrando id almacen " + c_almacen.getId());
                     c_notificaciones.setId_almacen(c_almacen.getId());
                     c_notificaciones.mostrar();
                 }
@@ -125,6 +128,13 @@ public class frm_principal extends javax.swing.JFrame {
     }
 
     private void cargar_permisos() {
+        c_permiso.setId_permiso(23);
+        boolean permitido23 = c_permiso.validar();
+
+        if (!permitido23) {
+            jButton12.setEnabled(false);
+        }
+        
         c_permiso.setId_permiso(18);
         boolean permitido18 = c_permiso.validar();
 
@@ -142,9 +152,10 @@ public class frm_principal extends javax.swing.JFrame {
         c_permiso.setId_permiso(16);
         boolean permitido16 = c_permiso.validar();
 
-        if (!permitido16) {
+/*        if (!permitido16) {
             jButton3.setEnabled(false);
         }
+*/
 
         c_permiso.setId_permiso(15);
         boolean permitido15 = c_permiso.validar();
@@ -243,7 +254,6 @@ public class frm_principal extends javax.swing.JFrame {
         jSeparator15 = new javax.swing.JToolBar.Separator();
         jButton23 = new javax.swing.JButton();
         jToolBar6 = new javax.swing.JToolBar();
-        jButton3 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         jButton16 = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
@@ -499,7 +509,7 @@ public class frm_principal extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Casa de la Biblia  | Sistema de Gestion de Ventas");
+        setTitle("Comercial Peña | Sistema de Gestion de Ventas");
         setBackground(new java.awt.Color(204, 204, 204));
         setIconImage(Toolkit.getDefaultToolkit().getImage("reports/icono.jpg"));
 
@@ -557,7 +567,6 @@ public class frm_principal extends javax.swing.JFrame {
         jToolBar4.setBackground(new java.awt.Color(255, 255, 255));
         jToolBar4.setBorder(null);
         jToolBar4.setFloatable(false);
-        jToolBar4.setRollover(true);
         jToolBar4.setBorderPainted(false);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Office-Customer-Male-Light-icon.png"))); // NOI18N
@@ -715,10 +724,14 @@ public class frm_principal extends javax.swing.JFrame {
 
         jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/archiver-512.png"))); // NOI18N
         jButton15.setText("Clasificacion");
-        jButton15.setEnabled(false);
         jButton15.setFocusable(false);
         jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton15.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
         jToolBar2.add(jButton15);
 
         jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/product-icon.png"))); // NOI18N
@@ -760,7 +773,7 @@ public class frm_principal extends javax.swing.JFrame {
         jToolBar2.add(jButton7);
 
         jButton20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/shop-78-512.png"))); // NOI18N
-        jButton20.setText("Guias de Remision");
+        jButton20.setText("Salidas");
         jButton20.setFocusable(false);
         jButton20.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton20.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -803,18 +816,6 @@ public class frm_principal extends javax.swing.JFrame {
         jToolBar6.setBorder(null);
         jToolBar6.setFloatable(false);
         jToolBar6.setBorderPainted(false);
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/company_building-512.png"))); // NOI18N
-        jButton3.setText("Empresas");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jToolBar6.add(jButton3);
         jToolBar6.add(jSeparator3);
 
         jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/40-512.png"))); // NOI18N
@@ -899,7 +900,7 @@ public class frm_principal extends javax.swing.JFrame {
         jToolBar3.setBorderPainted(false);
         jToolBar3.setOpaque(false);
 
-        jLabel13.setText("Traslados Pendientes:");
+        jLabel13.setText("Traslados Pendientes: ");
         jToolBar3.add(jLabel13);
 
         lbl_traslados_encontrados.setText("0");
@@ -950,11 +951,6 @@ public class frm_principal extends javax.swing.JFrame {
         frm_reg_venta formulario = new frm_reg_venta();
         c_varios.llamar_ventana(formulario);
     }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        frm_ver_empresas formulario = new frm_ver_empresas();
-        c_varios.llamar_ventana(formulario);
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         frm_ver_ingresos formulario = new frm_ver_ingresos();
@@ -1017,6 +1013,8 @@ public class frm_principal extends javax.swing.JFrame {
         boolean existe_caja = c_caja.validar_caja();
 
         if (!existe_caja) {
+            txt_tienda.setText(c_almacen.getNombre());
+            txt_fecha.setText(c_varios.fecha_usuario(c_varios.getFechaActual()));
             jd_apertura.setModal(true);
             jd_apertura.setSize(398, 224);
             jd_apertura.setLocationRelativeTo(null);
@@ -1151,7 +1149,7 @@ public class frm_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        frm_ver_guias_remision formulario = new frm_ver_guias_remision();
+        frm_ver_salidas formulario = new frm_ver_salidas();
         c_varios.llamar_ventana(formulario);
 
     }//GEN-LAST:event_jButton20ActionPerformed
@@ -1179,6 +1177,11 @@ public class frm_principal extends javax.swing.JFrame {
         frm_ver_compras formulario = new frm_ver_compras();
         c_varios.llamar_ventana(formulario);
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        frm_ver_clasificacion_productos formulario = new frm_ver_clasificacion_productos();
+        c_varios.llamar_ventana_normal(formulario);
+    }//GEN-LAST:event_jButton15ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1235,7 +1238,6 @@ public class frm_principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
