@@ -8,7 +8,6 @@ package vistas;
 import clases.cl_cliente;
 import clases.cl_cobros_ventas;
 import clases.cl_conectar;
-import clases.cl_documento_firmado;
 import clases.cl_documento_almacen;
 import clases.cl_productos_ventas;
 import clases.cl_varios;
@@ -43,7 +42,6 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
     cl_varios c_varios = new cl_varios();
     cl_venta c_venta = new cl_venta();
     cl_venta c_separacion = new cl_venta();
-    cl_documento_firmado c_hash = new cl_documento_firmado();
 
     cl_venta_eliminada c_cupon = new cl_venta_eliminada();
     cl_productos_ventas c_detalle = new cl_productos_ventas();
@@ -1314,7 +1312,6 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
         c_venta.setId_tipo_venta(1);
         c_venta.setPagado(c_separacion.getTotal());
         c_venta.setEstado(1);
-        c_venta.setEnviado_sunat(0);
 
         cl_productos_ventas c_nuevo_detalle = new cl_productos_ventas();
 
@@ -1496,38 +1493,9 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
         String letras_numeros = c_letras.Convertir(c_venta.getTotal() + "", true) + " SOLES";
         System.out.println(letras_numeros);
 
-        //imprimir boleta o factura
-        if (c_venta.getId_tido() == 1 || c_venta.getId_tido() == 2) {
-            c_hash.setId_venta(id_venta);
-            c_hash.setId_almacen(id_almacen);
-            c_hash.validar_firma();
-            String url_codigo_qr = "http://www.lunasystemsperu.com/clientes/comercial_penia/greenter/generate_qr/temp/" + c_hash.getNombre() + ".png";
-            System.out.println(url_codigo_qr);
-
-            File miDir = new File(".");
-            try {
-                Map<String, Object> parametros = new HashMap<>();
-                String path = miDir.getCanonicalPath();
-                String direccion = path + "//reports//subreports//";
-
-                System.out.println(direccion);
-                parametros.put("SUBREPORT_DIR", direccion);
-                parametros.put("JRParameter.REPORT_LOCALE", Locale.ENGLISH);
-                parametros.put("REPORT_LOCALE", Locale.ENGLISH);
-                parametros.put("p_id_venta", c_venta.getId_venta());
-                parametros.put("p_id_almacen", c_venta.getId_almacen());
-                parametros.put("p_letras_numero", letras_numeros);
-                parametros.put("p_codigo_qr", url_codigo_qr);
-                parametros.put("p_hash", c_hash.getHash());
-                //   c_varios.imp_reporte("rpt_documento_venta", parametros);
-                if (id_almacen == 1) {
-                    c_varios.ver_reporte("rpt_documento_venta_rodson", parametros);
-                } else {
-                    c_varios.ver_reporte("rpt_documento_venta", parametros);
-                }
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
-            }
+        //imprimir ticket
+        if (c_venta.getId_tido() == 12) {
+            //codigo para imprimir ticket
         }
 
         //imprimir si es nota de ventaonota de separacion

@@ -23,18 +23,19 @@ public class cl_venta {
     cl_varios c_varios = new cl_varios();
 
     private int id_venta;
+    private int id_almacen;
     private String fecha;
-    private int id_cliente;
     private int id_tido;
     private String serie;
     private int numero;
-    private int id_almacen;
+    private int id_cliente;
     private int id_usuario;
     private double total;
     private double pagado;
+    private int afecto_igv;
     private int id_tipo_venta;
-    private int enviado_sunat;
     private int estado;
+    private int id_pedido;
 
     public cl_venta() {
     }
@@ -135,12 +136,20 @@ public class cl_venta {
         this.estado = estado;
     }
 
-    public int getEnviado_sunat() {
-        return enviado_sunat;
+    public int getAfecto_igv() {
+        return afecto_igv;
     }
 
-    public void setEnviado_sunat(int enviado_sunat) {
-        this.enviado_sunat = enviado_sunat;
+    public void setAfecto_igv(int afecto_igv) {
+        this.afecto_igv = afecto_igv;
+    }
+
+    public int getId_pedido() {
+        return id_pedido;
+    }
+
+    public void setId_pedido(int id_pedido) {
+        this.id_pedido = id_pedido;
     }
 
     public boolean validar_venta() {
@@ -154,7 +163,8 @@ public class cl_venta {
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 existe = true;
-                enviado_sunat = rs.getInt("enviado_sunat");
+                afecto_igv = rs.getInt("afecto_igv");
+                id_pedido = rs.getInt("id_pedido");
                 fecha = rs.getString("fecha");
                 id_cliente = rs.getInt("id_cliente");
                 id_tido = rs.getInt("id_tido");
@@ -215,7 +225,7 @@ public class cl_venta {
         Statement st = c_conectar.conexion();
         String query = "insert into ventas "
                 + "values ('" + id_venta + "', '" + id_almacen + "', '" + fecha + "', '" + id_tido + "', '" + serie + "', '" + numero + "', "
-                + "'" + id_cliente + "', '" + id_usuario + "', '" + total + "', '0', '" + id_tipo_venta + "', '" + estado + "', current_timestamp() ,'" + enviado_sunat + "')";
+                + "'" + id_cliente + "', '" + id_usuario + "', '" + total + "', '0', '" + afecto_igv + "', '" + id_tipo_venta + "', '"+estado+"', '" + id_pedido + "')";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;
@@ -250,20 +260,6 @@ public class cl_venta {
         return registrado;
     }
 
-    public boolean actualizar_sunat() {
-        boolean registrado = false;
-        Statement st = c_conectar.conexion();
-        String query = "update ventas "
-                + "set enviado_sunat = '" + enviado_sunat + "' "
-                + "where id_ventas = '" + id_venta + "' and id_almacen = '" + id_almacen + "'";
-        int resultado = c_conectar.actualiza(st, query);
-        if (resultado > -1) {
-            registrado = true;
-        }
-        c_conectar.cerrar(st);
-        return registrado;
-    }
-
     public void mostrar(JTable tabla, String query) {
         try {
             DefaultTableModel tmodelo;
@@ -286,7 +282,7 @@ public class cl_venta {
             tmodelo.addColumn("Pagado");
             tmodelo.addColumn("Vendedor");
             tmodelo.addColumn("Estado");
-            tmodelo.addColumn("_idventa");
+            tmodelo.addColumn("");
 
             //Creando las filas para el JTable
             while (rs.next()) {
@@ -344,6 +340,7 @@ public class cl_venta {
             tabla.getColumnModel().getColumn(5).setPreferredWidth(80);
             tabla.getColumnModel().getColumn(6).setPreferredWidth(90);
             tabla.getColumnModel().getColumn(7).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(8).setPreferredWidth(0);
             tabla.setDefaultRenderer(Object.class, new render_ventas());
             //   t_productos.setRowSorter(sorter);
 

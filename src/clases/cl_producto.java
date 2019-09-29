@@ -24,19 +24,17 @@ public class cl_producto {
 
     private int id;
     private String descripcion;
-    private String marca;
-    private String cod_barra;
+    private String cod_externo;
+    private String modelo;
     private double costo;
     private double precio;
     private double ctotal;
-    private double csunat;
     private double comision;
     private int tipo_producto;
-    private int icbper;
+    private int afecto_igv;
     private String estado;
     private int id_proveedor;
-    private int id_clasificacion;
-    private int id_unidad;
+    private int id_sub_clasificacion;
 
     public cl_producto() {
     }
@@ -54,23 +52,23 @@ public class cl_producto {
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion.toUpperCase();
+        this.descripcion = descripcion;
     }
 
-    public String getMarca() {
-        return marca;
+    public String getCod_externo() {
+        return cod_externo;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca.toUpperCase();
+    public void setCod_externo(String cod_externo) {
+        this.cod_externo = cod_externo;
     }
 
-    public String getCod_barra() {
-        return cod_barra;
+    public String getModelo() {
+        return modelo;
     }
 
-    public void setCod_barra(String cod_barra) {
-        this.cod_barra = cod_barra;
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
     }
 
     public double getCosto() {
@@ -97,14 +95,6 @@ public class cl_producto {
         this.ctotal = ctotal;
     }
 
-    public double getCsunat() {
-        return csunat;
-    }
-
-    public void setCsunat(double csunat) {
-        this.csunat = csunat;
-    }
-
     public double getComision() {
         return comision;
     }
@@ -121,12 +111,12 @@ public class cl_producto {
         this.tipo_producto = tipo_producto;
     }
 
-    public int getIcbper() {
-        return icbper;
+    public int getAfecto_igv() {
+        return afecto_igv;
     }
 
-    public void setIcbper(int icbper) {
-        this.icbper = icbper;
+    public void setAfecto_igv(int afecto_igv) {
+        this.afecto_igv = afecto_igv;
     }
 
     public String getEstado() {
@@ -145,20 +135,12 @@ public class cl_producto {
         this.id_proveedor = id_proveedor;
     }
 
-    public int getId_clasificacion() {
-        return id_clasificacion;
+    public int getId_sub_clasificacion() {
+        return id_sub_clasificacion;
     }
 
-    public void setId_clasificacion(int id_clasificacion) {
-        this.id_clasificacion = id_clasificacion;
-    }
-
-    public int getId_unidad() {
-        return id_unidad;
-    }
-
-    public void setId_unidad(int id_unidad) {
-        this.id_unidad = id_unidad;
+    public void setId_sub_clasificacion(int id_sub_clasificacion) {
+        this.id_sub_clasificacion = id_sub_clasificacion;
     }
 
     public void mostrar(JTable tabla, String query) {
@@ -227,7 +209,7 @@ public class cl_producto {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public boolean validar_id() {
         boolean existe = false;
         try {
@@ -240,19 +222,17 @@ public class cl_producto {
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 descripcion = rs.getString("descripcion");
-                marca = rs.getString("marca");
-                cod_barra = rs.getString("cod_barra");
+                cod_externo = rs.getString("cod_externo");
+                modelo = rs.getString("modelo");
                 costo = rs.getDouble("costo");
                 precio = rs.getDouble("precio");
                 ctotal = rs.getDouble("ctotal");
-                csunat = rs.getDouble("csunat");
                 comision = rs.getDouble("comision");
                 tipo_producto = rs.getInt("tipo_producto");
-                icbper = rs.getInt("afecto_icbper");
+                afecto_igv = rs.getInt("afecto_igv");
                 estado = rs.getString("estado");
                 id_proveedor = rs.getInt("id_proveedor");
-                id_clasificacion = rs.getInt("id_clasificacion");
-                id_unidad = rs.getInt("id_unidad");
+                id_sub_clasificacion = rs.getInt("id_sub_clasificacion");
                 existe = true;
             }
 
@@ -266,8 +246,8 @@ public class cl_producto {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into productos "
-                + "values ('" + id + "', '" + descripcion + "', '" + marca + "', '" + cod_barra + "', '"+costo+"', '" + precio + "', '0', '0', '" + comision + "', "
-                + "'" + tipo_producto + "', '" + icbper + "', '1', '0', '" + id_clasificacion + "', '" + id_unidad + "')";
+                + "values ('" + id + "', '" + descripcion + "', '" + cod_externo + "', '" + modelo + "', '" + costo + "', '" + precio + "', '0', '" + comision + "', "
+                + "'" + tipo_producto + "', '" + afecto_igv + "','" + id_sub_clasificacion + "', '', '1', '1')";
         System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
@@ -280,8 +260,8 @@ public class cl_producto {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "update productos "
-                + "set descripcion = '" + descripcion + "', marca = '" + marca + "', cod_barra = '" + cod_barra + "', precio = '" + precio + "', costo = '" + costo + "', comision = '" + comision + "', "
-                + "id_clasificacion = '" + id_clasificacion + "' "
+                + "set descripcion = '" + descripcion + "', cod_externo = '" + cod_externo + "', modelo = '" + modelo + "', precio = '" + precio + "', costo = '" + costo + "', comision = '" + comision + "', "
+                + "id_sub_clasificacion = '" + id_sub_clasificacion + "', afecto_igv = '" + afecto_igv + "' "
                 + "where id_producto = '" + id + "'";
         System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);

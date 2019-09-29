@@ -26,7 +26,6 @@ public class cl_productos_almacen {
     private int producto;
     private int almacen;
     private double ctotal;
-    private double csunat;
     private String fecha_ingreso;
     private String fecha_salida;
 
@@ -55,14 +54,6 @@ public class cl_productos_almacen {
 
     public void setCtotal(double ctotal) {
         this.ctotal = ctotal;
-    }
-
-    public double getCsunat() {
-        return csunat;
-    }
-
-    public void setCsunat(double csunat) {
-        this.csunat = csunat;
     }
 
     public String getFecha_ingreso() {
@@ -264,7 +255,6 @@ public class cl_productos_almacen {
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 ctotal = rs.getDouble("cactual");
-                csunat = rs.getDouble("csunat");
                 fecha_ingreso = rs.getString("f_infreso");
                 fecha_salida = rs.getString("f_salida");
                 existe = true;

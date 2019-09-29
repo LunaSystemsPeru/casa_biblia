@@ -37,11 +37,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="txt_descripcion" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="txt_marca" min="-2" pref="267" max="-2" attributes="0"/>
+                              <Component id="txt_cod_externo" min="-2" pref="267" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txt_modelo" pref="250" max="32767" attributes="0"/>
+                              <Component id="txt_modelo" pref="229" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -61,7 +61,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="txt_marca" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="txt_cod_externo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="txt_modelo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
@@ -85,17 +85,17 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Marca:"/>
+        <Property name="text" type="java.lang.String" value="Cod. Externo"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_marca">
+    <Component class="javax.swing.JTextField" name="txt_cod_externo">
       <Properties>
         <Property name="text" type="java.lang.String" value="jTextField2"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="modelo:"/>
+        <Property name="text" type="java.lang.String" value="Modelo:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_modelo">

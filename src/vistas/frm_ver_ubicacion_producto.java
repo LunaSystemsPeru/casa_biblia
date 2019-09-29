@@ -31,7 +31,7 @@ public class frm_ver_ubicacion_producto extends javax.swing.JDialog {
             c_producto.setId(id_producto);
             c_producto.validar_id();
             txt_descripcion.setText(c_producto.getDescripcion());
-            txt_marca.setText(c_producto.getMarca());
+            txt_cod_externo.setText(c_producto.getCod_externo());
             String query = "select a.nombre as nalmacen, pa.cactual, pa.f_infreso as f_ingreso, pa.f_salida "
                     + "from productos_almacen as pa "
                     + "inner join almacen as a on a.id_almacen = pa.id_almacen "
@@ -56,7 +56,7 @@ public class frm_ver_ubicacion_producto extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txt_descripcion = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txt_marca = new javax.swing.JTextField();
+        txt_cod_externo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txt_modelo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -69,11 +69,11 @@ public class frm_ver_ubicacion_producto extends javax.swing.JDialog {
 
         txt_descripcion.setText("jTextField1");
 
-        jLabel2.setText("Marca:");
+        jLabel2.setText("Cod. Externo");
 
-        txt_marca.setText("jTextField2");
+        txt_cod_externo.setText("jTextField2");
 
-        jLabel3.setText("modelo:");
+        jLabel3.setText("Modelo:");
 
         txt_modelo.setText("jTextField3");
 
@@ -112,11 +112,11 @@ public class frm_ver_ubicacion_producto extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_descripcion)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txt_marca, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_cod_externo, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_modelo, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))))
+                                .addComponent(txt_modelo, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -129,7 +129,7 @@ public class frm_ver_ubicacion_producto extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_marca, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_cod_externo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_modelo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -189,8 +189,8 @@ public class frm_ver_ubicacion_producto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txt_cod_externo;
     private javax.swing.JTextField txt_descripcion;
-    private javax.swing.JTextField txt_marca;
     private javax.swing.JTextField txt_modelo;
     // End of variables declaration//GEN-END:variables
 }
