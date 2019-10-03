@@ -29,7 +29,6 @@ import clases.cl_cliente;
 import clases.cl_conectar;
 import clases.cl_producto;
 import clases.cl_productos_almacen;
-import clases.cl_productos_empresa;
 import clases.cl_productos_ventas;
 import clases.cl_varios;
 import clases.cl_venta;
@@ -57,7 +56,6 @@ public class frm_mod_separacion extends javax.swing.JDialog {
 
     cl_producto c_producto = new cl_producto();
     cl_productos_almacen c_producto_almacen = new cl_productos_almacen();
-    cl_productos_empresa c_producto_empresa = new cl_productos_empresa();
 
     cl_cliente c_cliente = new cl_cliente();
 
@@ -81,7 +79,6 @@ public class frm_mod_separacion extends javax.swing.JDialog {
 
         modelo_venta();
         c_producto_almacen.setAlmacen(id_almacen);
-        c_producto_empresa.setId_empresa(id_empresa);
         cargar_productos();
 
         c_venta.setId_almacen(id_almacen);
@@ -153,7 +150,6 @@ public class frm_mod_separacion extends javax.swing.JDialog {
                         System.out.println("producto seleccionado " + pnombre);
                         c_producto.setId(pcodigo);
                         c_producto_almacen.setProducto(pcodigo);
-                        c_producto_empresa.setId_producto(pcodigo);
                     } else {
                         System.out.println("El item es de un tipo desconocido");
                     }
@@ -732,7 +728,7 @@ public class frm_mod_separacion extends javax.swing.JDialog {
             if (!error) {
                 Object fila[] = new Object[5];
                 fila[0] = c_producto.getId();
-                fila[1] = c_producto.getDescripcion() + " | " + c_producto.getMarca();
+                fila[1] = c_producto.getDescripcion() + " | " + c_producto.getModelo();
                 fila[2] = cantidad;
                 fila[3] = c_varios.formato_numero(precio);
                 fila[4] = c_varios.formato_numero(parcial);
@@ -832,22 +828,19 @@ public class frm_mod_separacion extends javax.swing.JDialog {
                     //validar que no existe en la tabla
                     if (valida_tabla(c_producto.getId())) {
                         c_producto.validar_id();
-                        c_producto_empresa.obtener_datos();
-                        txt_precio.setText(c_varios.formato_numero(c_producto_empresa.getPrecio()));
+                        txt_precio.setText(c_varios.formato_numero(c_producto.getPrecio()));
                         txt_cactual.setText(c_producto_almacen.getCtotal() + "");
                         txt_cantidad.setText("1");
                         txt_cantidad.setEnabled(true);
                         txt_cantidad.requestFocus();
                     } else {
                         c_producto.setId(0);
-                        c_producto_empresa.setId_empresa(0);
                         c_producto_almacen.setProducto(0);
                         limpiar_buscar();
                         JOptionPane.showMessageDialog(null, "ESTE PRODUCTO YA ESTA SELECCIONADO");
                     }
                 } else {
                     c_producto.setId(0);
-                    c_producto_empresa.setId_empresa(0);
                     c_producto_almacen.setProducto(0);
                     limpiar_buscar();
                     JOptionPane.showMessageDialog(null, "ERROR AL SELECCIONAR PRODUCTO");

@@ -18,7 +18,6 @@ import forms.frm_reg_cierre_caja;
 import forms.frm_reg_movimiento_caja;
 import forms.frm_reg_salida;
 import forms.frm_reg_traslado;
-import forms.frm_reg_venta;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -35,7 +34,6 @@ import vistas.frm_ver_clientes;
 import vistas.frm_ver_cobros;
 import vistas.frm_ver_compras;
 import vistas.frm_ver_empresas;
-import vistas.frm_ver_guias_remision;
 import vistas.frm_ver_ingresos;
 import vistas.frm_ver_inventarios;
 import vistas.frm_ver_kardex_diario;
@@ -509,7 +507,7 @@ public class frm_principal extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Comercial Peña | Sistema de Gestion de Ventas");
+        setTitle("Casa de la Biblia| Sistema de Gestion de Ventas");
         setBackground(new java.awt.Color(204, 204, 204));
         setIconImage(Toolkit.getDefaultToolkit().getImage("reports/icono.jpg"));
 
@@ -948,8 +946,8 @@ public class frm_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        frm_reg_venta formulario = new frm_reg_venta();
-        c_varios.llamar_ventana(formulario);
+        //frm_reg_venta formulario = new frm_reg_venta();
+     //   c_varios.llamar_ventana(formulario);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed

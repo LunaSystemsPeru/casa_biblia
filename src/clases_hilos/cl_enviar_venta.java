@@ -25,7 +25,6 @@
  */
 package clases_hilos;
 
-import clases.cl_documento_firmado;
 import clases.cl_varios;
 import clases.cl_venta;
 import clases_varios.leer_numeros;

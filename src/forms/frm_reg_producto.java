@@ -70,20 +70,14 @@ public class frm_reg_producto extends javax.swing.JDialog {
             c_proveedor.cargar_datos();
 
             txt_descripcion.setText(c_producto.getDescripcion());
-            txt_marca.setText(c_producto.getMarca());
-            txt_cod_barra.setText(c_producto.getCod_barra());
+            txt_marca.setText(c_producto.getModelo());
+            txt_cod_barra.setText(c_producto.getCod_externo());
             txt_precio_minimo.setText(c_varios.formato_numero(c_producto.getPrecio()));
             txt_proveedor.setText(c_proveedor.getRuc() + " | " + c_proveedor.getRazon_social());
 
-            //obtener modelo unidad
-            c_unidad.setId(c_producto.getId_unidad());
-            c_unidad.validar_id();
-            cbx_unidad_medida.setEnabled(true);
-            cbx_unidad_medida.getModel().setSelectedItem(new cla_unidad_medida(c_unidad.getId(), c_unidad.getNombre()));
-
             //obtener modelo clasificacion
             c_clasificacion = new cl_productos_clasificacion();
-            c_clasificacion.setId_clasificacion(c_producto.getId_clasificacion());
+            c_clasificacion.setId_clasificacion(c_producto.getId_sub_clasificacion());
             c_clasificacion.obtener_datos();
             cbx_clasificacion.setEnabled(true);
             cbx_clasificacion.getModel().setSelectedItem(new cla_producto_clasificacion(c_clasificacion.getId_clasificacion(), c_clasificacion.getDescripcion()));
@@ -464,21 +458,15 @@ public class frm_reg_producto extends javax.swing.JDialog {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         c_producto.setDescripcion(txt_descripcion.getText());
-        c_producto.setMarca(txt_marca.getText());
-        c_producto.setCod_barra(txt_cod_barra.getText());
+        c_producto.setModelo(txt_marca.getText());
+        c_producto.setCod_externo(txt_cod_barra.getText());
         c_producto.setComision(0);
         c_producto.setCosto(0);
         c_producto.setPrecio(Double.parseDouble(txt_precio_minimo.getText()));
         int tipo_producto = cbx_tipo_producto.getSelectedIndex();
         c_producto.setTipo_producto(tipo_producto);
         cla_producto_clasificacion cla_clasificacion = (cla_producto_clasificacion) cbx_clasificacion.getSelectedItem();
-        c_producto.setId_clasificacion(cla_clasificacion.getId_clasificacion());
-        c_producto.setIcbper(0);
-        if (cla_clasificacion.getId_clasificacion() == 3) {
-            c_producto.setIcbper(1);
-        }
-        cla_unidad_medida cla_unidad = (cla_unidad_medida) cbx_unidad_medida.getSelectedItem();
-        c_producto.setId_unidad(cla_unidad.getId());
+        c_producto.setId_sub_clasificacion(cla_clasificacion.getId_clasificacion());
 
         c_presentacion = new cl_productos_presentacion();
 

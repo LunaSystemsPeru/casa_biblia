@@ -9,7 +9,6 @@ import br.com.adilson.util.PrinterMatrix;
 import clases.cl_almacen;
 import clases.cl_cliente;
 import clases.cl_conectar;
-import clases.cl_documento_firmado;
 import clases.cl_documento_sunat;
 import clases.cl_empresa;
 import clases.cl_productos_ventas;
@@ -46,8 +45,7 @@ public class Print_Venta_Ticket {
     cl_cliente c_cliente = new cl_cliente();
     cl_documento_sunat c_sunat = new cl_documento_sunat();
     leer_numeros leer = new leer_numeros();
-    cl_documento_firmado c_firma = new cl_documento_firmado();
-
+    
     private int id_venta;
     private int id_almacen;
 
@@ -95,10 +93,6 @@ public class Print_Venta_Ticket {
         c_cliente.setCodigo(c_venta.getId_cliente());
         c_cliente.comprobar_cliente();
         
-        c_firma.setId_almacen(id_almacen);
-        c_firma.setId_venta(id_venta);
-        c_firma.validar_firma();
-
         //  Extenso e = new Extenso();
         //   e.setNumber(101.85);
         printer.setOutSize(39 + contar, 40);
@@ -187,7 +181,7 @@ public class Print_Venta_Ticket {
         add_filas++;
         add_filas++;
         printer.printTextWrap(14 + add_filas, 14 + add_filas + 1, 0, 40, "Representacion impresa de la " +c_sunat.getDescripcion().trim() + " ELECTRONICA, "
-                + "visite efacturas.lunasystemsperu.com, resumen hash " + c_firma.getHash());
+                + "visite efacturas.lunasystemsperu.com, resumen hash " );
         
         //mostrar en consola
         printer.show();

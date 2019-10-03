@@ -832,7 +832,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         Object fila[] = new Object[7];
         fila[0] = c_producto.getId();
         fila[1] = c_producto.getDescripcion();
-        fila[2] = c_producto.getMarca();
+        fila[2] = c_producto.getModelo();
         fila[3] = cantidad;
         fila[4] = c_varios.formato_numero(costo);
         fila[5] = c_varios.formato_numero(precio);

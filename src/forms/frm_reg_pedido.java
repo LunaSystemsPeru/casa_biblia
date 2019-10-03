@@ -792,7 +792,7 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
             if (!error) {
                 Object fila[] = new Object[5];
                 fila[0] = c_producto.getId();
-                fila[1] = c_producto.getDescripcion() + " | " + c_producto.getMarca();
+                fila[1] = c_producto.getDescripcion() + " | " + c_producto.getModelo();
                 fila[2] = cantidad;
                 fila[3] = c_varios.formato_numero(precio);
                 fila[4] = c_varios.formato_numero(parcial);

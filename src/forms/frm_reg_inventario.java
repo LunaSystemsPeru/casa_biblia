@@ -9,7 +9,6 @@ import clases.cl_conectar;
 import clases.cl_inventarios;
 import clases.cl_producto;
 import clases.cl_productos_almacen;
-import clases.cl_productos_empresa;
 import clases.cl_productos_inventarios;
 import clases.cl_varios;
 import clases_autocomplete.cla_producto;
@@ -467,7 +466,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         Object fila[] = new Object[7];
         fila[0] = c_producto.getId();
         fila[1] = c_producto.getDescripcion();
-        fila[2] = c_producto.getMarca();
+        fila[2] = c_producto.getModelo();
         fila[3] = c_varios.formato_numero(c_producto.getPrecio());
         fila[4] = c_producto_almacen.getCtotal();
         double diferencia = cenviar - c_producto_almacen.getCtotal();
@@ -495,7 +494,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                         jd_add_producto.setModal(true);
                         jd_add_producto.setSize(717, 164);
                         jd_add_producto.setLocationRelativeTo(null);
-                        txt_producto.setText(c_producto.getDescripcion() + " " + c_producto.getMarca());
+                        txt_producto.setText(c_producto.getDescripcion() + " " + c_producto.getModelo());
                         txt_precio.setText(c_varios.formato_numero(c_producto.getPrecio()));
                         txt_cantidad_actual.setText(c_producto_almacen.getCtotal() + "");
                         txt_cantidad_enviar.setText("");
