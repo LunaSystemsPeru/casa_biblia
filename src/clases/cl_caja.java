@@ -173,13 +173,13 @@ public class cl_caja {
                 ing_venta = rs.getDouble("ing_venta");
                 cobro_venta = rs.getDouble("cobro_venta");
                 o_ingresos = rs.getDouble("o_ingresos");
-                devolucion_ventas = rs.getDouble("devolucion_ventas");
+                devolucion_ventas = rs.getDouble("devolucion_venta");
                 gastos_varios = rs.getDouble("gastos_varios");
                 m_sistema = rs.getDouble("m_sistema");
                 uso_cupon = rs.getDouble("uso_cupon");
                 m_apertura = rs.getDouble("m_apertura");
                 m_cierre = rs.getDouble("m_cierre");
-                venta_banco = rs.getDouble("m_banco");
+                venta_banco = rs.getDouble("venta_banco");
             }
 
             c_conectar.cerrar(rs);

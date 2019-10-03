@@ -669,7 +669,6 @@ public class frm_ver_almacenes extends javax.swing.JInternalFrame {
         txt_j_direccion.setText(c_almacen.getDireccion());
         txt_j_ciudad.setText(c_almacen.getCiudad());
         txt_j_ticketera.setText(c_almacen.getTicketera());
-        txt_j_ubigeo.setText(c_almacen.getUbigeo());
         txt_j_telefono.setText(c_almacen.getTelefono());
         c_empresa.setId(c_almacen.getEmpresa());
         c_empresa.validar_empresa();

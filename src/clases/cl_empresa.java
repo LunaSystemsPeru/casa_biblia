@@ -24,10 +24,6 @@ public class cl_empresa {
     private String ruc;
     private String razon;
     private String direccion;
-    private String distrito;
-    private String provincia;
-    private String departamento;
-    private String ubigeo;
     private String estado;
     private String condicion;
 
@@ -82,38 +78,6 @@ public class cl_empresa {
         this.condicion = condicion;
     }
 
-    public String getDistrito() {
-        return distrito;
-    }
-
-    public void setDistrito(String distrito) {
-        this.distrito = distrito;
-    }
-
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
-
-    public String getUbigeo() {
-        return ubigeo;
-    }
-
-    public void setUbigeo(String ubigeo) {
-        this.ubigeo = ubigeo;
-    }
-
     public boolean validar_empresa() {
         boolean existe = false;
         try {
@@ -129,10 +93,6 @@ public class cl_empresa {
                 direccion = rs.getString("direccion");
                 estado = rs.getString("estado");
                 condicion = rs.getString("condicion");
-                distrito = rs.getString("distrito");
-                provincia = rs.getString("provincia");
-                departamento = rs.getString("departamento");
-                ubigeo = rs.getString("ubigeo");
             }
             c_conectar.cerrar(rs);
             c_conectar.cerrar(st);
@@ -190,7 +150,7 @@ public class cl_empresa {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into empresa "
-                + "Values ('" + id + "', '" + ruc + "', '" + razon + "', '" + direccion + "', '" + distrito + "','" + provincia + "','" + departamento + "','" + ubigeo + "','" + estado + "', '" + condicion + "')";
+                + "Values ('" + id + "', '" + ruc + "', '" + razon + "', '" + direccion + "', '" + estado + "', '" + condicion + "')";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;

@@ -27,7 +27,6 @@ public class cl_almacen {
     private String direccion;
     private String ciudad;
     private String ticketera;
-    private String ubigeo;
     private String telefono;
     private String estado;
 
@@ -88,14 +87,6 @@ public class cl_almacen {
 
     public void setTicketera(String ticketera) {
         this.ticketera = ticketera;
-    }
-
-    public String getUbigeo() {
-        return ubigeo;
-    }
-
-    public void setUbigeo(String ubigeo) {
-        this.ubigeo = ubigeo;
     }
 
     public String getTelefono() {
@@ -162,7 +153,7 @@ public class cl_almacen {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into almacen "
-                + "Values ('" + id + "', '" + empresa + "', '" + nombre + "', '" + direccion + "', '" + ciudad + "', '" + ticketera + "', '" + ubigeo + "', '" + telefono + "', '1')";
+                + "Values ('" + id + "', '" + empresa + "', '" + nombre + "', '" + direccion + "', '" + ciudad + "', '" + ticketera + "', '" + telefono + "', '1')";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;
@@ -175,7 +166,7 @@ public class cl_almacen {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "update almacen "
-                + "set id_empresa = '" + empresa + "', nombre = '" + nombre + "', direccion = '" + direccion + "', ciudad = '" + ciudad + "', ticketera = '" + ticketera + "', ubigeo = '" + ubigeo + "', telefono = '" + telefono + "'  "
+                + "set id_empresa = '" + empresa + "', nombre = '" + nombre + "', direccion = '" + direccion + "', ciudad = '" + ciudad + "', ticketera = '" + ticketera + "', telefono = '" + telefono + "'  "
                 + "where id_almacen = '" + id + "'";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
@@ -217,7 +208,6 @@ public class cl_almacen {
                 direccion = rs.getString("direccion");
                 ciudad = rs.getString("ciudad");
                 ticketera = rs.getString("ticketera");
-                ubigeo = rs.getString("ubigeo");
                 telefono = rs.getString("telefono");
                 estado = rs.getString("estado");
             }
