@@ -120,7 +120,7 @@ public class cl_salida {
         try {
             Statement st = c_conectar.conexion();
             String query = "select ifnull(max(id_salida) + 1, 1) as codigo "
-                    + "from salidas ";
+                    + "from salida ";
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
@@ -136,7 +136,7 @@ public class cl_salida {
     public boolean registrar() {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
-        String query = "insert into salidas "
+        String query = "insert into salida "
                 + "Values ('" + id_salida + "', '" + fecha + "', '" + id_almacen + "', '" + id_tido + "', '" + serie + "', '" + numero + "', '" + documento + "', '" + datos + "', '" + id_usuario + "','1')";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
@@ -149,7 +149,7 @@ public class cl_salida {
     public boolean anular() {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
-        String query = "update salidas "
+        String query = "update salida "
                 + "set estado = '2' "
                 + "where id_salida = '" + id_salida + "'";
         int resultado = c_conectar.actualiza(st, query);
@@ -186,7 +186,7 @@ public class cl_salida {
                 Object[] fila = new Object[6];
                 fila[0] = rs.getInt("id_salida");
                 fila[1] = rs.getString("fecha");
-                fila[2] = rs.getString("docsunat") + " / " + rs.getString("serie") + " - " + rs.getString("numero");
+                fila[2] = rs.getString("docsunat") + " / " + rs.getString("id_almacen") + " - " + rs.getString("numero");
                 fila[3] = rs.getString("documento") + " | " + rs.getString("datos");
                 fila[4] = rs.getString("nomusuario");
                 if (rs.getString("estado").equals("1")) {

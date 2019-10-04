@@ -85,7 +85,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         };
         detalle.addColumn("Id");
         detalle.addColumn("Producto");
-        detalle.addColumn("Marca");
+        detalle.addColumn("cod_externo");
         detalle.addColumn("Cant.");
         detalle.addColumn("Costo");
         detalle.addColumn("Precio");
@@ -130,12 +130,12 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
             tac_productos.setMode(0);
             tac_productos.setCaseSensitive(false);
             Statement st = c_conectar.conexion();
-            String sql = "select p.descripcion, p.precio, p.costo, p.id_producto, p.marca "
+            String sql = "select p.descripcion, p.precio, p.costo, p.id_producto, p.cod_externo "
                     + "from productos as p ";
             ResultSet rs = c_conectar.consulta(st, sql);
             while (rs.next()) {
                 int id_producto = rs.getInt("id_producto");
-                String descripcion = rs.getString("descripcion") + " | " + rs.getString("marca")
+                String descripcion = rs.getString("descripcion") + " | cod externo: " + rs.getString("cod_externo")
                         + "    |    Precio: S/ " + c_varios.formato_numero(rs.getDouble("precio")) + "    |    Costo: S/ " + c_varios.formato_numero(rs.getDouble("costo"));
                 tac_productos.addItem(new cla_producto(id_producto, descripcion));
             }
@@ -768,9 +768,11 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
     private void txt_buscar_productosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscar_productosKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_buscar_productos.getText().length() > 25) {
+                System.out.println("\033[32m "+ c_producto.getId()); 
                 if (c_producto.validar_id()) {
                     //validar que no existe en la tabla
                     if (valida_tabla(c_producto.getId())) {
+                        
                         c_producto_almacen.setProducto(c_producto.getId());
                         c_producto_almacen.validar_id();
                         txt_precio.setText(c_varios.formato_numero(c_producto.getPrecio()));

@@ -31,10 +31,11 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
     public frm_ver_salidas() {
         initComponents();
         String periodo = c_varios.obtener_periodo();
-        query = "select s.id_salida, s.fecha, ds.abreviado as docsunat, s.serie, s.numero,s.documento,s.datos, us.username as nomusuario, s.estado "
-                + "from salidas as s "
-                + "inner join documentos_sunat as ds on ds.id_tido=s.id_salida "
-                + "inner join usuarios as us on us.id_usuarios=s.id_usuarios";
+        query = "SELECT s.id_salida, s.fecha, ds.abreviado AS docsunat, "
+                + "s.id_almacen, s.id_salida, s.doc_destinatario,s.nom_destinatario, us.username AS nomusuario " 
+                +"FROM salida AS s " 
+                +"INNER JOIN documentos_sunat AS ds ON ds.id_tido=s.id_salida " 
+                +"INNER JOIN usuarios AS us ON us.id_usuarios=s.id_usuarios";
         c_salida.mostrar(t_ingresos, query);
     }
 
