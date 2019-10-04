@@ -60,7 +60,7 @@ public class cl_productos_salida {
     public boolean registrar() {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
-        String query = "insert into productos_salidas "
+        String query = "insert into productos_salida "
                 + "Values ('" + id_producto + "', '" + id_salida + "', '" + cantidad + "', '" + precio + "')";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {

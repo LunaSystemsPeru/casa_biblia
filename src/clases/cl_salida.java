@@ -137,7 +137,7 @@ public class cl_salida {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into salida "
-                + "Values ('" + id_salida + "', '" + fecha + "', '" + id_almacen + "', '" + id_tido + "', '" + serie + "', '" + numero + "', '" + documento + "', '" + datos + "', '" + id_usuario + "','1')";
+                + "Values (" + id_salida + ", '" + fecha + "', " + id_almacen + ", '" + id_tido + "', '" + documento + "', '" + datos + "', '" + numero + "', '" + id_usuario + "')";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;
