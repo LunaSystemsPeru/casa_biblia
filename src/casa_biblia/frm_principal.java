@@ -15,6 +15,7 @@ import clases.cl_varios;
 import clases_hilos.cl_notificaciones;
 import clases_varios.cl_grafica_mensual;
 import forms.frm_reg_cierre_caja;
+import forms.frm_reg_cobro_pedido;
 import forms.frm_reg_movimiento_caja;
 import forms.frm_reg_salida;
 import forms.frm_reg_traslado;
@@ -223,6 +224,9 @@ public class frm_principal extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         jButton6 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jSeparator17 = new javax.swing.JToolBar.Separator();
+        jButton24 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jSeparator9 = new javax.swing.JToolBar.Separator();
         jButton1 = new javax.swing.JButton();
@@ -591,6 +595,26 @@ public class frm_principal extends javax.swing.JFrame {
             }
         });
         jToolBar4.add(jButton6);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eccomerce_-_receipt-512.png"))); // NOI18N
+        jButton3.setText("Cobrar");
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jToolBar4.add(jButton3);
+        jToolBar4.add(jSeparator17);
+
+        jButton24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/eccomerce_-_receipt-512.png"))); // NOI18N
+        jButton24.setText("Pedidos");
+        jButton24.setFocusable(false);
+        jButton24.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton24.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar4.add(jButton24);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Product-sale-report-icon.png"))); // NOI18N
         jButton2.setText("Ventas");
@@ -1181,6 +1205,11 @@ public class frm_principal extends javax.swing.JFrame {
         c_varios.llamar_ventana_normal(formulario);
     }//GEN-LAST:event_jButton15ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        frm_reg_cobro_pedido formulario = new frm_reg_cobro_pedido();
+        c_varios.llamar_ventana_normal(formulario);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1236,6 +1265,8 @@ public class frm_principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton21;
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
+    private javax.swing.JButton jButton24;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -1267,6 +1298,7 @@ public class frm_principal extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator14;
     private javax.swing.JToolBar.Separator jSeparator15;
     private javax.swing.JSeparator jSeparator16;
+    private javax.swing.JToolBar.Separator jSeparator17;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
