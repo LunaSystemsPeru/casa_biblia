@@ -7,15 +7,11 @@ package forms;
 
 import clases.cl_conectar;
 import clases.cl_documento_almacen;
-import clases.cl_ingresos;
 import clases.cl_producto;
 import clases.cl_productos_almacen;
-import clases.cl_productos_ingresos;
 import clases.cl_productos_salida;
-import clases.cl_proveedor;
 import clases.cl_salida;
 import clases.cl_varios;
-import clases_autocomplete.cla_almacen;
 import clases_autocomplete.cla_mis_documentos;
 import clases_autocomplete.cla_producto;
 import com.mxrck.autocompleter.AutoCompleterCallback;
@@ -33,7 +29,6 @@ import nicon.notify.core.Notification;
 import casa_biblia.frm_principal;
 import json.cl_json_entidad;
 import org.json.simple.parser.ParseException;
-import vistas.frm_ver_ingresos;
 import vistas.frm_ver_salidas;
 
 /**
@@ -869,7 +864,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                 int nro_filas = t_detalle.getRowCount();
                 for (int i = 0; i < nro_filas; i++) {
                     c_detalle.setId_producto(Integer.parseInt(t_detalle.getValueAt(i, 0).toString()));
-                    c_detalle.setCantidad(Double.parseDouble(t_detalle.getValueAt(i, 3).toString()));
+                    c_detalle.setCantidad(Integer.parseInt(t_detalle.getValueAt(i, 3).toString()));
                     c_detalle.setPrecio(Double.parseDouble(t_detalle.getValueAt(i, 5).toString()));
                     c_detalle.registrar();
                 }

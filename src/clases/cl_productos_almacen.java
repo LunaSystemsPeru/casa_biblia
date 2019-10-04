@@ -25,7 +25,7 @@ public class cl_productos_almacen {
 
     private int producto;
     private int almacen;
-    private double ctotal;
+    private int ctotal;
     private String fecha_ingreso;
     private String fecha_salida;
 
@@ -48,11 +48,11 @@ public class cl_productos_almacen {
         this.almacen = almacen;
     }
 
-    public double getCtotal() {
+    public int getCtotal() {
         return ctotal;
     }
 
-    public void setCtotal(double ctotal) {
+    public void setCtotal(int ctotal) {
         this.ctotal = ctotal;
     }
 
@@ -139,23 +139,21 @@ public class cl_productos_almacen {
             //Establecer como cabezeras el nombre de las colimnas
             mostrar.addColumn("Id");
             mostrar.addColumn("Descripcion");
-            mostrar.addColumn("Marca");
+            mostrar.addColumn("Cod Externo");
             mostrar.addColumn("Cant. Act.");
-            mostrar.addColumn("Cant. Sunat.");
             mostrar.addColumn("Precio");
             mostrar.addColumn("Ult. Ingreso");
             mostrar.addColumn("Ult. Salida");
 
             //Creando las filas para el JTable
-            Object[] fila = new Object[8];
+            Object[] fila = new Object[7];
             while (rs.next()) {
 
                 fila[0] = rs.getString("id_producto");
-                fila[1] = (rs.getString("descripcion").trim() + " x " + rs.getString("um.nombre")).trim();
-                fila[2] = rs.getString("marca").trim();
+                fila[1] = rs.getString("descripcion").trim();
+                fila[2] = rs.getString("cod_externo").trim();
                 fila[3] = rs.getDouble("cactual");
-                fila[4] = rs.getDouble("csunat");
-                fila[5] = c_varios.formato_numero(rs.getDouble("precio"));
+                fila[4] = c_varios.formato_numero(rs.getDouble("precio"));
                 String fingreso = rs.getString("f_infreso");
                 if (fingreso.equals("1000-01-01")) {
                     fingreso = "-";
@@ -164,8 +162,8 @@ public class cl_productos_almacen {
                 if (fsalida.equals("1000-01-01")) {
                     fsalida = "-";
                 }
-                fila[6] = fingreso;
-                fila[7] = fsalida;
+                fila[5] = fingreso;
+                fila[6] = fsalida;
 
                 mostrar.addRow(fila);
             }
@@ -179,7 +177,6 @@ public class cl_productos_almacen {
             tabla.getColumnModel().getColumn(4).setPreferredWidth(50);
             tabla.getColumnModel().getColumn(5).setPreferredWidth(50);
             tabla.getColumnModel().getColumn(6).setPreferredWidth(80);
-            tabla.getColumnModel().getColumn(7).setPreferredWidth(80);
             tabla.setDefaultRenderer(Object.class, new render_mis_productos());
             mostrar.fireTableDataChanged();
             tabla.setRowSorter(sorter);
@@ -254,7 +251,7 @@ public class cl_productos_almacen {
          //   System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
-                ctotal = rs.getDouble("cactual");
+                ctotal = rs.getInt("cactual");
                 fecha_ingreso = rs.getString("f_infreso");
                 fecha_salida = rs.getString("f_salida");
                 existe = true;

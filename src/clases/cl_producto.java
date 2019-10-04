@@ -27,7 +27,7 @@ public class cl_producto {
     private String cod_externo;
     private double costo;
     private double precio;
-    private double ctotal;
+    private int ctotal;
     private int tipo_producto;
     private int afecto_igv;
     private String estado;
@@ -77,11 +77,11 @@ public class cl_producto {
         this.precio = precio;
     }
 
-    public double getCtotal() {
+    public int getCtotal() {
         return ctotal;
     }
 
-    public void setCtotal(double ctotal) {
+    public void setCtotal(int ctotal) {
         this.ctotal = ctotal;
     }
 
@@ -207,7 +207,7 @@ public class cl_producto {
                 cod_externo = rs.getString("cod_externo");
                 costo = rs.getDouble("costo");
                 precio = rs.getDouble("precio");
-                ctotal = rs.getDouble("ctotal");
+                ctotal = rs.getInt("ctotal");
                 tipo_producto = rs.getInt("tipo_producto");
                 afecto_igv = rs.getInt("afecto_igv");
                 estado = rs.getString("estado");

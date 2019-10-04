@@ -51,11 +51,11 @@ public class frm_ver_mis_productos extends javax.swing.JDialog {
     }
 
     private void cargar_tabla() {
-        query = "select pa.id_producto, p.descripcion, p.marca, p.modelo, p.precio, pa.cactual, p.comision, pa.f_infreso, pa.f_salida "
+        query = "select pa.id_producto, p.descripcion, p.cod_externo, p.precio, pa.cactual, pa.f_infreso, pa.f_salida "
                 + "from productos_almacen as pa "
                 + "inner join productos as p on p.id_producto = pa.id_producto "
                 + "where pa.id_almacen = '" + id_almacen + "' "
-                + "order by p.descripcion asc , p.marca asc "
+                + "order by p.descripcion asc , p.cod_externo asc "
                 + "limit 0";
         c_mis_productos.mis_productos(query, jTable1);
     }
@@ -754,7 +754,7 @@ public class frm_ver_mis_productos extends javax.swing.JDialog {
     private void btn_detalle_kardexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detalle_kardexActionPerformed
         if (kardex_seleccionado > -1) {
             btn_detalle_kardex.setEnabled(false);
-            
+
             int idkardex = Integer.parseInt(t_kardex.getValueAt(kardex_seleccionado, 0).toString());
             cl_kardex c_kardexdetalle = new cl_kardex();
             c_kardexdetalle.setId_kardex(idkardex);
@@ -766,7 +766,7 @@ public class frm_ver_mis_productos extends javax.swing.JDialog {
                 cl_traslados c_traslado = new cl_traslados();
                 c_traslado.setId_traslado(c_kardexdetalle.getNumero());
                 c_traslado.validar_datos();
-                
+
                 id_traslado = c_traslado.getId_traslado();
 
                 cl_almacen c_tenvia = new cl_almacen();
@@ -776,24 +776,22 @@ public class frm_ver_mis_productos extends javax.swing.JDialog {
                 cl_almacen c_trecibe = new cl_almacen();
                 c_trecibe.setId(c_traslado.getId_tienda_recibe());
                 c_trecibe.validar_almacen();
-                
+
                 cl_usuario c_uenvia = new cl_usuario();
                 c_uenvia.setId_usuario(c_traslado.getId_usuario_envia());
                 c_uenvia.validar_usuario();
-                
-                
+
                 cl_usuario c_urecibe = new cl_usuario();
                 c_urecibe.setId_usuario(c_traslado.getId_usuario_recibe());
                 c_urecibe.validar_usuario();
-                
+
                 txt_tienda_origen.setText(c_tenvia.getNombre());
                 txt_tienda_destino.setText(c_trecibe.getNombre());
                 txt_fecha_envio.setText(c_traslado.getFecha_envio());
                 txt_fecha_recepcion.setText(c_traslado.getFecha_recepcion());
                 txt_usuario_envia.setText(c_uenvia.getNombre());
                 txt_usuario_recibe.setText(c_urecibe.getNombre());
-                txt_id_traslado.setText(c_traslado.getId_traslado()+"");
-                
+                txt_id_traslado.setText(c_traslado.getId_traslado() + "");
 
                 jd_detalle_traslado.setModal(true);
                 jd_detalle_traslado.setSize(516, 382);
@@ -808,21 +806,21 @@ public class frm_ver_mis_productos extends javax.swing.JDialog {
     }//GEN-LAST:event_btn_salir_trasladoActionPerformed
 
     private void btn_ver_pdf_trasladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ver_pdf_trasladoActionPerformed
-         // TODO add your handling code here:
+        // TODO add your handling code here:
         File miDir = new File(".");
         try {
             Map<String, Object> parametros = new HashMap<>();
-        String path = miDir.getCanonicalPath();
-         String direccion = path + "//reports//subreports//"; 
-         System.out.println(direccion); 
-         parametros.put("SUBREPORT_DIR", direccion); 
-         parametros.put("JRParameter.REPORT_LOCALE", Locale.ENGLISH); 
-         parametros.put("id_traslado", id_traslado); 
-         //c_varios.imp_reporte("rpt_documento_venta", parametros);
-               c_varios.ver_reporte("report_traslado", parametros); 
-       
+            String path = miDir.getCanonicalPath();
+            String direccion = path + "//reports//subreports//";
+            System.out.println(direccion);
+            parametros.put("SUBREPORT_DIR", direccion);
+            parametros.put("JRParameter.REPORT_LOCALE", Locale.ENGLISH);
+            parametros.put("id_traslado", id_traslado);
+            //c_varios.imp_reporte("rpt_documento_venta", parametros);
+            c_varios.ver_reporte("report_traslado", parametros);
+
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, e.getLocalizedMessage()); 
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
     }//GEN-LAST:event_btn_ver_pdf_trasladoActionPerformed
 

@@ -22,8 +22,8 @@ public class cl_productos_inventarios {
 
     private int id_inventario;
     private int id_producto;
-    private double cactual;
-    private double cfisico;
+    private int cactual;
+    private int cfisico;
 
     public cl_productos_inventarios() {
     }
@@ -44,19 +44,19 @@ public class cl_productos_inventarios {
         this.id_producto = id_producto;
     }
 
-    public double getCactual() {
+    public int getCactual() {
         return cactual;
     }
 
-    public void setCactual(double cactual) {
+    public void setCactual(int cactual) {
         this.cactual = cactual;
     }
 
-    public double getCfisico() {
+    public int getCfisico() {
         return cfisico;
     }
 
-    public void setCfisico(double cfisico) {
+    public void setCfisico(int cfisico) {
         this.cfisico = cfisico;
     }
 
