@@ -22,7 +22,7 @@ public class render_mis_productos extends DefaultTableCellRenderer {
             setBackground(Color.red);
             setForeground(Color.white);
         } else {
-            String fsalida = String.valueOf(table.getValueAt(row, 7));
+            String fsalida = String.valueOf(table.getValueAt(row, 6));
             if (fsalida.equals("-")) {
                 setBackground(Color.green);
                 setForeground(Color.black);

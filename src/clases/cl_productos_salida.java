@@ -17,7 +17,7 @@ public class cl_productos_salida {
     
     private int id_producto;
     private int id_salida;
-    private double cantidad;
+    private int cantidad;
     private double precio;
 
     public cl_productos_salida() {
@@ -39,11 +39,11 @@ public class cl_productos_salida {
         this.id_salida = id_salida;
     }
 
-    public double getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(double cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 
