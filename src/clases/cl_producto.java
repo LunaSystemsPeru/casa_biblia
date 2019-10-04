@@ -141,7 +141,7 @@ public class cl_producto {
             //Establecer como cabezeras el nombre de las colimnas
             tmodelo.addColumn("Id");
             tmodelo.addColumn("Descripcion");//descripcion modelo serie
-            tmodelo.addColumn("Marca");
+            tmodelo.addColumn("Cod Externo");
             tmodelo.addColumn("Precio");
             tmodelo.addColumn("Clasificacion");
             tmodelo.addColumn("Cant. Actual");

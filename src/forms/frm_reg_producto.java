@@ -7,6 +7,7 @@ package forms;
 
 import clases.cl_producto;
 import clases.cl_productos_clasificacion;
+import clases.cl_productos_sub_clasificacion;
 import clases.cl_proveedor;
 import clases.cl_varios;
 import clases_autocomplete.cla_producto_clasificacion;
@@ -15,6 +16,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.table.DefaultTableModel;
 import models.m_empresas;
 import models.m_producto_clasificacion;
+import models.m_producto_subclasificacion;
 import models.m_unidades;
 
 /**
@@ -29,9 +31,11 @@ public class frm_reg_producto extends javax.swing.JDialog {
     //clases secundarias
     cl_varios c_varios = new cl_varios();
     cl_productos_clasificacion c_clasificacion;
+    cl_productos_sub_clasificacion c_subclasificacion;
 
     //autollenado clasificacon
     m_producto_clasificacion m_clasificacion = new m_producto_clasificacion();
+    m_producto_subclasificacion m_subclasificacion = new m_producto_subclasificacion();
     m_empresas m_empresa = new m_empresas();
     m_unidades m_unidad = new m_unidades();
 
@@ -67,11 +71,20 @@ public class frm_reg_producto extends javax.swing.JDialog {
             txt_proveedor.setText(c_proveedor.getRuc() + " | " + c_proveedor.getRazon_social());
 
             //obtener modelo clasificacion
+            c_subclasificacion = new cl_productos_sub_clasificacion();
+            c_subclasificacion.setId_subclasificacion(c_producto.getId_sub_clasificacion());
+            c_subclasificacion.validar_datos();
+
             c_clasificacion = new cl_productos_clasificacion();
-            c_clasificacion.setId_clasificacion(c_producto.getId_sub_clasificacion());
+            c_clasificacion.setId_clasificacion(c_subclasificacion.getId_clasificacion());
             c_clasificacion.obtener_datos();
+
             cbx_clasificacion.setEnabled(true);
             cbx_clasificacion.getModel().setSelectedItem(new cla_producto_clasificacion(c_clasificacion.getId_clasificacion(), c_clasificacion.getDescripcion()));
+
+            m_subclasificacion.llenar_combobox(cbx_sub_clasificacion, c_subclasificacion.getId_clasificacion());
+            cbx_sub_clasificacion.setEnabled(true);
+            cbx_sub_clasificacion.getModel().setSelectedItem(new cla_producto_clasificacion(c_subclasificacion.getId_subclasificacion(), c_clasificacion.getDescripcion()));
 
             txt_descripcion.setEnabled(true);
             txt_cod_barra.setEnabled(true);
@@ -299,8 +312,13 @@ public class frm_reg_producto extends javax.swing.JDialog {
         c_producto.setCod_externo(txt_cod_barra.getText());
         c_producto.setCosto(0);
         c_producto.setPrecio(Double.parseDouble(txt_precio_minimo.getText()));
+
         int tipo_producto = cbx_tipo_producto.getSelectedIndex();
         c_producto.setTipo_producto(tipo_producto);
+
+        int afecto_igv = cbx_afecto.getSelectedIndex();
+        c_producto.setAfecto_igv(afecto_igv);
+
         cla_producto_clasificacion cla_clasificacion = (cla_producto_clasificacion) cbx_clasificacion.getSelectedItem();
         c_producto.setId_sub_clasificacion(cla_clasificacion.getId_clasificacion());
 
@@ -330,6 +348,8 @@ public class frm_reg_producto extends javax.swing.JDialog {
 
     private void cbx_clasificacionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_clasificacionKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cla_producto_clasificacion cla_clasificacion = (cla_producto_clasificacion) cbx_clasificacion.getSelectedItem();
+            m_subclasificacion.llenar_combobox(cbx_sub_clasificacion, cla_clasificacion.getId_clasificacion());
             cbx_sub_clasificacion.setEnabled(true);
             cbx_sub_clasificacion.requestFocus();
         }
