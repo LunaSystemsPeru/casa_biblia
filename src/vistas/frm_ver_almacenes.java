@@ -565,7 +565,7 @@ public class frm_ver_almacenes extends javax.swing.JInternalFrame {
 
     private void btn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarActionPerformed
         jd_reg_tienda.setModal(true);
-        jd_reg_tienda.setSize(621, 334);
+        jd_reg_tienda.setSize(621, 398);
         jd_reg_tienda.setLocationRelativeTo(null);
         reiniciar_campos();
         m_empresas m_empresas = new m_empresas();

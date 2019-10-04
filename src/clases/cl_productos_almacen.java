@@ -203,7 +203,7 @@ public class cl_productos_almacen {
             //Establecer como cabezeras el nombre de las colimnas
             mostrar.addColumn("Id");
             mostrar.addColumn("Descripcion");
-            mostrar.addColumn("Marca");
+            mostrar.addColumn("cod Externo");
             mostrar.addColumn("Cant. Act.");
             mostrar.addColumn("Precio");
             mostrar.addColumn("Tienda");
@@ -214,7 +214,7 @@ public class cl_productos_almacen {
 
                 fila[0] = rs.getString("id_producto");
                 fila[1] = (rs.getString("descripcion").trim()).trim();
-                fila[2] = rs.getString("marca").trim();
+                fila[2] = rs.getString("cod_externo").trim();
                 fila[3] = rs.getInt("cactual");
                 fila[4] = c_varios.formato_numero(rs.getDouble("precio"));
                 fila[5] = rs.getString("nalmacen");
@@ -248,7 +248,7 @@ public class cl_productos_almacen {
             String query = "select * "
                     + "from productos_almacen "
                     + "where id_producto = '" + producto + "' and id_almacen = '" + almacen + "'";
-         //   System.out.println(query);
+            //System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 ctotal = rs.getInt("cactual");

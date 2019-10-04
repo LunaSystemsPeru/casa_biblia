@@ -101,7 +101,7 @@ public class cl_productos_ingresos {
                 }
             };
             //c_conectar.conectar();
-            String query = "select pi.id_producto, p.descripcion, p.marca, pi.cantidad, pi.costo, pi.precio "
+            String query = "select pi.id_producto, p.descripcion, p.cod_externo, pi.cantidad, pi.costo, pi.precio "
                     + "from productos_ingresos as pi "
                     + "inner join productos as p on p.id_producto = pi.id_producto "
                     + "where pi.id_ingreso= '" + id_ingreso + "'";
@@ -113,7 +113,7 @@ public class cl_productos_ingresos {
             //Establecer como cabezeras el nombre de las colimnas
             modelo.addColumn("Id");
             modelo.addColumn("Producto");
-            modelo.addColumn("Marca");
+            modelo.addColumn("Cod Externo");
             modelo.addColumn("Cantidad");
             modelo.addColumn("Costo");
             modelo.addColumn("Precio");
@@ -123,7 +123,7 @@ public class cl_productos_ingresos {
                 Object[] fila = new Object[6];
                 fila[0] = rs.getInt("id_producto");
                 fila[1] = rs.getString("descripcion").trim();
-                fila[2] = rs.getString("marca").trim();
+                fila[2] = rs.getString("cod_externo").trim();
                 fila[3] = rs.getInt("cantidad");
                 fila[4] = c_varios.formato_totales(rs.getDouble("costo"));
                 fila[5] = c_varios.formato_totales(rs.getDouble("precio"));

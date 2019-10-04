@@ -145,18 +145,16 @@ public class cl_producto {
             tmodelo.addColumn("Precio");
             tmodelo.addColumn("Clasificacion");
             tmodelo.addColumn("Cant. Actual");
-            tmodelo.addColumn("Comision");
 
             //Creando las filas para el JTable
             while (rs.next()) {
-                Object[] fila = new Object[7];
+                Object[] fila = new Object[6];
                 fila[0] = rs.getObject("id_producto");
-                fila[1] = rs.getString("descripcion").trim() + " x " + rs.getString("id_unidad");
-                fila[2] = rs.getString("marca");
+                fila[1] = rs.getString("descripcion").trim();
+                fila[2] = rs.getString("cod_externo");
                 fila[3] = c_varios.formato_numero(rs.getDouble("precio"));
-                fila[4] = rs.getString("id_clasificacion");
+                fila[4] = rs.getString("id_subclasificacion");
                 fila[5] = rs.getInt("ctotal");
-                fila[6] = c_varios.formato_numero(rs.getDouble("comision"));
 
                 tmodelo.addRow(fila);
             }
@@ -169,7 +167,6 @@ public class cl_producto {
             tabla.getColumnModel().getColumn(3).setPreferredWidth(20);
             tabla.getColumnModel().getColumn(4).setPreferredWidth(100);
             tabla.getColumnModel().getColumn(5).setPreferredWidth(30);
-            tabla.getColumnModel().getColumn(6).setPreferredWidth(40);
             tabla.setDefaultRenderer(Object.class, new render_productos_todos());
             tabla.setRowSorter(sorter);
 

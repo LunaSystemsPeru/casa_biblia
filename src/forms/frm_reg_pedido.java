@@ -7,6 +7,7 @@ package forms;
 
 import casa_biblia.frm_principal;
 import clases.cl_conectar;
+import clases.cl_pedido;
 import clases.cl_producto;
 import clases.cl_productos_almacen;
 import clases.cl_varios;
@@ -33,6 +34,7 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
 
     cl_producto c_producto = new cl_producto();
     cl_productos_almacen c_producto_almacen = new cl_productos_almacen();
+    cl_pedido c_pedido = new cl_pedido();
 
     static DefaultTableModel detalle;
     int fila_seleccionada;
@@ -48,9 +50,14 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
      */
     public frm_reg_pedido() {
         initComponents();
+        
+        c_producto_almacen.setAlmacen(id_almacen);
+
+        cargar_productos();
+        modelo_pedido();
     }
 
-    private void modelo_venta() {
+    private void modelo_pedido() {
         //formato de tabla detalle de venta
         detalle = new DefaultTableModel() {
             @Override
@@ -85,7 +92,7 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
         return total;
     }
 
-    private void cargar_productos(int tipo_documento) {
+    private void cargar_productos() {
         try {
             if (tac_productos != null) {
                 tac_productos.removeAllItems();
@@ -111,23 +118,15 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
             tac_productos.setMode(0);
             tac_productos.setCaseSensitive(false);
             Statement st = c_conectar.conexion();
-            String sql = "";
-            //if(tipo_documento==1 || tipo_documento==2){
-            /*sql = "select p.descripcion, pa.cactual, p.precio, p.id_producto, p.marca, p.modelo "
+            String sql;
+            sql = "select p.descripcion, pa.cactual, p.precio, p.id_producto, p.cod_externo "
                     + "from productos as p "
                     + "inner join productos_almacen as pa on pa.id_producto = p.id_producto "
-                    + "where pa.id_almacen = '" + id_almacen + "' and pa.cactual > 0 and pa.csunat > 0";      */
-            //}if
-            if (tipo_documento == 6) {
-                sql = "select p.descripcion, pa.cactual, p.precio, p.id_producto, p.marca, p.modelo "
-                        + "from productos as p "
-                        + "inner join productos_almacen as pa on pa.id_producto = p.id_producto "
-                        + "where pa.id_almacen = '" + id_almacen + "' and pa.cactual > 0";
-            }
+                    + "where pa.id_almacen = '" + id_almacen + "' and pa.cactual > 0";
             ResultSet rs = c_conectar.consulta(st, sql);
             while (rs.next()) {
                 int id_producto = rs.getInt("id_producto");
-                String descripcion = rs.getString("descripcion") + " | " + rs.getString("marca")
+                String descripcion = rs.getString("descripcion") + " | " + rs.getString("cod_externo")
                         + "    |    Cant: " + rs.getInt("cactual") + "    |    Precio: S/ " + c_varios.formato_numero(rs.getDouble("precio"));
                 tac_productos.addItem(new cla_producto(id_producto, descripcion));
             }
@@ -225,8 +224,6 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         txt_cactual = new javax.swing.JTextField();
         btn_ver_tiendas = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        txt_nombre_producto = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_detalle = new javax.swing.JTable();
@@ -432,20 +429,6 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel4.setText("Seleccionado:");
-
-        txt_nombre_producto.setEnabled(false);
-        txt_nombre_producto.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txt_nombre_productoFocusGained(evt);
-            }
-        });
-        txt_nombre_producto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_nombre_productoKeyPressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -457,10 +440,6 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_buscar_producto))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_nombre_producto))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -484,10 +463,6 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_nombre_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -652,7 +627,7 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_grabar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 301, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -692,7 +667,7 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
 
     private void txt_buscar_productoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscar_productoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (txt_buscar_producto.getText().length() > 25) {
+            if (txt_buscar_producto.getText().length() > 15) {
                 if (c_producto_almacen.validar_id()) {
                     //validar que no existe en la tabla
                     if (valida_tabla(c_producto.getId())) {
@@ -843,14 +818,6 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_t_detalleMouseClicked
 
-    private void txt_nombre_productoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_nombre_productoFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_nombre_productoFocusGained
-
-    private void txt_nombre_productoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombre_productoKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_nombre_productoKeyPressed
-
     private void btn_grabarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btn_grabarFocusGained
         lbl_ayuda.setText("ENTER PARA COBRAR VENTA");
     }//GEN-LAST:event_btn_grabarFocusGained
@@ -927,7 +894,6 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
@@ -950,7 +916,6 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_jd_descripcion;
     private javax.swing.JTextField txt_jd_idproducto;
     private javax.swing.JTextField txt_jd_precio;
-    private javax.swing.JTextField txt_nombre_producto;
     private javax.swing.JTextField txt_precio;
     // End of variables declaration//GEN-END:variables
 }

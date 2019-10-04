@@ -84,10 +84,12 @@ public class frm_reg_producto extends javax.swing.JDialog {
 
             m_subclasificacion.llenar_combobox(cbx_sub_clasificacion, c_subclasificacion.getId_clasificacion());
             cbx_sub_clasificacion.setEnabled(true);
-            cbx_sub_clasificacion.getModel().setSelectedItem(new cla_producto_clasificacion(c_subclasificacion.getId_subclasificacion(), c_clasificacion.getDescripcion()));
+            cbx_sub_clasificacion.getModel().setSelectedItem(new cla_producto_clasificacion(c_subclasificacion.getId_subclasificacion(), c_subclasificacion.getNombre()));
 
             txt_descripcion.setEnabled(true);
             txt_cod_barra.setEnabled(true);
+            cbx_afecto.setEnabled(true);
+            txt_precio_minimo.setEnabled(true);
             btn_guardar.setEnabled(true);
         }
     }

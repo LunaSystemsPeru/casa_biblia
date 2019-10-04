@@ -83,7 +83,7 @@ public class cl_compra {
     }
 
     public void setSerie(String serie) {
-        this.serie = serie;
+        this.serie = serie.toUpperCase();
     }
 
     public int getNumero() {
