@@ -178,23 +178,16 @@ public class cl_salida {
             modelo.addColumn("Documento");
             modelo.addColumn("Persona");
             modelo.addColumn("Usuario");
-            modelo.addColumn("Estado");
 
             //Creando las filas para el JTable
             //nombre dela columna de la consulta
             while (rs.next()) {
-                Object[] fila = new Object[6];
+                Object[] fila = new Object[5];
                 fila[0] = rs.getInt("id_salida");
                 fila[1] = rs.getString("fecha");
-                fila[2] = rs.getString("docsunat") + " / " + rs.getString("id_almacen") + " - " + rs.getString("numero");
-                fila[3] = rs.getString("documento") + " | " + rs.getString("datos");
+                fila[2] = "NSA" + " | " + rs.getString("id_almacen") + " - " + rs.getString("id_salida");
+                fila[3] = rs.getString("doc_destinatario") + " | " + rs.getString("nom_destinatario");
                 fila[4] = rs.getString("nomusuario");
-                if (rs.getString("estado").equals("1")) {
-                    fila[5] = "ACTIVO";
-                } else {
-                    fila[5] = "ANULADO";
-                }
-
                 modelo.addRow(fila);
             }
 
@@ -207,12 +200,10 @@ public class cl_salida {
             tabla.getColumnModel().getColumn(2).setPreferredWidth(150);
             tabla.getColumnModel().getColumn(3).setPreferredWidth(450);
             tabla.getColumnModel().getColumn(4).setPreferredWidth(100);
-            tabla.getColumnModel().getColumn(5).setPreferredWidth(70);
             c_varios.centrar_celda(tabla,0);
             c_varios.centrar_celda(tabla,1);
             c_varios.centrar_celda(tabla,2);
             c_varios.centrar_celda(tabla,4);
-            c_varios.centrar_celda(tabla,5);
             
             
         } catch (SQLException e) {
