@@ -254,7 +254,8 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Fecha:");
 
-        jLabel2.setText("Documento:");
+        jLabel2.setText("Tipo Venta:");
+        jLabel2.setToolTipText("");
 
         jLabel3.setText("Serie - Numero:");
 
