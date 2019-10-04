@@ -256,7 +256,7 @@ public class frm_principal extends javax.swing.JFrame {
         jSeparator15 = new javax.swing.JToolBar.Separator();
         jButton23 = new javax.swing.JButton();
         jToolBar6 = new javax.swing.JToolBar();
-        jButton3 = new javax.swing.JButton();
+        jButton25 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         jButton16 = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
@@ -840,17 +840,17 @@ public class frm_principal extends javax.swing.JFrame {
         jToolBar6.setFloatable(false);
         jToolBar6.setBorderPainted(false);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/shop-icon.png"))); // NOI18N
-        jButton3.setText("Empresas");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/company_building-512.png"))); // NOI18N
+        jButton25.setText("Empresas");
+        jButton25.setFocusable(false);
+        jButton25.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton25.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton25.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton25ActionPerformed(evt);
             }
         });
-        jToolBar6.add(jButton3);
+        jToolBar6.add(jButton25);
         jToolBar6.add(jSeparator3);
 
         jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/40-512.png"))); // NOI18N
@@ -984,7 +984,7 @@ public class frm_principal extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         frm_reg_pedido formulario = new frm_reg_pedido();
-        c_varios.llamar_ventana(formulario);
+        c_varios.llamar_ventana_normal(formulario);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
@@ -1223,6 +1223,11 @@ public class frm_principal extends javax.swing.JFrame {
         c_varios.llamar_ventana_normal(formulario);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        frm_ver_empresas formulario = new frm_ver_empresas();
+        c_varios.llamar_ventana_normal(formulario);
+    }//GEN-LAST:event_jButton25ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1279,6 +1284,7 @@ public class frm_principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton22;
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
+    private javax.swing.JButton jButton25;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
