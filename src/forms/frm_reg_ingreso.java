@@ -122,12 +122,12 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             tac_productos.setMode(0);
             tac_productos.setCaseSensitive(false);
             Statement st = c_conectar.conexion();
-            String sql = "select p.descripcion, p.precio, p.costo, p.id_producto, p.marca "
-                    + "from productos as p ";
+            String sql = "SELECT p.id_producto, p.descripcion, p.cod_externo, p.costo, p.precio FROM productos AS p "
+                    + "WHERE p.tipo_producto = 0";
             ResultSet rs = c_conectar.consulta(st, sql);
             while (rs.next()) {
                 int id_producto = rs.getInt("id_producto");
-                String descripcion = rs.getString("descripcion") + " | " + rs.getString("marca")
+                String descripcion = rs.getString("descripcion") + " | " + rs.getString("cod_externo")
                         + "    |    Precio: S/ " + c_varios.formato_numero(rs.getDouble("precio")) + "    |    Costo: S/ " + c_varios.formato_numero(rs.getDouble("costo"));
                 tac_productos.addItem(new cla_producto(id_producto, descripcion));
             }

@@ -212,7 +212,7 @@ public class cl_producto {
                 afecto_igv = rs.getInt("afecto_igv");
                 estado = rs.getString("estado");
                 id_proveedor = rs.getInt("id_proveedor");
-                id_sub_clasificacion = rs.getInt("id_sub_clasificacion");
+                id_sub_clasificacion = rs.getInt("id_subclasificacion");
                 existe = true;
             }
 
