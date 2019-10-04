@@ -40,7 +40,7 @@ public class cl_productos_sub_clasificacion {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();
     }
 
     public int getId_clasificacion() {
@@ -97,6 +97,28 @@ public class cl_productos_sub_clasificacion {
         }
     }
     
+     public boolean validar_datos() {
+        boolean existe = false;
+        try {
+
+            Statement st = c_conectar.conexion();
+            String query = "select * "
+                    + "from productos_sub_clasificacion "
+                    + "where id_subclasificacion = '" + id_subclasificacion + "' ";
+            //System.out.println(query);
+            ResultSet rs = c_conectar.consulta(st, query);
+            if (rs.next()) {
+                this.nombre = rs.getString("nombre");
+                this.id_clasificacion = rs.getInt("id_clasificacion");
+                existe = true;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return existe;
+    }
+
     
     public void mostrar(JTable tabla) {
         DefaultTableModel modelo;

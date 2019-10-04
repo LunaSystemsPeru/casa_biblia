@@ -970,7 +970,7 @@ public class frm_reg_traslado extends javax.swing.JInternalFrame {
                         jd_add_producto.setModal(true);
                         jd_add_producto.setSize(717, 164);
                         jd_add_producto.setLocationRelativeTo(null);
-                        txt_producto.setText(c_producto.getDescripcion() + " " + c_producto.getModelo());
+                        txt_producto.setText(c_producto.getDescripcion() + " " + c_producto.getCod_externo());
                         txt_precio.setText(c_varios.formato_numero(c_producto.getPrecio()));
                         txt_cantidad_actual.setText(c_producto_almacen.getCtotal()+ "");
                         txt_cantidad_enviar.setText("1");
@@ -1041,7 +1041,7 @@ public class frm_reg_traslado extends javax.swing.JInternalFrame {
             Object fila[] = new Object[6];
             fila[0] = c_producto.getId();
             fila[1] = c_producto.getDescripcion();
-            fila[2] = c_producto.getModelo();
+            fila[2] = c_producto.getCod_externo();
             fila[3] = c_producto_almacen.getCtotal();
             fila[4] = cenviar;
             fila[5] = c_varios.formato_numero(c_producto.getPrecio());
@@ -1092,7 +1092,7 @@ public class frm_reg_traslado extends javax.swing.JInternalFrame {
                 jd_add_producto.setModal(true);
                 jd_add_producto.setSize(717, 164);
                 jd_add_producto.setLocationRelativeTo(null);
-                txt_producto.setText(c_producto.getDescripcion() + " " + c_producto.getModelo());
+                txt_producto.setText(c_producto.getDescripcion() + " " + c_producto.getCod_externo());
                 txt_precio.setText(c_varios.formato_numero(c_producto.getPrecio()));
                 txt_cantidad_actual.setText(c_actual + "");
                 txt_cantidad_enviar.setText(c_enviar + "");

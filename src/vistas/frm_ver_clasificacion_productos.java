@@ -9,6 +9,7 @@ import clases.cl_productos_clasificacion;
 import clases.cl_varios;
 import javax.swing.JOptionPane;
 import casa_biblia.frm_principal;
+import clases.cl_productos_sub_clasificacion;
 import java.awt.event.KeyEvent;
 
 /**
@@ -19,8 +20,10 @@ public class frm_ver_clasificacion_productos extends javax.swing.JInternalFrame 
 
     cl_varios c_varios = new cl_varios();
     cl_productos_clasificacion c_clasificacion = new cl_productos_clasificacion();
+    cl_productos_sub_clasificacion c_subclasificacion = new cl_productos_sub_clasificacion();
 
     int fila_seleccionada;
+    int fila_subclasificacion;
 
     /**
      * Creates new form frm_ver_usuarios
@@ -32,10 +35,12 @@ public class frm_ver_clasificacion_productos extends javax.swing.JInternalFrame 
 
     private void activar_botones() {
         btn_modificar.setEnabled(true);
+        btn_ver_sub.setEnabled(true);
     }
 
     private void desactivar_botones() {
         btn_modificar.setEnabled(false);
+        btn_ver_sub.setEnabled(false);
     }
 
     private void activar_campos() {
@@ -69,12 +74,27 @@ public class frm_ver_clasificacion_productos extends javax.swing.JInternalFrame 
         btn_j_grabar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btn_j_cerrar = new javax.swing.JButton();
+        jd_ver_sub_clasificacion = new javax.swing.JDialog();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txt_nom_clasificacion = new javax.swing.JTextField();
+        txt_nom_subclasificacion = new javax.swing.JTextField();
+        jToolBar3 = new javax.swing.JToolBar();
+        btn_sub_nuevo = new javax.swing.JButton();
+        btn_sub_grabar = new javax.swing.JButton();
+        btn_sub_modificar = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JToolBar.Separator();
+        btn_sub_salir = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        t_subclasificacion = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_clasificacion = new javax.swing.JTable();
         jToolBar2 = new javax.swing.JToolBar();
         btn_agregar = new javax.swing.JButton();
         btn_modificar = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
+        btn_ver_sub = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
         btn_cerrar = new javax.swing.JButton();
 
         jd_reg_clasificacion.setTitle("Registrar Usuario");
@@ -176,6 +196,128 @@ public class frm_ver_clasificacion_productos extends javax.swing.JInternalFrame 
                 .addContainerGap())
         );
 
+        jd_ver_sub_clasificacion.setTitle("Ver Sub Clasificacion");
+
+        jLabel2.setText("Clasificacion:");
+
+        jLabel4.setText("Sub Clasificacion:");
+
+        txt_nom_clasificacion.setEnabled(false);
+
+        txt_nom_subclasificacion.setEnabled(false);
+        txt_nom_subclasificacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_nom_subclasificacionKeyPressed(evt);
+            }
+        });
+
+        jToolBar3.setFloatable(false);
+
+        btn_sub_nuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png"))); // NOI18N
+        btn_sub_nuevo.setText("Nuevo");
+        btn_sub_nuevo.setFocusable(false);
+        btn_sub_nuevo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_sub_nuevo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_sub_nuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sub_nuevoActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(btn_sub_nuevo);
+
+        btn_sub_grabar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/accept.png"))); // NOI18N
+        btn_sub_grabar.setText("Grabar");
+        btn_sub_grabar.setEnabled(false);
+        btn_sub_grabar.setFocusable(false);
+        btn_sub_grabar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_sub_grabar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_sub_grabar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sub_grabarActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(btn_sub_grabar);
+
+        btn_sub_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/application_edit.png"))); // NOI18N
+        btn_sub_modificar.setText("Modificar");
+        btn_sub_modificar.setEnabled(false);
+        btn_sub_modificar.setFocusable(false);
+        btn_sub_modificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_sub_modificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_sub_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sub_modificarActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(btn_sub_modificar);
+        jToolBar3.add(jSeparator4);
+
+        btn_sub_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cross.png"))); // NOI18N
+        btn_sub_salir.setText("Salir");
+        btn_sub_salir.setFocusable(false);
+        btn_sub_salir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_sub_salir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_sub_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sub_salirActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(btn_sub_salir);
+
+        t_subclasificacion.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        t_subclasificacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_subclasificacionMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(t_subclasificacion);
+
+        javax.swing.GroupLayout jd_ver_sub_clasificacionLayout = new javax.swing.GroupLayout(jd_ver_sub_clasificacion.getContentPane());
+        jd_ver_sub_clasificacion.getContentPane().setLayout(jd_ver_sub_clasificacionLayout);
+        jd_ver_sub_clasificacionLayout.setHorizontalGroup(
+            jd_ver_sub_clasificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(jd_ver_sub_clasificacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_ver_sub_clasificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_ver_sub_clasificacionLayout.createSequentialGroup()
+                        .addGroup(jd_ver_sub_clasificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jd_ver_sub_clasificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_nom_clasificacion)
+                            .addComponent(txt_nom_subclasificacion)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jd_ver_sub_clasificacionLayout.setVerticalGroup(
+            jd_ver_sub_clasificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_ver_sub_clasificacionLayout.createSequentialGroup()
+                .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_ver_sub_clasificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nom_clasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jd_ver_sub_clasificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nom_subclasificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         setTitle("Ver Clasificacion de Productos");
 
         t_clasificacion.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -221,6 +363,20 @@ public class frm_ver_clasificacion_productos extends javax.swing.JInternalFrame 
         jToolBar2.add(btn_modificar);
         jToolBar2.add(jSeparator2);
 
+        btn_ver_sub.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/blog.png"))); // NOI18N
+        btn_ver_sub.setText("Sub Clasificacion");
+        btn_ver_sub.setEnabled(false);
+        btn_ver_sub.setFocusable(false);
+        btn_ver_sub.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_ver_sub.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_ver_sub.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ver_subActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btn_ver_sub);
+        jToolBar2.add(jSeparator3);
+
         btn_cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cross.png"))); // NOI18N
         btn_cerrar.setText("Cerrar");
         btn_cerrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -262,6 +418,7 @@ public class frm_ver_clasificacion_productos extends javax.swing.JInternalFrame 
         jd_reg_clasificacion.setModal(true);
         jd_reg_clasificacion.setSize(721, 239);
         jd_reg_clasificacion.setLocationRelativeTo(null);
+        c_clasificacion.setId_clasificacion(0);
         reiniciar_campos();
         jd_reg_clasificacion.setVisible(true);
     }//GEN-LAST:event_btn_agregarActionPerformed
@@ -292,7 +449,7 @@ public class frm_ver_clasificacion_productos extends javax.swing.JInternalFrame 
 
     private void btn_j_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_j_grabarActionPerformed
         c_clasificacion.setDescripcion(txt_reg_nombre.getText());
-        if (c_clasificacion.getId_clasificacion() != 0) {
+        if (c_clasificacion.getId_clasificacion() == 0) {
             c_clasificacion.obtener_codigo();
             c_clasificacion.registrar();
         } else {
@@ -314,6 +471,75 @@ public class frm_ver_clasificacion_productos extends javax.swing.JInternalFrame 
         }
     }//GEN-LAST:event_txt_reg_nombreKeyPressed
 
+    private void reiniciar_subclasificacion() {
+        //txt_nom_clasificacion.setText("");
+        txt_nom_subclasificacion.setText("");
+        txt_nom_subclasificacion.setEnabled(false);
+    }
+
+    private void btn_ver_subActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ver_subActionPerformed
+        desactivar_botones();
+        reiniciar_subclasificacion();
+        c_subclasificacion.setId_clasificacion(Integer.parseInt(t_clasificacion.getValueAt(fila_seleccionada, 0).toString()));
+        txt_nom_clasificacion.setText(t_clasificacion.getValueAt(fila_seleccionada, 1).toString());
+        c_subclasificacion.mostrar(t_subclasificacion);
+
+        jd_ver_sub_clasificacion.setModal(true);
+        jd_ver_sub_clasificacion.setSize(400, 370);
+        jd_ver_sub_clasificacion.setLocationRelativeTo(null);
+        jd_ver_sub_clasificacion.setVisible(true);
+    }//GEN-LAST:event_btn_ver_subActionPerformed
+
+    private void btn_sub_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sub_salirActionPerformed
+        jd_ver_sub_clasificacion.dispose();
+    }//GEN-LAST:event_btn_sub_salirActionPerformed
+
+    private void btn_sub_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sub_nuevoActionPerformed
+        txt_nom_subclasificacion.setEnabled(true);
+        txt_nom_subclasificacion.requestFocus();
+    }//GEN-LAST:event_btn_sub_nuevoActionPerformed
+
+    private void txt_nom_subclasificacionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nom_subclasificacionKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_nom_subclasificacion.getText().length() > 0) {
+                btn_sub_grabar.setEnabled(true);
+                btn_sub_grabar.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_nom_subclasificacionKeyPressed
+
+    private void btn_sub_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sub_grabarActionPerformed
+        c_subclasificacion.setNombre(txt_nom_subclasificacion.getText());
+        if (c_subclasificacion.getId_subclasificacion() == 0) {
+
+            c_subclasificacion.obtener_codigo();
+            c_subclasificacion.registrar();
+        } else {
+            c_subclasificacion.modificar();
+        }
+        btn_sub_grabar.setEnabled(false);
+        btn_sub_nuevo.setEnabled(true);
+        reiniciar_subclasificacion();
+        c_subclasificacion.mostrar(t_subclasificacion);
+    }//GEN-LAST:event_btn_sub_grabarActionPerformed
+
+    private void t_subclasificacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_subclasificacionMouseClicked
+        if (evt.getClickCount() == 2) {
+            btn_sub_modificar.setEnabled(true);
+            fila_subclasificacion = t_subclasificacion.getSelectedRow();
+        }
+    }//GEN-LAST:event_t_subclasificacionMouseClicked
+
+    private void btn_sub_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sub_modificarActionPerformed
+        btn_sub_nuevo.setEnabled(false);
+        btn_sub_grabar.setEnabled(true);
+        btn_sub_modificar.setEnabled(false);
+        txt_nom_subclasificacion.setText(t_subclasificacion.getValueAt(fila_subclasificacion, 1).toString());
+        c_subclasificacion.setId_subclasificacion(Integer.parseInt(t_subclasificacion.getValueAt(fila_subclasificacion, 0).toString()));
+        txt_nom_subclasificacion.setEnabled(true);
+        txt_nom_subclasificacion.requestFocus();
+    }//GEN-LAST:event_btn_sub_modificarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
@@ -321,16 +547,31 @@ public class frm_ver_clasificacion_productos extends javax.swing.JInternalFrame 
     private javax.swing.JButton btn_j_cerrar;
     private javax.swing.JButton btn_j_grabar;
     private javax.swing.JButton btn_modificar;
+    private javax.swing.JButton btn_sub_grabar;
+    private javax.swing.JButton btn_sub_modificar;
+    private javax.swing.JButton btn_sub_nuevo;
+    private javax.swing.JButton btn_sub_salir;
+    private javax.swing.JButton btn_ver_sub;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JToolBar jToolBar3;
     private javax.swing.JDialog jd_reg_clasificacion;
+    private javax.swing.JDialog jd_ver_sub_clasificacion;
     private javax.swing.JTable t_clasificacion;
+    private javax.swing.JTable t_subclasificacion;
+    private javax.swing.JTextField txt_nom_clasificacion;
+    private javax.swing.JTextField txt_nom_subclasificacion;
     private javax.swing.JTextField txt_reg_id;
     private javax.swing.JTextField txt_reg_nombre;
     // End of variables declaration//GEN-END:variables

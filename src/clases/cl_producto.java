@@ -25,11 +25,9 @@ public class cl_producto {
     private int id;
     private String descripcion;
     private String cod_externo;
-    private String modelo;
     private double costo;
     private double precio;
     private double ctotal;
-    private double comision;
     private int tipo_producto;
     private int afecto_igv;
     private String estado;
@@ -63,14 +61,6 @@ public class cl_producto {
         this.cod_externo = cod_externo;
     }
 
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
     public double getCosto() {
         return costo;
     }
@@ -93,14 +83,6 @@ public class cl_producto {
 
     public void setCtotal(double ctotal) {
         this.ctotal = ctotal;
-    }
-
-    public double getComision() {
-        return comision;
-    }
-
-    public void setComision(double comision) {
-        this.comision = comision;
     }
 
     public int getTipo_producto() {
@@ -159,7 +141,7 @@ public class cl_producto {
             //Establecer como cabezeras el nombre de las colimnas
             tmodelo.addColumn("Id");
             tmodelo.addColumn("Descripcion");//descripcion modelo serie
-            tmodelo.addColumn("Marca");
+            tmodelo.addColumn("Cod Externo");
             tmodelo.addColumn("Precio");
             tmodelo.addColumn("Clasificacion");
             tmodelo.addColumn("Cant. Actual");
@@ -223,11 +205,9 @@ public class cl_producto {
             if (rs.next()) {
                 descripcion = rs.getString("descripcion");
                 cod_externo = rs.getString("cod_externo");
-                modelo = rs.getString("modelo");
                 costo = rs.getDouble("costo");
                 precio = rs.getDouble("precio");
                 ctotal = rs.getDouble("ctotal");
-                comision = rs.getDouble("comision");
                 tipo_producto = rs.getInt("tipo_producto");
                 afecto_igv = rs.getInt("afecto_igv");
                 estado = rs.getString("estado");
@@ -246,7 +226,7 @@ public class cl_producto {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into productos "
-                + "values ('" + id + "', '" + descripcion + "', '" + cod_externo + "', '" + modelo + "', '" + costo + "', '" + precio + "', '0', '" + comision + "', "
+                + "values ('" + id + "', '" + descripcion + "', '" + cod_externo + "', '" + costo + "', '" + precio + "', '0', "
                 + "'" + tipo_producto + "', '" + afecto_igv + "','" + id_sub_clasificacion + "', '', '1', '1')";
         System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);
@@ -260,7 +240,7 @@ public class cl_producto {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "update productos "
-                + "set descripcion = '" + descripcion + "', cod_externo = '" + cod_externo + "', modelo = '" + modelo + "', precio = '" + precio + "', costo = '" + costo + "', comision = '" + comision + "', "
+                + "set descripcion = '" + descripcion + "', cod_externo = '" + cod_externo + "', precio = '" + precio + "', costo = '" + costo + "', "
                 + "id_sub_clasificacion = '" + id_sub_clasificacion + "', afecto_igv = '" + afecto_igv + "' "
                 + "where id_producto = '" + id + "'";
         System.out.println(query);

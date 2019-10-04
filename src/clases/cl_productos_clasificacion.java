@@ -88,6 +88,7 @@ public class cl_productos_clasificacion {
         Statement st = c_conectar.conexion();
         String query = "insert into productos_clasificacion "
                 + "Values ('" + id_clasificacion + "', '" + descripcion + "')";
+        System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;

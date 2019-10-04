@@ -17,6 +17,7 @@ import clases_varios.cl_grafica_mensual;
 import forms.frm_reg_cierre_caja;
 import forms.frm_reg_cobro_pedido;
 import forms.frm_reg_movimiento_caja;
+import forms.frm_reg_pedido;
 import forms.frm_reg_salida;
 import forms.frm_reg_traslado;
 import java.awt.Frame;
@@ -133,7 +134,7 @@ public class frm_principal extends javax.swing.JFrame {
         if (!permitido23) {
             jButton12.setEnabled(false);
         }
-        
+
         c_permiso.setId_permiso(18);
         boolean permitido18 = c_permiso.validar();
 
@@ -151,25 +152,24 @@ public class frm_principal extends javax.swing.JFrame {
         c_permiso.setId_permiso(16);
         boolean permitido16 = c_permiso.validar();
 
-/*        if (!permitido16) {
+        /*        if (!permitido16) {
             jButton3.setEnabled(false);
         }
-*/
-
+         */
         c_permiso.setId_permiso(15);
         boolean permitido15 = c_permiso.validar();
 
         if (!permitido15) {
             jButton23.setEnabled(false);
         }
-        
+
         c_permiso.setId_permiso(9);
         boolean permitido9 = c_permiso.validar();
 
         if (!permitido9) {
             jButton13.setEnabled(false);
         }
-        
+
         c_permiso.setId_permiso(4);
         boolean permitido4 = c_permiso.validar();
 
@@ -256,6 +256,7 @@ public class frm_principal extends javax.swing.JFrame {
         jSeparator15 = new javax.swing.JToolBar.Separator();
         jButton23 = new javax.swing.JButton();
         jToolBar6 = new javax.swing.JToolBar();
+        jButton3 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         jButton16 = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
@@ -585,7 +586,7 @@ public class frm_principal extends javax.swing.JFrame {
         jToolBar4.add(jSeparator2);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/shopping-add-512.png"))); // NOI18N
-        jButton6.setText("Vender");
+        jButton6.setText("Pre Pedido");
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -838,6 +839,18 @@ public class frm_principal extends javax.swing.JFrame {
         jToolBar6.setBorder(null);
         jToolBar6.setFloatable(false);
         jToolBar6.setBorderPainted(false);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/shop-icon.png"))); // NOI18N
+        jButton3.setText("Empresas");
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jToolBar6.add(jButton3);
         jToolBar6.add(jSeparator3);
 
         jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/40-512.png"))); // NOI18N
@@ -970,8 +983,8 @@ public class frm_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        //frm_reg_venta formulario = new frm_reg_venta();
-     //   c_varios.llamar_ventana(formulario);
+        frm_reg_pedido formulario = new frm_reg_pedido();
+        c_varios.llamar_ventana(formulario);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
