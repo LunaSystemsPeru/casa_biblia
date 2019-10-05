@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import vistas.frm_ver_ubicacion_producto;
 import java.awt.Frame;
+import nicon.notify.core.Notification;
 
 /**
  *
@@ -50,7 +51,7 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
      */
     public frm_reg_pedido() {
         initComponents();
-        
+
         c_producto_almacen.setAlmacen(id_almacen);
 
         cargar_productos();
@@ -177,20 +178,12 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
     }
 
     private void llenar() {
-        /*  c_venta.setId_almacen(id_almacen);
-        c_venta.setId_usuario(id_usuario);
-        c_venta.setId_venta(c_venta.obtener_codigo());
-        c_venta.setId_cliente(c_cliente.getCodigo());
-        //c_venta.setFecha(c_varios.getFechaActual());
-        c_venta.setFecha(c_varios.fecha_myql(txt_fecha.getText()));
-        c_venta.setId_tido(c_doc_almacen.getId_tido());
-        c_venta.setSerie(c_doc_almacen.getSerie());
-        c_venta.setNumero(c_doc_almacen.getNumero());
-        c_venta.setTotal(final_total);
-        c_venta.setId_tipo_venta(cbx_tipo_venta.getSelectedIndex() + 1);
-        c_venta.setPagado(final_efectivo + final_tarjeta);
-        c_venta.setEstado(1);
-        c_venta.setEnviado_sunat(0);*/
+        c_pedido.setId_almacen(id_almacen);
+        c_pedido.setFecha(c_varios.fecha_myql(txt_fecha.getText()));
+        c_pedido.setId_usuario(id_usuario);
+        c_pedido.setId_cajero(id_usuario);
+        c_pedido.obtener_codigo();
+        c_pedido.setTotal(calcular_total());
     }
 
     /**
@@ -824,7 +817,16 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
 
     private void btn_grabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_grabarActionPerformed
         //grabar pedido y generar id para enviar a caja
+        llenar();
 
+        if (c_pedido.registrar()) {
+            Notification.show("Pedido", "Nro de Pedido: " + c_pedido.getId_pedido(), Notification.NICON_LIGHT_THEME);
+            JOptionPane.showMessageDialog(null, "<html><h1>NRO. DE PEDIDO: " + c_pedido.getId_pedido() + "</h1></html>");
+            
+            this.dispose();
+            frm_reg_pedido formulario = new frm_reg_pedido();
+            c_varios.llamar_ventana_normal(formulario);
+        }
 
     }//GEN-LAST:event_btn_grabarActionPerformed
 
@@ -919,3 +921,4 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_precio;
     // End of variables declaration//GEN-END:variables
 }
+

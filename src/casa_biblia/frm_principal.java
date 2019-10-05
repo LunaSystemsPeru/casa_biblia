@@ -18,6 +18,7 @@ import forms.frm_reg_cierre_caja;
 import forms.frm_reg_cobro_pedido;
 import forms.frm_reg_movimiento_caja;
 import forms.frm_reg_pedido;
+import java.awt.AWTEvent;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -512,6 +513,11 @@ public class frm_principal extends javax.swing.JFrame {
         setTitle("Casa de la Biblia| Sistema de Gestion de Ventas");
         setBackground(new java.awt.Color(204, 204, 204));
         setIconImage(Toolkit.getDefaultToolkit().getImage("reports/icono.jpg"));
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jToolBar1.setBorder(null);
         jToolBar1.setFloatable(false);
@@ -1224,6 +1230,10 @@ public class frm_principal extends javax.swing.JFrame {
         frm_ver_empresas formulario = new frm_ver_empresas();
         c_varios.llamar_ventana_normal(formulario);
     }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
