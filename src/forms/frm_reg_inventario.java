@@ -120,14 +120,14 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             tac_productos.setMode(0);
             tac_productos.setCaseSensitive(false);
             Statement st = c_conectar.conexion();
-            String sql = "select p.descripcion, pa.cactual, p.precio, p.id_producto, p.marca "
+            String sql = "select p.descripcion, pa.cactual, p.precio, p.id_producto, p.cod_externo "
                     + "from productos_almacen as pa "
                     + "inner join productos as p on p.id_producto = pa.id_producto "
                     + "where pa.id_almacen = '" + id_almacen + "'";
             ResultSet rs = c_conectar.consulta(st, sql);
             while (rs.next()) {
                 int id_producto = rs.getInt("id_producto");
-                String descripcion = rs.getString("descripcion") + " | " + rs.getString("marca")
+                String descripcion = rs.getString("descripcion") + " | " + rs.getString("cod_externo")
                         + "    |    Cant: " + rs.getInt("cactual") + "    |    Precio: S/ " + c_varios.formato_numero(rs.getDouble("precio"));
                 tac_productos.addItem(new cla_producto(id_producto, descripcion));
             }
@@ -203,7 +203,7 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         jToolBar1 = new javax.swing.JToolBar();
         btn_guardar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
-        jButton1 = new javax.swing.JButton();
+        btn_eliminar = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         jButton2 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
@@ -330,12 +330,18 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         jToolBar1.add(btn_guardar);
         jToolBar1.add(jSeparator1);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
-        jButton1.setText("Eliminar");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
+        btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
+        btn_eliminar.setText("Eliminar");
+        btn_eliminar.setEnabled(false);
+        btn_eliminar.setFocusable(false);
+        btn_eliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_eliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_eliminar);
         jToolBar1.add(jSeparator2);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cross.png"))); // NOI18N
@@ -406,6 +412,11 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        t_inventario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_inventarioMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(t_inventario);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -462,14 +473,14 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_cantidad_enviarKeyPressed
 
     private void btn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarActionPerformed
-        double cenviar = Double.parseDouble(txt_cantidad_enviar.getText());
+        int cenviar = Integer.parseInt(txt_cantidad_enviar.getText());
         Object fila[] = new Object[7];
         fila[0] = c_producto.getId();
         fila[1] = c_producto.getDescripcion();
         fila[2] = c_producto.getCod_externo();
         fila[3] = c_varios.formato_numero(c_producto.getPrecio());
         fila[4] = c_producto_almacen.getCtotal();
-        double diferencia = cenviar - c_producto_almacen.getCtotal();
+        int diferencia = cenviar - c_producto_almacen.getCtotal();
         fila[5] = cenviar;
         fila[6] = diferencia;
 
@@ -542,8 +553,8 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
             c_inventario.setId_almacen(id_almacen);
             c_inventario.setId_usuario(id_usuario);
             c_inventario.obtener_codigo();
-                int contar_filas = t_inventario.getRowCount();
-                c_inventario.setTotal_productos(contar_filas);
+            int contar_filas = t_inventario.getRowCount();
+            c_inventario.setTotal_productos(contar_filas);
             boolean registrar = c_inventario.registrar();
 
             if (registrar) {
@@ -575,11 +586,23 @@ public class frm_reg_inventario extends javax.swing.JInternalFrame {
         c_varios.limitar_caracteres(evt, txt_cantidad_enviar, 10);
     }//GEN-LAST:event_txt_cantidad_enviarKeyTyped
 
+    private void t_inventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_inventarioMouseClicked
+        if (evt.getClickCount() == 2) {
+            btn_eliminar.setEnabled(true);
+            fila_seleccionada = t_inventario.getSelectedRow();
+        }
+    }//GEN-LAST:event_t_inventarioMouseClicked
+
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        detalle.removeRow(fila_seleccionada);
+        txt_buscar_producto.requestFocus();
+    }//GEN-LAST:event_btn_eliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
+    private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_guardar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
