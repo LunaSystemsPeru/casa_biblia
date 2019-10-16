@@ -105,8 +105,7 @@ public class cl_inventarios {
         try {
             Statement st = c_conectar.conexion();
             String query = "select ifnull(max(id_inventario) + 1, 1) as codigo "
-                    + "from inventario "
-                    + "where anio = '" + anio + "'";
+                    + "from inventario ";
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 id_inventario = rs.getInt("codigo");

@@ -39,7 +39,7 @@ public class frm_ver_compras extends javax.swing.JInternalFrame {
                 + "inner join proveedor as p on p.id_proveedor = c.id_proveedor "
                 + "inner join empresa as em on em.id_empresa = c.id_empresa "
                 + "inner join documentos_sunat as ds on ds.id_tido = c.id_tido "
-                + "where c.estado = 2 "
+                + "where c.estado = 0 "
                 + "order by c.fecha asc ";
         cargar_tabla();
     }

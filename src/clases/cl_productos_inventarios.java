@@ -84,7 +84,7 @@ public class cl_productos_inventarios {
                 }
             };
             //c_conectar.conectar();
-            String query = "select pi.id_producto, p.descripcion, p.marca, p.modelo, p.precio, pi.cant_actual, pi.cant_fisico "
+            String query = "select pi.id_producto, p.descripcion, p.cod_externo, p.precio, pi.cant_actual, pi.cant_fisico "
                     + "from productos_inventario as pi "
                     + "inner join productos as p on p.id_producto = pi.id_producto "
                     + "where pi.id_inventario = '" + id_inventario + "' ";
@@ -96,7 +96,7 @@ public class cl_productos_inventarios {
             //Establecer como cabezeras el nombre de las colimnas
             modelo.addColumn("Id");
             modelo.addColumn("Producto");
-            modelo.addColumn("Marca");
+            modelo.addColumn("Cod Externo");
             modelo.addColumn("Precio");
             modelo.addColumn("C. Sistema");
             modelo.addColumn("C. Fisico");
@@ -106,8 +106,8 @@ public class cl_productos_inventarios {
             while (rs.next()) {
                 Object[] fila = new Object[7];
                 fila[0] = rs.getInt("id_producto");
-                fila[1] = (rs.getString("descripcion").trim() + " " + rs.getString("modelo").trim()).trim();
-                fila[2] = rs.getString("marca").trim();
+                fila[1] = rs.getString("descripcion").trim();
+                fila[2] = rs.getString("cod_externo").trim();
                 int isistema = rs.getInt("cant_actual");
                 int ifisico = rs.getInt("cant_fisico");
                 int diferencia = ifisico - isistema;

@@ -267,7 +267,7 @@ public class cl_compra {
                 fila[4] = rs.getString("nro_documento") + " | " + rs.getString("razon_social");
                 fila[5] = c_varios.formato_numero(dtotal);
                 fila[6] = c_varios.formato_numero(ddeuda);
-                if (iestado == 2) {
+                if (iestado == 0) {
                     fila[7] = "POR PAGAR";
                 }
                 if (iestado == 1) {
