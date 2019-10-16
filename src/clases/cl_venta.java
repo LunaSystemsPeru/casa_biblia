@@ -5,6 +5,8 @@
  */
 package clases;
 
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -152,6 +154,30 @@ public class cl_venta {
         this.id_pedido = id_pedido;
     }
 
+    public int regirtar_venta(int pedido,int idcliente,int idusuario,double efectivo, double tarjeta, int afecto){
+        
+        int resultado = 0;
+  
+        try {
+            CallableStatement  st = c_conectar.conx().prepareCall("call SP_INSERTAR_AFECTOS(?,?,?,?,?,?,?)");
+            st.setInt(1, pedido);
+            st.setInt(2, idcliente);
+            st.setInt(3, idusuario);
+            st.setDouble(4, efectivo);
+            st.setDouble(5, tarjeta);
+            st.setInt(6, afecto);
+            
+            st.registerOutParameter(7, java.sql.Types.INTEGER);
+            
+            st.execute();
+            
+            resultado=st.getInt(7);
+            
+        }catch(SQLException ex){
+             System.out.println(ex.getMessage());
+        }
+        return resultado;
+    }
     public boolean validar_venta() {
         boolean existe = false;
         try {
