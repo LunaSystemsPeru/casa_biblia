@@ -687,18 +687,18 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             
             Statement st = c_conectar.conexion();
             String sql;
-            sql = "SELECT p.id_producto, p.costo, dpc.cantidad,dpc.precio \n" +
-                    "	FROM productos_pedidos AS dpc \n" +
-                    "	INNER JOIN productos AS p ON dpc.id_producto = p.id_producto\n" +
+            sql = "SELECT p.id_producto, p.costo, dpc.cantidad,dpc.precio " +
+                    "	FROM productos_pedidos AS dpc " +
+                    "	INNER JOIN productos AS p ON dpc.id_producto = p.id_producto" +
                     "	WHERE dpc.id_pedido= "+cl_pedido.getId_pedido();
             ResultSet rs = c_conectar.consulta(st, sql);
             try {
                 while (rs.next()) {
-                    cl_productos_ventas.setCantidad(rs.getInt(3));
-                    cl_productos_ventas.setCosto(rs.getDouble(2));
-                    cl_productos_ventas.setId_producto(rs.getInt(1));
+                    cl_productos_ventas.setCantidad(rs.getInt("cantidad"));
+                    cl_productos_ventas.setCosto(rs.getDouble("costo"));
+                    cl_productos_ventas.setId_producto(rs.getInt("id_producto"));
                     cl_productos_ventas.setId_venta(cl_venta.getId_venta());
-                    cl_productos_ventas.setPrecio(rs.getDouble(4));
+                    cl_productos_ventas.setPrecio(rs.getDouble("precio"));
                     cl_productos_ventas.registrar();
                 }
                 print_Venta_Nota.setId_venta(cl_venta.getId_venta());
@@ -711,7 +711,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             }
         }else if (tido==9) {
             int venta1=-1;
-        int venta2=-1;
+            int venta2=-1;
 
             venta1= cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 1);
             venta2= cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 0);
