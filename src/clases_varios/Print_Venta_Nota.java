@@ -33,7 +33,7 @@ import javax.swing.JOptionPane;
  *
  * @author gerenciatecnica
  */
-public class Print_Venta_Ticket {
+public class Print_Venta_Nota {
 
     cl_conectar c_conectar = new cl_conectar();
     cl_varios c_varios = new cl_varios();
@@ -49,7 +49,7 @@ public class Print_Venta_Ticket {
     private int id_venta;
     private int id_almacen;
 
-    public Print_Venta_Ticket() {
+    public Print_Venta_Nota() {
     }
 
     public int getId_venta() {
@@ -90,8 +90,6 @@ public class Print_Venta_Ticket {
         c_empresa.setId(c_almacen.getEmpresa());
         c_empresa.validar_empresa();
 
-        c_cliente.setCodigo(c_venta.getId_cliente());
-        c_cliente.comprobar_cliente();
 
         //  Extenso e = new Extenso();
         //   e.setNumber(101.85);
@@ -104,18 +102,12 @@ public class Print_Venta_Ticket {
         printer.printTextWrap(3, 4, 0, 40, c_almacen.getDireccion());
 
         printer.printTextLinCol(7, 1, varios_impresion.centrar_texto(40, "SUCURSAL: " + c_almacen.getNombre()));
-        /*dni  ticket boleta, ruc ticket factura*/
-        String documentocliente="";
-        if (c_cliente.getDocumento().length()==8) {
-            documentocliente="TICKET BOLETA";
-        }else{
-            documentocliente="TICKET FACTURA";
-        }
-        printer.printTextLinCol(8, 1, varios_impresion.centrar_texto(40, documentocliente));
+
+        
+        printer.printTextLinCol(8, 1, varios_impresion.centrar_texto(40, "NOTA VENTA"));
         printer.printTextLinCol(9, 1, varios_impresion.centrar_texto(40, c_almacen.getTicketera() + " - " + numero));
         printer.printTextLinCol(10, 1, "FECHA EMISION: " + c_varios.getFechaHora());
-        printer.printTextLinCol(11, 1, "CLIENTE DOC: " + c_cliente.getDocumento());
-        printer.printTextLinCol(12, 1, c_cliente.getNombre());
+
         
 
         //cargar detalle de productos
@@ -154,7 +146,7 @@ public class Print_Venta_Ticket {
                 String texto_linea = pcantidad + " " + pdescripcion;
 
                 //imprimir linea producto
-                printer.printTextWrap(13 + add_filas, 15 + add_filas + 1, 0, 40, texto_linea);
+                printer.printTextWrap(11 + add_filas, 15 + add_filas + 1, 0, 40, texto_linea);
                 add_filas++;
 
                 //si cantidad de letras de descripcion es mayor a 28 saltar una linea
@@ -163,7 +155,7 @@ public class Print_Venta_Ticket {
                 }
 
                 //imprimir linea parcial
-                printer.printTextLinCol(13 + add_filas, 29, " x " + varios_impresion.texto_derecha(9, sparcial));
+                printer.printTextLinCol(11 + add_filas, 29, " x " + varios_impresion.texto_derecha(9, sparcial));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -177,19 +169,12 @@ public class Print_Venta_Ticket {
 
         add_filas++;
         add_filas++;
-        printer.printTextLinCol(13 + add_filas, 1, varios_impresion.texto_derecha(30, "SUB TOTAL"));
-        printer.printTextLinCol(13 + add_filas, 31, varios_impresion.texto_derecha(10, c_varios.formato_totales(subtotal)));
+        
+        printer.printTextLinCol(11 + add_filas, 1, varios_impresion.texto_derecha(30, "TOTAL"));
+        printer.printTextLinCol(11 + add_filas, 31, varios_impresion.texto_derecha(10, c_varios.formato_totales(total)));
 
         add_filas++;
-        printer.printTextLinCol(13 + add_filas, 1, varios_impresion.texto_derecha(30, "IGV"));
-        printer.printTextLinCol(13 + add_filas, 31, varios_impresion.texto_derecha(10, c_varios.formato_totales(igv)));
-
-        add_filas++;
-        printer.printTextLinCol(13 + add_filas, 1, varios_impresion.texto_derecha(30, "TOTAL"));
-        printer.printTextLinCol(13 + add_filas, 31, varios_impresion.texto_derecha(10, c_varios.formato_totales(total)));
-
-        add_filas++;
-        printer.printTextWrap(13 + add_filas, 14 + add_filas + 1, 0, 40, numeros_texto);
+        printer.printTextWrap(11 + add_filas, 14 + add_filas + 1, 0, 40, numeros_texto);
 
 
         

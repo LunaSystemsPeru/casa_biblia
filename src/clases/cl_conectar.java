@@ -31,6 +31,11 @@ public class cl_conectar {
      *
      * @return
      */
+    public Connection conexion2 () throws Exception{
+            Class.forName(driver);
+            conexion = DriverManager.getConnection(server, user, password);
+            return conexion;
+    }
     public boolean conectar() {
         boolean conectado;
         try {

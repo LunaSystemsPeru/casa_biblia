@@ -159,7 +159,9 @@ public class cl_venta {
         int resultado = 0;
   
         try {
-            CallableStatement  st = c_conectar.conx().prepareCall("call SP_INSERTAR_AFECTOS(?,?,?,?,?,?,?)");
+
+            CallableStatement  st = c_conectar.conexion2().prepareCall("call SP_INSERTAR_AFECTOS_NOAFECTOS(?,?,?,?,?,?,?)");
+
             st.setInt(1, pedido);
             st.setInt(2, idcliente);
             st.setInt(3, idusuario);
@@ -168,13 +170,14 @@ public class cl_venta {
             st.setInt(6, afecto);
             
             st.registerOutParameter(7, java.sql.Types.INTEGER);
-            
+
             st.execute();
-            
+
             resultado=st.getInt(7);
             
-        }catch(SQLException ex){
-             System.out.println(ex.getMessage());
+        }catch(Exception ex){
+             System.out.println("error: "+ex.getMessage());
+             System.out.println(ex);
         }
         return resultado;
     }
