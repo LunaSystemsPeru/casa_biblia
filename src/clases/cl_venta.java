@@ -160,7 +160,7 @@ public class cl_venta {
   
         try {
 
-            CallableStatement  st = c_conectar.conexion2().prepareCall("call SP_INSERTAR_AFECTOS_NOAFECTOS(?,?,?,?,?,?,?)");
+            CallableStatement  st = c_conectar.conx().prepareCall("call SP_INSERTAR_AFECTOS_NOAFECTOS(?,?,?,?,?,?,?)");
 
             st.setInt(1, pedido);
             st.setInt(2, idcliente);
