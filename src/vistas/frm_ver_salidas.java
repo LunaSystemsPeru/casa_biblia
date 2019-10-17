@@ -13,6 +13,7 @@ import forms.frm_reg_ingreso;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import casa_biblia.frm_principal;
+import clases_varios.Print_Nota_Salida;
 import forms.frm_reg_salida;
 
 /**
@@ -32,22 +33,24 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
         initComponents();
         String periodo = c_varios.obtener_periodo();
         query = "SELECT s.id_salida, s.fecha, "
-                + "s.id_almacen, s.id_salida, s.doc_destinatario,s.nom_destinatario, us.username AS nomusuario " 
-                +"FROM salida AS s " 
-                +"INNER JOIN usuarios AS us ON us.id_usuarios=s.id_usuarios";
-        c_salida.mostrar(t_ingresos, query);
+                + "s.id_almacen, s.id_salida, s.doc_destinatario,s.nom_destinatario, us.username AS nomusuario "
+                + "FROM salida AS s "
+                + "INNER JOIN usuarios AS us ON us.id_usuarios=s.id_usuarios";
+        c_salida.mostrar(t_salidas, query);
     }
 
     private void activar_botones() {
         btn_detalle.setEnabled(true);
         btn_pdf.setEnabled(true);
         btn_eliminar.setEnabled(true);
+        btn_imprimir.setEnabled(true);
     }
 
     private void desactivar_botones() {
         btn_detalle.setEnabled(false);
         btn_pdf.setEnabled(false);
         btn_eliminar.setEnabled(false);
+        btn_imprimir.setEnabled(false);
     }
 
     /**
@@ -69,14 +72,16 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
         txt_documento = new javax.swing.JTextField();
         txt_fecha = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        t_ingresos = new javax.swing.JTable();
+        t_salidas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txt_buscar = new javax.swing.JTextField();
         cbx_buscar = new javax.swing.JComboBox<>();
         jToolBar1 = new javax.swing.JToolBar();
         btn_agregar = new javax.swing.JButton();
         btn_detalle = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
         btn_pdf = new javax.swing.JButton();
+        btn_imprimir = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btn_cerrar = new javax.swing.JButton();
@@ -145,7 +150,7 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
 
         setTitle("Ver Salidas");
 
-        t_ingresos.setModel(new javax.swing.table.DefaultTableModel(
+        t_salidas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"201810-001", "15/10/2018", "FT / 001-00002451", "10469932091 | OYANGUREN GIRON LUIS ENRIQUE", "loyagureng"},
                 {"201810-002", "17/10/2018", "BL / 002-00326541", "10718449559 | DE LA CRUZ ESPINOZA ANDREA TATIANA", "loyangureng"},
@@ -156,20 +161,20 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
                 "ID.", "Fecha", "Documento", "Proveedor", "Usuario"
             }
         ));
-        t_ingresos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        t_ingresos.setShowVerticalLines(false);
-        t_ingresos.addMouseListener(new java.awt.event.MouseAdapter() {
+        t_salidas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        t_salidas.setShowVerticalLines(false);
+        t_salidas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                t_ingresosMouseClicked(evt);
+                t_salidasMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(t_ingresos);
-        if (t_ingresos.getColumnModel().getColumnCount() > 0) {
-            t_ingresos.getColumnModel().getColumn(0).setPreferredWidth(100);
-            t_ingresos.getColumnModel().getColumn(1).setPreferredWidth(100);
-            t_ingresos.getColumnModel().getColumn(2).setPreferredWidth(150);
-            t_ingresos.getColumnModel().getColumn(3).setPreferredWidth(450);
-            t_ingresos.getColumnModel().getColumn(4).setPreferredWidth(150);
+        jScrollPane1.setViewportView(t_salidas);
+        if (t_salidas.getColumnModel().getColumnCount() > 0) {
+            t_salidas.getColumnModel().getColumn(0).setPreferredWidth(100);
+            t_salidas.getColumnModel().getColumn(1).setPreferredWidth(100);
+            t_salidas.getColumnModel().getColumn(2).setPreferredWidth(150);
+            t_salidas.getColumnModel().getColumn(3).setPreferredWidth(450);
+            t_salidas.getColumnModel().getColumn(4).setPreferredWidth(150);
         }
 
         jLabel1.setText("Buscar por:");
@@ -218,6 +223,7 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
             }
         });
         jToolBar1.add(btn_detalle);
+        jToolBar1.add(jSeparator2);
 
         btn_pdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/exportar.png"))); // NOI18N
         btn_pdf.setText("Ver PDF");
@@ -231,6 +237,19 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
             }
         });
         jToolBar1.add(btn_pdf);
+
+        btn_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/printer.png"))); // NOI18N
+        btn_imprimir.setText("Imprimir");
+        btn_imprimir.setEnabled(false);
+        btn_imprimir.setFocusable(false);
+        btn_imprimir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_imprimir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_imprimirActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_imprimir);
 
         btn_eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
         btn_eliminar.setText("Eliminar");
@@ -345,7 +364,7 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
                         + "where i.numero = '" + buscar + "' "
                         + "order by i.fecha asc";
             }
-            c_salida.mostrar(t_ingresos, query);
+            c_salida.mostrar(t_salidas, query);
         }
     }//GEN-LAST:event_txt_buscarKeyPressed
 
@@ -354,14 +373,14 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
         txt_buscar.requestFocus();
     }//GEN-LAST:event_cbx_buscarActionPerformed
 
-    private void t_ingresosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_ingresosMouseClicked
+    private void t_salidasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_salidasMouseClicked
         if (evt.getClickCount() == 2) {
             activar_botones();
-            fila_seleccionada = t_ingresos.getSelectedRow();
-            c_salida.setId_salida(Integer.parseInt(t_ingresos.getValueAt(fila_seleccionada, 0).toString()));
+            fila_seleccionada = t_salidas.getSelectedRow();
+            c_salida.setId_salida(Integer.parseInt(t_salidas.getValueAt(fila_seleccionada, 0).toString()));
             c_detalle.setId_ingreso(c_salida.getId_salida());
         }
-    }//GEN-LAST:event_t_ingresosMouseClicked
+    }//GEN-LAST:event_t_salidasMouseClicked
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         frm_principal.c_permiso.setId_permiso(5);
@@ -377,7 +396,7 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
                     c_detalle.eliminar();
                     c_salida.anular();
 
-                    c_salida.mostrar(t_ingresos, query);
+                    c_salida.mostrar(t_salidas, query);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No ha seleccionado una fila");
@@ -394,9 +413,9 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
         jd_detalle.setModal(true);
         jd_detalle.setSize(900, 600);
         jd_detalle.setLocationRelativeTo(null);
-        txt_proveedor.setText(t_ingresos.getValueAt(fila_seleccionada, 3).toString());
-        txt_documento.setText(t_ingresos.getValueAt(fila_seleccionada, 2).toString());
-        txt_fecha.setText(t_ingresos.getValueAt(fila_seleccionada, 1).toString());
+        txt_proveedor.setText(t_salidas.getValueAt(fila_seleccionada, 3).toString());
+        txt_documento.setText(t_salidas.getValueAt(fila_seleccionada, 2).toString());
+        txt_fecha.setText(t_salidas.getValueAt(fila_seleccionada, 1).toString());
         c_detalle.mostrar_detalle(t_detalle);
         jd_detalle.setVisible(true);
     }//GEN-LAST:event_btn_detalleActionPerformed
@@ -412,12 +431,21 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_pdfActionPerformed
 
+    private void btn_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_imprimirActionPerformed
+        desactivar_botones();
+        int id_salida = Integer.parseInt(t_salidas.getValueAt(fila_seleccionada, 0).toString());
+        Print_Nota_Salida print = new Print_Nota_Salida();
+        print.setId_salida(id_salida);
+        print.generar_ticket();
+    }//GEN-LAST:event_btn_imprimirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
     private javax.swing.JButton btn_cerrar;
     private javax.swing.JButton btn_detalle;
     private javax.swing.JButton btn_eliminar;
+    private javax.swing.JButton btn_imprimir;
     private javax.swing.JButton btn_pdf;
     private javax.swing.JComboBox<String> cbx_buscar;
     private javax.swing.JLabel jLabel1;
@@ -427,10 +455,11 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JDialog jd_detalle;
     private javax.swing.JTable t_detalle;
-    private javax.swing.JTable t_ingresos;
+    private javax.swing.JTable t_salidas;
     private javax.swing.JTextField txt_buscar;
     private javax.swing.JTextField txt_documento;
     private javax.swing.JTextField txt_fecha;

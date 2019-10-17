@@ -99,6 +99,7 @@ public class frm_principal extends javax.swing.JFrame {
     private void autoconectar() {
         try {
             Timer timer = new Timer(35000, new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     c_usuario.autoconectar();
                 }
