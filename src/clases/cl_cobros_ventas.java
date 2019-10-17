@@ -5,6 +5,7 @@
  */
 package clases;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -69,6 +70,8 @@ public class cl_cobros_ventas {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
+    
+
 
     public int obtener_codigo() {
         int resultado = 0;
