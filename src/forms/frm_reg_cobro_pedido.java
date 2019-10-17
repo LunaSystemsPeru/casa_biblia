@@ -499,6 +499,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
     private void tex_cod_pedidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tex_cod_pedidoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             cl_pedido.setId_pedido(Integer.parseInt(tex_cod_pedido.getText()));
+            cl_pedido.setId_almacen(idalmacen);
             if (cl_pedido.validar_pedido()) {
                 cl_usuario.setId_usuario(cl_pedido.getId_usuario());
                 cl_usuario.validar_usuario();
@@ -507,7 +508,6 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                 lbl_total.setText("S/ " + c_varios.formato_totales(cl_pedido.getTotal()));
                 cbx_tipo_venta.setEnabled(true);
                 cbx_tipo_venta.requestFocus();
-
             } else {
                 JOptionPane.showMessageDialog(this, "Codigo no encontrado", "Alerta", JOptionPane.WARNING_MESSAGE);
             }
