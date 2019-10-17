@@ -81,7 +81,7 @@ public class Print_Venta_Ticket {
         c_sunat.setId(c_venta.getId_tido());
         c_sunat.validar_documento();
 
-        String serie = c_varios.ceros_izquieda_letras(4, c_venta.getSerie());
+        //String serie = c_varios.ceros_izquieda_letras(4, c_venta.getSerie());
         String numero = c_varios.ceros_izquieda_numero(7, c_venta.getNumero());
 
         c_almacen.setId(c_venta.getId_almacen());
@@ -106,6 +106,7 @@ public class Print_Venta_Ticket {
         printer.printTextLinCol(7, 1, varios_impresion.centrar_texto(40, "SUCURSAL: " + c_almacen.getNombre()));
         /*dni  ticket boleta, ruc ticket factura*/
         String documentocliente="";
+        System.out.println(c_cliente.getCodigo());
         if (c_cliente.getDocumento().length()==8) {
             documentocliente="TICKET BOLETA";
         }else{
