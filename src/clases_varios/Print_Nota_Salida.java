@@ -81,7 +81,7 @@ public class Print_Nota_Salida {
         //imprimir cabezera
         printer.printCharAtCol(1, 0, 80, "=");
         printer.printTextLinCol(2, 1, varios_impresion.texto_izquierda(40, "FECHA DE ENVIO: " + c_varios.fecha_usuario(c_salida.getFecha())) + varios_impresion.texto_derecha(40, "NOTA DE SALIDA"));
-        printer.printTextLinCol(3, 1, c_empresa.getRazon() + " - CASA DE LA BIBLIA");
+        printer.printTextLinCol(3, 1, varios_impresion.texto_izquierda(50,c_empresa.getRazon() + " - CASA DE LA BIBLIA") + varios_impresion.texto_derecha(30, "CODIGO:" + c_salida.getId_salida()));
         printer.printTextLinCol(4, 1, "RUC: " + c_empresa.getRuc());
         printer.printTextWrap(4, 5, 0, 80, c_empresa.getDireccion());
         printer.printTextLinCol(6, 1, "VENTA DE REGALOS, LIBROS, BIBLIAS Y ACCESORIOS EN GENERAL");
