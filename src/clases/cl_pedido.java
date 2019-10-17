@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import render_tablas.render_compras;
+import render_tablas.render_pedidos;
 
 /**
  *
@@ -121,7 +122,7 @@ public class cl_pedido {
             Statement st = c_conectar.conexion();
             String query = "select * "
                     + "from pedidos "
-                    + "where id_pedido = '" + id_pedido + "' ";
+                    + "where id_pedido = '" + id_pedido + "' and id_almacen = '" + id_almacen + "'";
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 existe = true;
@@ -129,7 +130,6 @@ public class cl_pedido {
                 fecha_venta = rs.getString("fecha_venta");
                 id_usuario = rs.getInt("id_usuarios");
                 id_cajero = rs.getInt("id_cajero");
-                id_almacen = rs.getInt("id_almacen");
                 total = rs.getDouble("total");
                 estado = rs.getInt("estado");
             }
@@ -165,7 +165,7 @@ public class cl_pedido {
         c_conectar.cerrar(st);
         return registrado;
     }
-    
+
     public void mostrar(JTable tabla, String query) {
         try {
             DefaultTableModel modelo = new DefaultTableModel() {
@@ -179,32 +179,30 @@ public class cl_pedido {
             ResultSet rs = c_conectar.consulta(st, query);
 
             modelo.addColumn("Id");
-            modelo.addColumn("Empresa");
             modelo.addColumn("Fecha");
-            modelo.addColumn("Documento");
-            modelo.addColumn("Proveedor");
+            modelo.addColumn("Vendedor");
             modelo.addColumn("Total");
-            modelo.addColumn("Por Pagar");
             modelo.addColumn("Estado");
 
             //Creando las filas para el JTable
             while (rs.next()) {
-                double dtotal = rs.getDouble("total");
-                double dpagado = rs.getDouble("pagado");
-                double ddiferencia = dtotal - dpagado;
-                Object[] fila = new Object[8];
-                fila[0] = rs.getInt("id_compra");
-                fila[1] = rs.getString("ruc_empresa");
-                fila[2] = rs.getString("fecha");
-                fila[3] = rs.getString("abreviado") + " | " + rs.getString("serie") + " - " + rs.getString("numero");
-                fila[4] = rs.getString("nro_documento") + " | " + rs.getString("razon_social");
-                fila[5] = dtotal;
-                fila[6] = ddiferencia;
-                if (ddiferencia > 0) {
-                    fila[7] = "POR PAGAR";
-                } else {
-                    fila[7] = "-";
+                int iestado = rs.getInt("estado");
+                String sestado = "";
+                if (iestado == 0) {
+                    sestado = "PENDIENTE";
                 }
+                if (iestado == 1) {
+                    sestado = "VENDIDO";
+                }
+                if (iestado == 2) {
+                    sestado = "ANULADO";
+                }
+                Object[] fila = new Object[5];
+                fila[0] = rs.getInt("id_pedido");
+                fila[1] = rs.getString("fecha");
+                fila[2] = rs.getString("id_usuarios");
+                fila[3] = rs.getDouble("total");
+                fila[4] = sestado;
 
                 modelo.addRow(fila);
             }
@@ -215,13 +213,10 @@ public class cl_pedido {
             tabla.setModel(modelo);
             tabla.getColumnModel().getColumn(0).setPreferredWidth(30);
             tabla.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tabla.getColumnModel().getColumn(2).setPreferredWidth(80);
-            tabla.getColumnModel().getColumn(3).setPreferredWidth(150);
-            tabla.getColumnModel().getColumn(4).setPreferredWidth(350);
-            tabla.getColumnModel().getColumn(5).setPreferredWidth(80);
-            tabla.getColumnModel().getColumn(6).setPreferredWidth(80);
-            tabla.getColumnModel().getColumn(7).setPreferredWidth(80);
-            tabla.setDefaultRenderer(Object.class, new render_compras());
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(150);
+            tabla.getColumnModel().getColumn(3).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tabla.setDefaultRenderer(Object.class, new render_pedidos());
         } catch (SQLException e) {
             System.out.print(e);
         }
