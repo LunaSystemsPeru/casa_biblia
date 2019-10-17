@@ -640,7 +640,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
 
     private void btn_finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizarActionPerformed
         
-        
+        btn_finalizar.setEnabled(false);
         double cnt_tarjeta=Double.parseDouble(txt_tarjeta.getText());
         double cnt_efectivo=Double.parseDouble(txt_efectivo.getText());
         
@@ -682,8 +682,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                 cl_cobros_ventas.setTipo_pago(1);
                 cl_cobros_ventas.registrar();
             }
-            //cl_cobros_ventas.registrar();
-            
+
             
             Statement st = c_conectar.conexion();
             String sql;
@@ -727,8 +726,9 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             }
         }
         
-        
-        
+        this.dispose();
+        frm_reg_cobro_pedido formulario = new frm_reg_cobro_pedido();
+        c_varios.llamar_ventana_normal(formulario);
     }//GEN-LAST:event_btn_finalizarActionPerformed
 
 

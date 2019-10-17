@@ -93,7 +93,7 @@ public class Print_Venta_Nota {
 
         //  Extenso e = new Extenso();
         //   e.setNumber(101.85);
-        printer.setOutSize(39 + contar, 40);
+        printer.setOutSize(31 + contar, 40);
 
         //imprimir cabezera
         printer.printTextLinCol(1, 1, varios_impresion.centrar_texto(40, "** CASA DE LA BIBLIA **"));
