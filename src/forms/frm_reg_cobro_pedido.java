@@ -32,7 +32,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
     cl_pedido cl_pedido = new cl_pedido();
     cl_usuario cl_usuario = new cl_usuario();
     cl_cliente c_cliente = new cl_cliente();
-    cl_venta cl_venta=new cl_venta();
+    cl_venta cl_venta = new cl_venta();
 
     m_mis_documentos m_mis_documentos = new m_mis_documentos();
 
@@ -592,16 +592,16 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_tarjetaKeyPressed
 
     private void btn_finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizarActionPerformed
-        
-        double cnt_tarjeta=Double.parseDouble(txt_tarjeta.getText());
-        double cnt_efectivo=Double.parseDouble(txt_efectivo.getText());
-        int cnt_afecto=0;
-        int cnt_noafecto=0;
-        
-        int venta1=-1;
-        int venta2=-1;
-        
-        
+
+        double cnt_tarjeta = Double.parseDouble(txt_tarjeta.getText());
+        double cnt_efectivo = Double.parseDouble(txt_efectivo.getText());
+        int cnt_afecto = 0;
+        int cnt_noafecto = 0;
+
+        int venta1 = -1;
+        int venta2 = -1;
+
+        /*
         
         if (cnt_afecto>0&&cnt_noafecto==0) {
             venta1= cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 1);
@@ -611,8 +611,8 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             venta1= cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 1);
             venta2= cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 0);
         }
-        
-        
+         */
+
     }//GEN-LAST:event_btn_finalizarActionPerformed
 
 

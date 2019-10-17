@@ -17,10 +17,10 @@ public class cl_conectar {
 
     private static Connection conexion = null;
     private static String bd = "casa_biblia"; // Nombre de BD.
-    private static String user = "root"; // Usuario de BD.
-    private static String password = ""; // Password de BD.
+    private static String user = "lsp_biblia"; // Usuario de BD.
+    private static String password = "rjtXWPojnz9YnU7b"; // Password de BD.
     //private static String url = "lunasystemsperu.com";
-    private static String url = "localhost";
+    private static String url = "192.168.1.6";
 
     // Driver para MySQL en este caso.
     private static String driver = "com.mysql.jdbc.Driver";
