@@ -22,6 +22,7 @@ import java.sql.Statement;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
+import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
@@ -105,19 +106,18 @@ public class Print_Venta_Ticket {
 
         printer.printTextLinCol(7, 1, varios_impresion.centrar_texto(40, "SUCURSAL: " + c_almacen.getNombre()));
         /*dni  ticket boleta, ruc ticket factura*/
-        String documentocliente="";
+        String documentocliente = "";
         System.out.println(c_cliente.getCodigo());
-        if (c_cliente.getDocumento().length()==8) {
-            documentocliente="TICKET BOLETA";
-        }else{
-            documentocliente="TICKET FACTURA";
+        if (c_cliente.getDocumento().length() == 8) {
+            documentocliente = "TICKET BOLETA";
+        } else {
+            documentocliente = "TICKET FACTURA";
         }
         printer.printTextLinCol(8, 1, varios_impresion.centrar_texto(40, documentocliente));
         printer.printTextLinCol(9, 1, varios_impresion.centrar_texto(40, c_almacen.getTicketera() + " - " + numero));
         printer.printTextLinCol(10, 1, "FECHA EMISION: " + c_varios.getFechaHora());
         printer.printTextLinCol(11, 1, "CLIENTE DOC: " + c_cliente.getDocumento());
         printer.printTextLinCol(12, 1, c_cliente.getNombre());
-        
 
         //cargar detalle de productos
         int add_filas = 0;
@@ -133,7 +133,7 @@ public class Print_Venta_Ticket {
                     + " pv.precio FROM productos_ventas AS pv "
                     + "INNER JOIN productos AS p ON p.id_producto = pv.id_producto "
                     + "WHERE  pv.id_ventas = '" + c_venta.getId_venta() + "'";
-            
+
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
@@ -192,9 +192,6 @@ public class Print_Venta_Ticket {
         add_filas++;
         printer.printTextWrap(13 + add_filas, 14 + add_filas + 1, 0, 40, numeros_texto);
 
-
-        
-
         //mostrar en consola
         printer.show();
 
@@ -219,10 +216,13 @@ public class Print_Venta_Ticket {
 
         //inciiar servicio impresion
         PrinterService printerService = new PrinterService();
-        printerService.printString("BIXOLON SRP-270 (Copiar 3)", new String(initEP));
 
         DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        DocFlavor docbyte = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+
         Doc document = new SimpleDoc(inputStream, docFormat, null);
+        Doc initdocument = new SimpleDoc(initEP, docbyte, null);
+        Doc enddocument = new SimpleDoc(cutP, docbyte, null);
 
         PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
 
@@ -231,18 +231,24 @@ public class Print_Venta_Ticket {
         if (defaultPrintService != null) {
             DocPrintJob printJob = defaultPrintService.createPrintJob();
             try {
+                printJob.print(initdocument, attributeSet);
+            } catch (PrintException e) {
+                e.printStackTrace();
+            }
+            try {
                 printJob.print(document, attributeSet);
 
-            } catch (Exception ex) {
+            } catch (PrintException ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "error al imprimir \n" + ex.getLocalizedMessage());
+            }
+            try {
+                printJob.print(enddocument, attributeSet);
+            } catch (PrintException e) {
+                e.printStackTrace();
             }
         } else {
             System.err.println("No existen impresoras instaladas");
         }
-
-        //enviar comando de corte
-        printerService.printBytes("BIXOLON SRP-270 (Copiar 3)", cutP);
-
     }
 }

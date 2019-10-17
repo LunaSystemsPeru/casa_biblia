@@ -13,6 +13,7 @@ import forms.frm_reg_ingreso;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import casa_biblia.frm_principal;
+import clases.cl_productos_salida;
 import clases_varios.Print_Nota_Salida;
 import forms.frm_reg_salida;
 
@@ -24,7 +25,7 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
 
     cl_varios c_varios = new cl_varios();
     cl_salida c_salida = new cl_salida();
-    cl_productos_ingresos c_detalle = new cl_productos_ingresos();
+    cl_productos_salida c_detalle = new cl_productos_salida();
 
     int fila_seleccionada;
     String query;
@@ -35,7 +36,8 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
         query = "SELECT s.id_salida, s.fecha, "
                 + "s.id_almacen, s.id_salida, s.doc_destinatario,s.nom_destinatario, us.username AS nomusuario "
                 + "FROM salida AS s "
-                + "INNER JOIN usuarios AS us ON us.id_usuarios=s.id_usuarios";
+                + "INNER JOIN usuarios AS us ON us.id_usuarios=s.id_usuarios "
+                + "where concat(year(s.fecha), LPAD(month(s.fecha), 2, 0)) = '" + periodo + "'";
         c_salida.mostrar(t_salidas, query);
     }
 
@@ -378,7 +380,7 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
             activar_botones();
             fila_seleccionada = t_salidas.getSelectedRow();
             c_salida.setId_salida(Integer.parseInt(t_salidas.getValueAt(fila_seleccionada, 0).toString()));
-            c_detalle.setId_ingreso(c_salida.getId_salida());
+            c_detalle.setId_salida(c_salida.getId_salida());
         }
     }//GEN-LAST:event_t_salidasMouseClicked
 
@@ -392,9 +394,9 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
                 desactivar_botones();
 
                 if (JOptionPane.OK_OPTION == confirmado) {
-                    c_detalle.setId_ingreso(c_salida.getId_salida());
+                    c_detalle.setId_salida(c_salida.getId_salida());
                     c_detalle.eliminar();
-                    c_salida.anular();
+                    c_salida.eliminar();
 
                     c_salida.mostrar(t_salidas, query);
                 }

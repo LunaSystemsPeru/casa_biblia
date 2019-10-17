@@ -30,9 +30,8 @@ public class varios_impresion {
         return texto;
     }
 
-    public static String texto_izquierda(String titulo) {
+    public static String texto_izquierda(int largo, String titulo) {
         String texto;
-        int largo = 40;
         int largo_actual = titulo.length();
         int faltantes = (largo - largo_actual);
         String espacio = "";

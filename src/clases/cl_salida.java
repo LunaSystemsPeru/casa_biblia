@@ -153,11 +153,10 @@ public class cl_salida {
         return registrado;
     }
 
-    public boolean anular() {
+    public boolean eliminar() {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
-        String query = "update salida "
-                + "set estado = '2' "
+        String query = "delete from "
                 + "where id_salida = '" + id_salida + "'";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {

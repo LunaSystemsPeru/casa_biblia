@@ -20,6 +20,7 @@ import java.sql.Statement;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
+import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
@@ -79,66 +80,60 @@ public class Print_Nota_Salida {
 
         //imprimir cabezera
         printer.printCharAtCol(1, 0, 80, "=");
-        printer.printTextLinCol(2, 1, "FECHA DE ENVIO:" + c_varios.fecha_usuario(c_salida.getFecha()));
-        printer.printTextLinCol(3, 1, c_empresa.getRazon());
-        printer.printTextLinCol(4, 1, c_empresa.getRuc());
+        printer.printTextLinCol(2, 1, varios_impresion.texto_izquierda(40, "FECHA DE ENVIO: " + c_varios.fecha_usuario(c_salida.getFecha())) + varios_impresion.texto_derecha(40, "NOTA DE SALIDA"));
+        printer.printTextLinCol(3, 1, c_empresa.getRazon() + " - CASA DE LA BIBLIA");
+        printer.printTextLinCol(4, 1, "RUC: " + c_empresa.getRuc());
         printer.printTextWrap(4, 5, 0, 80, c_empresa.getDireccion());
+        printer.printTextLinCol(6, 1, "VENTA DE REGALOS, LIBROS, BIBLIAS Y ACCESORIOS EN GENERAL");
 
-        printer.printTextLinCol(7, 1, "Partida: " + c_almacen.getDireccion());
-        printer.printTextLinCol(8, 1, "Destino: " + c_salida.getDireccion());
+        printer.printTextLinCol(8, 1, (varios_impresion.texto_izquierda(80, "Partida: " + c_almacen.getDireccion())).substring(0, 79));
+        printer.printTextLinCol(9, 1, (varios_impresion.texto_izquierda(80, "Llegada: " + c_salida.getDireccion())).substring(0, 79));
 
-        printer.printTextLinCol(8, 1, varios_impresion.centrar_texto(40, "NOTA VENTA"));
-        printer.printTextLinCol(9, 1, varios_impresion.centrar_texto(40, c_almacen.getTicketera() + " - " + numero));
-        printer.printTextLinCol(10, 1, "FECHA EMISION: " + c_varios.getFechaHora());
+        printer.printCharAtCol(11, 0, 80, "=");
+        String cabezera = varios_impresion.texto_izquierda(4, "Cant.");
+        cabezera += varios_impresion.texto_izquierda(5, "U.M.");
+        cabezera += varios_impresion.texto_izquierda(64, "Producto");
+        cabezera += varios_impresion.texto_izquierda(7, "P.Vta.");
+        printer.printTextLinCol(12, 1, cabezera);
+        printer.printCharAtCol(13, 0, 80, "=");
 
         //cargar detalle de productos
         int add_filas = 0;
         try {
             Statement st = c_conectar.conexion();
 
-            /*String query = "select p.id_producto, p.descripcion, p.marca, p.modelo, pv.cantidad, pv.precio "
-                    + "from productos_ventas as pv "
-                    + "inner join productos as p on p.id_producto = pv.id_producto "
-                    + "where pv.id_almacen = '" + c_venta.getId_almacen() + "' and id_ventas = '" + c_venta.getId_venta() + "'";*/
             String query = "SELECT ps.cantidad, p.descripcion, ps.precio "
                     + "FROM productos_salida as ps "
                     + "inner join productos as p on p.id_producto = ps.id_producto "
                     + "where ps.id_salida = '" + c_salida.getId_salida() + "' "
                     + "order by p.descripcion asc";
+            //System.out.println(query);
 
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
-                String pdescripcion = (rs.getString("descripcion").trim()).trim();
-                //si cantidad de letras de descripcion es mayor a 68 , aplicar substring a 67
-                if (pdescripcion.length() > 68) {
-                    pdescripcion = pdescripcion.substring(0, 66);
-                }
-                if (pdescripcion.length() < 29) {
-                    pdescripcion = pdescripcion.substring(0, 26);
+                String producto = rs.getString("descripcion");
+
+                if (producto.length() > 63) {
+                    producto = producto.substring(0, 63);
                 }
 
-                int pcantidad = rs.getInt("cantidad");
-                double pprecio = rs.getDouble("precio");
-
-                String texto_linea = pcantidad + " " + pdescripcion;
+                String linea_fila = varios_impresion.texto_izquierda(4, rs.getString("cantidad"));
+                linea_fila += varios_impresion.texto_izquierda(5, "UND");
+                linea_fila += varios_impresion.texto_izquierda(64, producto);
+                linea_fila += varios_impresion.texto_derecha(7, c_varios.formato_totales(rs.getDouble("precio")));
 
                 //imprimir linea producto
-                printer.printTextWrap(11 + add_filas, 15 + add_filas + 1, 0, 40, texto_linea);
+                printer.printTextLinCol(14 + add_filas, 1, linea_fila);
                 add_filas++;
 
-                //si cantidad de letras de descripcion es mayor a 28 saltar una linea
-                if (texto_linea.length() > 28) {
-                    add_filas++;
-                }
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        //imprimir pie de ticket
-        add_filas++;
-        add_filas++;
+        //imprimir pie de salida
+        printer.printCharAtCol(64, 0, 80, "=");
 
         //mostrar en consola
         printer.show();
@@ -164,10 +159,14 @@ public class Print_Nota_Salida {
 
         //inciiar servicio impresion
         PrinterService printerService = new PrinterService();
-        printerService.printString("BIXOLON SRP-270 (Copiar 3)", new String(initEP));
+        //printerService.printBytes("BIXOLON SRP-270 (Copiar 3)", initEP);
 
         DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        DocFlavor docbyte = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+        
         Doc document = new SimpleDoc(inputStream, docFormat, null);
+        Doc initdocument = new SimpleDoc(initEP, docbyte, null);
+        Doc enddocument = new SimpleDoc(cutP, docbyte, null);
 
         PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
 
@@ -176,18 +175,29 @@ public class Print_Nota_Salida {
         if (defaultPrintService != null) {
             DocPrintJob printJob = defaultPrintService.createPrintJob();
             try {
+                printJob.print(initdocument, attributeSet);
+            } catch (PrintException e) {
+                e.printStackTrace();
+            }
+            try {
                 printJob.print(document, attributeSet);
 
-            } catch (Exception ex) {
+            } catch (PrintException ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "error al imprimir \n" + ex.getLocalizedMessage());
+            }
+            try {
+                printJob.print(enddocument, attributeSet);
+            } catch (PrintException e) {
+                e.printStackTrace();
             }
         } else {
             System.err.println("No existen impresoras instaladas");
         }
 
         //enviar comando de corte
-        printerService.printBytes("BIXOLON SRP-270 (Copiar 3)", cutP);
+        //printerService.printBytes("BIXOLON SRP-270 (Copiar 3)", cutP);
 
     }
+
 }

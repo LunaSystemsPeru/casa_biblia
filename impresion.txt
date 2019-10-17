@@ -5,22 +5,21 @@ JR. MANUEL RUIZ NRO 612 INTERIOR - CASCO
  URBANO - CHIMBOTE - SANTA -ANCASH      
                                         
            SUCURSAL: ALMACEN            
-             TICKET BOLETA              
-              - - 0000023               
-FECHA EMISION: 17/10/2019 16:43:14      
-CLIENTE DOC: 70667181                   
-BRUNO ALVA SAMUEL FLORENTINO JOSE       
+               NOTA VENTA               
+              1 - 0000000               
+FECHA EMISION: 17/10/2019 17:41:03      
                                         
-1 1 PAR DE PERILLAS PARA GUITARRA       
-                             x      3.00
-1 1 UNIDAD DE LAZO DE DAMA 2020         
-                             x      1.00
+1 RVR 1960 SUPER GIGANTE CON REFERENCIAS
+ EN CAJA 9781433646669       x    129.00
                                         
-                     SUB TOTAL      3.39
-                           IGV      0.61
-                         TOTAL      4.00
+                         TOTAL    129.00
                                         
-CUATRO 0/100 SOLES                      
+CIENTO VEINTE Y NUEVE 0/100 SOLES       
+                                        
+                                        
+                                        
+                                        
+                                        
                                         
                                         
                                         

@@ -36,35 +36,33 @@ import org.json.simple.parser.ParseException;
  * @author Flavio
  */
 public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
-
+    
     cl_conectar c_conectar = new cl_conectar();
-
+    
     cl_varios c_varios = new cl_varios();
-
+    
     cl_pedido cl_pedido = new cl_pedido();
     cl_usuario cl_usuario = new cl_usuario();
     cl_cliente c_cliente = new cl_cliente();
-    cl_venta cl_venta=new cl_venta();
-    cl_cobros_ventas cl_cobros_ventas=new cl_cobros_ventas();
-    cl_productos_ventas cl_productos_ventas=new cl_productos_ventas();
-    cl_documento_almacen cl_documento_almacen=new cl_documento_almacen();
+    cl_venta cl_venta = new cl_venta();
+    cl_cobros_ventas cl_cobros_ventas = new cl_cobros_ventas();
+    cl_productos_ventas cl_productos_ventas = new cl_productos_ventas();
+    cl_documento_almacen cl_documento_almacen = new cl_documento_almacen();
     
     int idalmacen = frm_principal.c_almacen.getId();
-    int tido=-1;
-
+    int tido = -1;
+    
     m_mis_documentos m_mis_documentos = new m_mis_documentos();
     
-    Print_Venta_Ticket print_Venta_Ticket=new Print_Venta_Ticket();
-    Print_Venta_Nota print_Venta_Nota=new Print_Venta_Nota();
+    Print_Venta_Ticket print_Venta_Ticket = new Print_Venta_Ticket();
+    Print_Venta_Nota print_Venta_Nota = new Print_Venta_Nota();
     
-    
-
     public frm_reg_cobro_pedido() {
         initComponents();
-
+        
         m_mis_documentos.cbx_documentos_venta(cbx_tido);
     }
-
+    
     private void calcular_suma() {
         double efectivo = 0;
         if (c_varios.esDecimal(txt_efectivo.getText())) {
@@ -74,24 +72,25 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
         if (c_varios.esDecimal(txt_tarjeta.getText())) {
             tarjeta = Double.parseDouble(txt_tarjeta.getText());
         }
-
+        
         double total = cl_pedido.getTotal();
         double suma = efectivo + tarjeta;
-
+        
         double faltante = 0;
         if (total > suma) {
             faltante = total - suma;
         }
-
+        
         double vuelto = 0;
         if (suma > total) {
             vuelto = suma - total;
         }
-
+        
         lbl_suma_pago.setText("S/ " + c_varios.formato_totales(suma));
         lbl_faltante.setText("S/ " + c_varios.formato_totales(faltante));
         lbl_vuelto.setText("S/ " + c_varios.formato_totales(vuelto));
     }
+    
     private void llenar_guardar() {
         c_cliente.setDocumento(txt_doc_cliente.getText());
         c_cliente.setNombre(txt_nom_cliente.getText());
@@ -511,7 +510,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Codigo no encontrado", "Alerta", JOptionPane.WARNING_MESSAGE);
             }
-
+            
         }
     }//GEN-LAST:event_tex_cod_pedidoKeyPressed
 
@@ -531,11 +530,11 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             
             cla_mis_documentos cla_tido = (cla_mis_documentos) cbx_tido.getSelectedItem();
             tido = cla_tido.getId_tido();
-            if (tido==2) {
-                c_cliente.setCodigo(2); 
+            if (tido == 2) {
+                c_cliente.setCodigo(2);
                 txt_efectivo.setEnabled(true);
                 txt_efectivo.requestFocus();
-            }else if (tido==9) {
+            } else if (tido == 9) {
                 txt_doc_cliente.setEnabled(true);
                 txt_doc_cliente.requestFocus();
             }
@@ -561,7 +560,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                             //Lo mostramos
                             String datos = cl_json_entidad.showJSONDNIL(json);
                             txt_nom_cliente.setText(datos);
-                            llenar_guardar(); 
+                            llenar_guardar();
                         } catch (ParseException e) {
                             JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR DNI " + e.getLocalizedMessage());
                         }
@@ -580,7 +579,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                             //Lo mostramos
                             String[] datos = cl_json_entidad.showJSONRUC_JMP(json);
                             txt_nom_cliente.setText(datos[0]);
-                            llenar_guardar(); 
+                            llenar_guardar();
                         } catch (ParseException e) {
                             JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR RUC " + e.getLocalizedMessage());
                         }
@@ -641,12 +640,11 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
     private void btn_finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizarActionPerformed
         
         btn_finalizar.setEnabled(false);
-        double cnt_tarjeta=Double.parseDouble(txt_tarjeta.getText());
-        double cnt_efectivo=Double.parseDouble(txt_efectivo.getText());
+        double cnt_tarjeta = Double.parseDouble(txt_tarjeta.getText());
+        double cnt_efectivo = Double.parseDouble(txt_efectivo.getText());
         
-        
-        
-        if (tido==2) {
+        if (tido == 2) {
+            cl_documento_almacen.setId_tido(tido);
             cl_documento_almacen.setId_almacen(idalmacen);
             cl_documento_almacen.comprobar_documento();
             
@@ -666,30 +664,28 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             cl_venta.setId_venta(cl_venta.obtener_codigo());
             cl_venta.registrar();
             
-            
             cl_cobros_ventas.setFecha(c_varios.getFechaActual());
             cl_cobros_ventas.setId_venta(cl_venta.getId_venta());
             
-            if (cnt_tarjeta>0) {
+            if (cnt_tarjeta > 0) {
                 cl_cobros_ventas.setId_cobro(cl_cobros_ventas.obtener_codigo());
                 cl_cobros_ventas.setMonto(cnt_tarjeta);
                 cl_cobros_ventas.setTipo_pago(2);
                 cl_cobros_ventas.registrar();
             }
-            if (cnt_efectivo>0) {
+            if (cnt_efectivo > 0) {
                 cl_cobros_ventas.setId_cobro(cl_cobros_ventas.obtener_codigo());
                 cl_cobros_ventas.setMonto(cnt_efectivo);
                 cl_cobros_ventas.setTipo_pago(1);
                 cl_cobros_ventas.registrar();
             }
-
             
             Statement st = c_conectar.conexion();
             String sql;
-            sql = "SELECT p.id_producto, p.costo, dpc.cantidad,dpc.precio " +
-                    "	FROM productos_pedidos AS dpc " +
-                    "	INNER JOIN productos AS p ON dpc.id_producto = p.id_producto" +
-                    "	WHERE dpc.id_pedido= "+cl_pedido.getId_pedido();
+            sql = "SELECT p.id_producto, p.costo, dpc.cantidad,dpc.precio "
+                    + "	FROM productos_pedidos AS dpc "
+                    + "	INNER JOIN productos AS p ON dpc.id_producto = p.id_producto"
+                    + "	WHERE dpc.id_pedido= " + cl_pedido.getId_pedido();
             ResultSet rs = c_conectar.consulta(st, sql);
             try {
                 while (rs.next()) {
@@ -704,22 +700,21 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                 print_Venta_Nota.setId_almacen(idalmacen);
                 print_Venta_Nota.generar_ticket();
                 
-                
             } catch (SQLException ex) {
                 Logger.getLogger(frm_reg_cobro_pedido.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else if (tido==9) {
-            int venta1=-1;
-            int venta2=-1;
-
-            venta1= cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 1);
-            venta2= cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 0);
-            if (venta1>0) {
+        } else if (tido == 9) {
+            int venta1 = -1;
+            int venta2 = -1;
+            
+            venta1 = cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 1);
+            venta2 = cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 0);
+            if (venta1 > 0) {
                 print_Venta_Ticket.setId_venta(venta1);
                 print_Venta_Ticket.setId_almacen(idalmacen);
                 print_Venta_Ticket.generar_ticket();
             }
-            if (venta2>0) {
+            if (venta2 > 0) {
                 print_Venta_Ticket.setId_almacen(idalmacen);
                 print_Venta_Ticket.setId_venta(venta2);
                 print_Venta_Ticket.generar_ticket();
