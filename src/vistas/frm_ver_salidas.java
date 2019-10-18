@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import casa_biblia.frm_principal;
 import clases.cl_productos_salida;
 import clases_varios.Print_Nota_Salida;
+import clases_varios.Print_Nota_Salida_prueba;
 import forms.frm_reg_salida;
 
 /**
@@ -430,7 +431,10 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbx_buscarKeyPressed
 
     private void btn_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pdfActionPerformed
-        // TODO add your handling code here:
+        desactivar_botones();
+        int id_salida = Integer.parseInt(t_salidas.getValueAt(fila_seleccionada, 0).toString());
+        Print_Nota_Salida_prueba print = new Print_Nota_Salida_prueba();
+        print.generar_ticket();
     }//GEN-LAST:event_btn_pdfActionPerformed
 
     private void btn_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_imprimirActionPerformed

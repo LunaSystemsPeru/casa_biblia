@@ -216,25 +216,18 @@ public class Print_Venta_Ticket {
 
         //inciiar servicio impresion
         PrinterService printerService = new PrinterService();
+        PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
+
+        printerService.printBytes(defaultPrintService.getName(), initEP);
 
         DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
-        DocFlavor docbyte = DocFlavor.BYTE_ARRAY.AUTOSENSE;
 
         Doc document = new SimpleDoc(inputStream, docFormat, null);
-        Doc initdocument = new SimpleDoc(initEP, docbyte, null);
-        Doc enddocument = new SimpleDoc(cutP, docbyte, null);
 
         PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
 
-        PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
-
         if (defaultPrintService != null) {
             DocPrintJob printJob = defaultPrintService.createPrintJob();
-            try {
-                printJob.print(initdocument, attributeSet);
-            } catch (PrintException e) {
-                e.printStackTrace();
-            }
             try {
                 printJob.print(document, attributeSet);
 
@@ -242,13 +235,10 @@ public class Print_Venta_Ticket {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "error al imprimir \n" + ex.getLocalizedMessage());
             }
-            try {
-                printJob.print(enddocument, attributeSet);
-            } catch (PrintException e) {
-                e.printStackTrace();
-            }
         } else {
             System.err.println("No existen impresoras instaladas");
         }
+        //enviar comando de corte
+        printerService.printBytes(defaultPrintService.getName(), cutP);
     }
 }

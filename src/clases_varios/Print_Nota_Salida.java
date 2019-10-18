@@ -133,7 +133,7 @@ public class Print_Nota_Salida {
         }
 
         //imprimir pie de salida
-        printer.printCharAtCol(64, 0, 80, "=");
+        printer.printCharAtCol(63, 0, 80, "=");
 
         //mostrar en consola
         printer.show();
@@ -159,26 +159,16 @@ public class Print_Nota_Salida {
 
         //inciiar servicio impresion
         PrinterService printerService = new PrinterService();
-        //printerService.printBytes("BIXOLON SRP-270 (Copiar 3)", initEP);
+        PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
+        //printerService.printBytes(defaultPrintService.getName(), initEP);
 
         DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
-        DocFlavor docbyte = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-        
+
         Doc document = new SimpleDoc(inputStream, docFormat, null);
-        Doc initdocument = new SimpleDoc(initEP, docbyte, null);
-        Doc enddocument = new SimpleDoc(cutP, docbyte, null);
-
         PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
-
-        PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
 
         if (defaultPrintService != null) {
             DocPrintJob printJob = defaultPrintService.createPrintJob();
-            try {
-                printJob.print(initdocument, attributeSet);
-            } catch (PrintException e) {
-                e.printStackTrace();
-            }
             try {
                 printJob.print(document, attributeSet);
 
@@ -186,18 +176,10 @@ public class Print_Nota_Salida {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "error al imprimir \n" + ex.getLocalizedMessage());
             }
-            try {
-                printJob.print(enddocument, attributeSet);
-            } catch (PrintException e) {
-                e.printStackTrace();
-            }
+
         } else {
             System.err.println("No existen impresoras instaladas");
         }
-
-        //enviar comando de corte
-        //printerService.printBytes("BIXOLON SRP-270 (Copiar 3)", cutP);
-
     }
 
 }
