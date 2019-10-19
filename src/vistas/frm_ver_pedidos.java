@@ -7,6 +7,8 @@ package vistas;
 
 import casa_biblia.frm_principal;
 import clases.cl_pedido;
+import clases.cl_varios;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -15,9 +17,12 @@ import clases.cl_pedido;
 public class frm_ver_pedidos extends javax.swing.JInternalFrame {
 
     cl_pedido c_pedido = new cl_pedido();
-    
+    cl_varios c_varios = new cl_varios();
+
     String query = "";
+
     int id_almacen = frm_principal.c_almacen.getId();
+
     /**
      * Creates new form frm_ver_pedidos
      */
@@ -25,7 +30,7 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
         initComponents();
         query = "select * "
                 + "from pedidos "
-                + "where id_almacen = '"+id_almacen+"' and concat(year(fecha), lpad(month(fecha), 2, 0)) = '201910'";
+                + "where id_almacen = '" + id_almacen + "' and concat(year(fecha), lpad(month(fecha), 2, 0)) = '201910'";
         c_pedido.mostrar(t_pedidos, query);
     }
 
@@ -44,6 +49,9 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_pedidos = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        cbx_tipo_busqueda = new javax.swing.JComboBox<>();
+        txt_buscar = new javax.swing.JTextField();
 
         setTitle("Ver Pedidos");
 
@@ -51,6 +59,7 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/clipboard_text.png"))); // NOI18N
         jButton2.setText("ver Detalle");
+        jButton2.setEnabled(false);
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -58,6 +67,7 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
         jButton1.setText("Anular");
+        jButton1.setEnabled(false);
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -88,6 +98,16 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(t_pedidos);
 
+        jLabel1.setText("Buscar:");
+
+        cbx_tipo_busqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FECHA", "PERIODO" }));
+
+        txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_buscarKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,7 +115,15 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbx_tipo_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -103,7 +131,12 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_tipo_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -114,13 +147,42 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void txt_buscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            int tipo = cbx_tipo_busqueda.getSelectedIndex();
+            String texto = txt_buscar.getText().trim();
+            if (tipo == 0) {
+                if (texto.length() == 10) {
+                    texto = c_varios.fecha_myql(texto);
+                    query = "select * "
+                            + "from pedidos "
+                            + "where id_almacen = '" + id_almacen + "' and fecha = '" + texto + "'";
+                }
+            }
+
+            if (tipo == 1) {
+                if (texto.length() == 6) {
+                    query = "select * "
+                            + "from pedidos "
+                            + "where id_almacen = '" + id_almacen + "' and concat(year(fecha), lpad(month(fecha), 2, 0)) = '" + texto + "'";
+
+                }
+            }
+
+            c_pedido.mostrar(t_pedidos, query);
+        }
+    }//GEN-LAST:event_txt_buscarKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbx_tipo_busqueda;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable t_pedidos;
+    private javax.swing.JTextField txt_buscar;
     // End of variables declaration//GEN-END:variables
 }

@@ -103,7 +103,7 @@ public class Print_Venta_Nota {
 
         printer.printTextLinCol(7, 1, varios_impresion.centrar_texto(40, "SUCURSAL: " + c_almacen.getNombre()));
 
-        printer.printTextLinCol(8, 1, varios_impresion.centrar_texto(40, "NOTA VENTA"));
+        printer.printTextLinCol(8, 1, varios_impresion.centrar_texto(40, c_sunat.getDescripcion()));
         printer.printTextLinCol(9, 1, varios_impresion.centrar_texto(40, c_almacen.getId() + " - " + numero));
         printer.printTextLinCol(10, 1, "FECHA EMISION: " + c_varios.getFechaHora());
 
