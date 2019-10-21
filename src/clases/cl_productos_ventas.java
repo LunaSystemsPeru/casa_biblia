@@ -192,10 +192,9 @@ public class cl_productos_ventas {
                 }
             };
             //c_conectar.conectar();
-            String query = "select pv.id_producto, p.descripcion, p.marca, pv.cantidad, pv.precio, um.nombre as und_medida "
+            String query = "select pv.id_producto, p.descripcion, p.cod_externo, pv.cantidad, pv.precio  "
                     + "from productos_ventas as pv "
                     + "inner join productos as p on p.id_producto = pv.id_producto "
-                    + "inner join unidades_medida as um on um.id_unidad = p.id_unidad " 
                     + "where id_ventas = '" + id_venta + "' "
                     + "order by p.descripcion asc";
             Statement st = c_conectar.conexion();
@@ -205,7 +204,7 @@ public class cl_productos_ventas {
             //Establecer como cabezeras el nombre de las colimnas
             modelo.addColumn("Id");
             modelo.addColumn("Producto");
-            modelo.addColumn("Marca");
+            modelo.addColumn("CodExterno");
             modelo.addColumn("Cant.");
             modelo.addColumn("Precio");
             modelo.addColumn("Subtotal");
@@ -214,8 +213,8 @@ public class cl_productos_ventas {
             while (rs.next()) {
                 Object[] fila = new Object[6];
                 fila[0] = rs.getInt("id_producto");
-                fila[1] = (rs.getString("descripcion").trim() + " x " + rs.getString("und_medida").trim()).trim();
-                fila[2] = rs.getString("marca").trim();
+                fila[1] = (rs.getString("descripcion").trim() + " x UND").trim();
+                fila[2] = rs.getString("cod_externo").trim();
                 int pcantidad = rs.getInt("cantidad");
                 double pprecio = rs.getDouble("precio");
                 double pparcial = pcantidad * pprecio;

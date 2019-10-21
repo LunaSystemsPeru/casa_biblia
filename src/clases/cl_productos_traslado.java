@@ -122,7 +122,7 @@ public class cl_productos_traslado {
                 }
             };
             //c_conectar.conectar();
-            String query = "select pt.id_producto, p.descripcion, p.marca, p.precio, pt.c_enviado, pt.c_recibido "
+            String query = "select pt.id_producto, p.descripcion, p.precio, p.cod_externo, pt.c_enviado, pt.c_recibido "
                     + "from productos_traslados as pt "
                     + "inner join productos as p on p.id_producto = pt.id_producto "
                     + "where pt.id_traslado = '" + id_traslado + "'";
@@ -134,7 +134,7 @@ public class cl_productos_traslado {
             //Establecer como cabezeras el nombre de las colimnas
             modelo.addColumn("Id");
             modelo.addColumn("Producto");
-            modelo.addColumn("Marca");
+            modelo.addColumn("Cod. Externo");
             modelo.addColumn("Precio");
             modelo.addColumn("C. enviada");
             modelo.addColumn("C. recibido");
@@ -144,7 +144,7 @@ public class cl_productos_traslado {
                 Object[] fila = new Object[6];
                 fila[0] = rs.getInt("id_producto");
                 fila[1] = (rs.getString("descripcion").trim()).trim();
-                fila[2] = rs.getString("marca").trim();
+                fila[2] = rs.getString("cod_externo").trim();
                 int tcenviado = rs.getInt("c_enviado");
                 double pprecio = rs.getDouble("precio");
                 fila[3] = c_varios.formato_totales(pprecio);
