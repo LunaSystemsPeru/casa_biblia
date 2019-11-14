@@ -713,6 +713,9 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             int venta1=-1;
             int venta2=-1;
 
+            // 0 AFECTO
+            // 1 NO AFECTO
+            
             venta1= cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 1);
             venta2= cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 0);
             if (venta1>0) {
