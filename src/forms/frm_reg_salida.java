@@ -46,7 +46,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
     cl_producto c_producto = new cl_producto();
     cl_productos_almacen c_producto_almacen = new cl_productos_almacen();
     cl_documento_almacen c_doc_tienda = new cl_documento_almacen();
-    cl_tipo_salida c_tipo_salida=new cl_tipo_salida();
+    cl_tipo_salida c_tipo_salida = new cl_tipo_salida();
 
     m_documentos_sunat m_documentos = new m_documentos_sunat();
     m_almacen m_almacen = new m_almacen();
@@ -68,8 +68,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         txt_fecha.requestFocus();
         txt_nom_tienda.setText(frm_principal.c_almacen.getNombre());
         modelo_ingreso();
-        c_tipo_salida.cbx_tipo_salida(cbx_tido); 
-        
+        c_tipo_salida.cbx_tipo_salida(cbx_tido);
 
     }
 
@@ -288,11 +287,11 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
             }
         });
         txt_ruc.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_rucKeyPressed(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_rucKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_rucKeyPressed(evt);
             }
         });
 
@@ -304,6 +303,11 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         txt_nom_tienda.setEnabled(false);
 
         txt_direccion.setEnabled(false);
+        txt_direccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_direccionKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -326,11 +330,8 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                             .addComponent(txt_ruc, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(cbx_tido, javax.swing.GroupLayout.Alignment.TRAILING, 0, 207, Short.MAX_VALUE)
                             .addComponent(txt_fecha, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_direccion, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txt_razon_social))))
+                    .addComponent(txt_direccion, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txt_razon_social))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -655,7 +656,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
     private void cbx_tidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tidoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             cl_tipo_salida tipo_salida = (cl_tipo_salida) cbx_tido.getSelectedItem();
-            c_salida.setId_tido(tipo_salida.getId_tipo_salida());
+            c_salida.setId_tipo(tipo_salida.getId_tipo_salida());
             c_doc_tienda.setId_tido(tipo_salida.getId_tipo_salida());
             c_doc_tienda.setId_almacen(id_almacen);
             c_doc_tienda.comprobar_documento();
@@ -676,28 +677,31 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
 
             if (documento.length() > 0) {
                 if (documento.length() == 8) {
+                    JOptionPane.showMessageDialog(null, "BUSCANDO DATOS DEL DOCUMENTO INGRESADO, POR FAVOR ESPERE");
                     //buscar dni en reniec
                     try {
                         String json = cl_json_entidad.getJSONDNI_LUNASYSTEMS(documento);
                         //Lo mostramos
                         String datos = cl_json_entidad.showJSONDNIL(json);
                         txt_razon_social.setText(datos);
-                        txt_direccion.setText(datos); 
+                        txt_direccion.setText("");
                     } catch (ParseException e) {
                         JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR  " + e.getLocalizedMessage());
 
                     }
-                    txt_buscar_productos.setEnabled(true);
-                    txt_buscar_productos.requestFocus();
+                    txt_direccion.setEnabled(true);
+                    txt_direccion.requestFocus();
 
                 }
                 if (documento.length() == 11) {
+                    JOptionPane.showMessageDialog(null, "BUSCANDO DATOS DEL DOCUMENTO INGRESADO, POR FAVOR ESPERE");
                     //buscar ruc en sunat
                     try {
                         String json = cl_json_entidad.getJSONRUC_LUNASYSTEMS(documento);
                         //Lo mostramos
                         String[] datos = cl_json_entidad.showJSONRUC_JMP(json);
                         txt_razon_social.setText(datos[0]);
+                        txt_direccion.setText(datos[1]);
                     } catch (ParseException e) {
                         JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR RUC " + e.getLocalizedMessage());
                     }
@@ -728,7 +732,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                 if (c_producto.validar_id()) {
                     //validar que no existe en la tabla
                     if (valida_tabla(c_producto.getId())) {
-                        
+
                         c_producto_almacen.setProducto(c_producto.getId());
                         c_producto_almacen.validar_id();
                         txt_precio.setText(c_varios.formato_numero(c_producto.getPrecio()));
@@ -816,6 +820,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
 //            c_ingreso.setTc(Double.parseDouble(txt_tc.getText()));
             c_salida.setDocumento(txt_ruc.getText());
             c_salida.setDatos(txt_razon_social.getText());
+            c_salida.setDireccion(txt_direccion.getText());
             c_salida.obtener_codigo();
 
             boolean registrado = c_salida.registrar();
@@ -893,6 +898,15 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
     private void txt_rucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_rucActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_rucActionPerformed
+
+    private void txt_direccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_direccionKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_direccion.getText().length() > 10) {
+                txt_buscar_productos.setEnabled(true);
+                txt_buscar_productos.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_direccionKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -16,6 +16,7 @@ import clases.cl_usuario;
 import clases.cl_varios;
 import clases.cl_venta;
 import clases_autocomplete.cla_mis_documentos;
+import clases_varios.Print_Separacion_Ticket;
 import clases_varios.Print_Venta_Nota;
 import clases_varios.Print_Venta_Ticket;
 import java.awt.event.KeyEvent;
@@ -44,20 +45,18 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
     cl_pedido cl_pedido = new cl_pedido();
     cl_usuario cl_usuario = new cl_usuario();
     cl_cliente c_cliente = new cl_cliente();
-    cl_venta cl_venta=new cl_venta();
-    cl_cobros_ventas cl_cobros_ventas=new cl_cobros_ventas();
-    cl_productos_ventas cl_productos_ventas=new cl_productos_ventas();
-    cl_documento_almacen cl_documento_almacen=new cl_documento_almacen();
-    
+    cl_venta cl_venta = new cl_venta();
+    cl_cobros_ventas cl_cobros_ventas = new cl_cobros_ventas();
+    cl_productos_ventas cl_productos_ventas = new cl_productos_ventas();
+    cl_documento_almacen cl_documento_almacen = new cl_documento_almacen();
+
     int idalmacen = frm_principal.c_almacen.getId();
-    int tido=-1;
+    int tido = -1;
 
     m_mis_documentos m_mis_documentos = new m_mis_documentos();
-    
-    Print_Venta_Ticket print_Venta_Ticket=new Print_Venta_Ticket();
-    Print_Venta_Nota print_Venta_Nota=new Print_Venta_Nota();
-    
-    
+
+    Print_Venta_Ticket print_Venta_Ticket = new Print_Venta_Ticket();
+    Print_Venta_Nota print_Venta_Nota = new Print_Venta_Nota();
 
     public frm_reg_cobro_pedido() {
         initComponents();
@@ -92,6 +91,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
         lbl_faltante.setText("S/ " + c_varios.formato_totales(faltante));
         lbl_vuelto.setText("S/ " + c_varios.formato_totales(vuelto));
     }
+
     private void llenar_guardar() {
         c_cliente.setDocumento(txt_doc_cliente.getText());
         c_cliente.setNombre(txt_nom_cliente.getText());
@@ -129,6 +129,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         txt_nom_cliente = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        btn_crea_cliente = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         lbl_faltante = new javax.swing.JLabel();
@@ -169,11 +170,11 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
 
         tex_cod_pedido.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tex_cod_pedido.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tex_cod_pedidoKeyPressed(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 tex_cod_pedidoKeyTyped(evt);
+            }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tex_cod_pedidoKeyPressed(evt);
             }
         });
 
@@ -210,13 +211,13 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tex_cod_pedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_fecha_pedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tex_vendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -262,6 +263,9 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Enter para buscar documento.");
 
+        btn_crea_cliente.setText("Crear Cliente");
+        btn_crea_cliente.setEnabled(false);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -283,7 +287,8 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(cbx_tido, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbx_tipo_venta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(158, 158, 158))
+                        .addGap(25, 25, 25)
+                        .addComponent(btn_crea_cliente))
                     .addComponent(txt_nom_cliente))
                 .addContainerGap())
         );
@@ -292,17 +297,18 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbx_tipo_venta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbx_tido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_doc_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_crea_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_nom_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
@@ -317,6 +323,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
 
         btn_finalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/accept.png"))); // NOI18N
         btn_finalizar.setText("Pagar");
+        btn_finalizar.setEnabled(false);
         btn_finalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_finalizarActionPerformed(evt);
@@ -499,6 +506,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
     private void tex_cod_pedidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tex_cod_pedidoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             cl_pedido.setId_pedido(Integer.parseInt(tex_cod_pedido.getText()));
+            cl_pedido.setId_almacen(idalmacen);
             if (cl_pedido.validar_pedido()) {
                 cl_usuario.setId_usuario(cl_pedido.getId_usuario());
                 cl_usuario.validar_usuario();
@@ -507,7 +515,6 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                 lbl_total.setText("S/ " + c_varios.formato_totales(cl_pedido.getTotal()));
                 cbx_tipo_venta.setEnabled(true);
                 cbx_tipo_venta.requestFocus();
-
             } else {
                 JOptionPane.showMessageDialog(this, "Codigo no encontrado", "Alerta", JOptionPane.WARNING_MESSAGE);
             }
@@ -521,25 +528,33 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
 
     private void cbx_tipo_ventaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tipo_ventaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbx_tido.setEnabled(true);
-            cbx_tido.requestFocus();
+            if (cbx_tipo_venta.getSelectedIndex() == 1) {
+                m_mis_documentos.cbx_documentos_separacion(cbx_tido);
+                tido = 11;
+                txt_doc_cliente.setEnabled(true);
+                txt_doc_cliente.requestFocus();
+            } else {
+                cbx_tido.setEnabled(true);
+                cbx_tido.requestFocus();
+
+            }
         }
     }//GEN-LAST:event_cbx_tipo_ventaKeyPressed
 
     private void cbx_tidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbx_tidoKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            
+
             cla_mis_documentos cla_tido = (cla_mis_documentos) cbx_tido.getSelectedItem();
             tido = cla_tido.getId_tido();
-            if (tido==2) {
-                c_cliente.setCodigo(2); 
+            if (tido == 2) {
+                c_cliente.setCodigo(2);
                 txt_efectivo.setEnabled(true);
                 txt_efectivo.requestFocus();
-            }else if (tido==9) {
+            } else if (tido == 9) {
                 txt_doc_cliente.setEnabled(true);
                 txt_doc_cliente.requestFocus();
             }
-            
+
         }
     }//GEN-LAST:event_cbx_tidoKeyPressed
 
@@ -553,7 +568,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                     if (c_cliente.comprobar_cliente_doc()) {
                         c_cliente.comprobar_cliente();
                         txt_nom_cliente.setText(c_cliente.getNombre());
-                        
+
                     } else {
                         try {
                             Notification.show("Validar Cliente", "Se esta validando el DNI en RENIEC", Notification.NICON_LIGHT_THEME);
@@ -561,7 +576,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                             //Lo mostramos
                             String datos = cl_json_entidad.showJSONDNIL(json);
                             txt_nom_cliente.setText(datos);
-                            llenar_guardar(); 
+                            llenar_guardar();
                         } catch (ParseException e) {
                             JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR DNI " + e.getLocalizedMessage());
                         }
@@ -580,7 +595,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                             //Lo mostramos
                             String[] datos = cl_json_entidad.showJSONRUC_JMP(json);
                             txt_nom_cliente.setText(datos[0]);
-                            llenar_guardar(); 
+                            llenar_guardar();
                         } catch (ParseException e) {
                             JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR RUC " + e.getLocalizedMessage());
                         }
@@ -639,17 +654,16 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_tarjetaKeyPressed
 
     private void btn_finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizarActionPerformed
-        
-        
-        double cnt_tarjeta=Double.parseDouble(txt_tarjeta.getText());
-        double cnt_efectivo=Double.parseDouble(txt_efectivo.getText());
-        
-        
-        
-        if (tido==2) {
+
+        btn_finalizar.setEnabled(false);
+        double cnt_tarjeta = Double.parseDouble(txt_tarjeta.getText());
+        double cnt_efectivo = Double.parseDouble(txt_efectivo.getText());
+
+        if (tido == 2 || tido == 11) {
+            cl_documento_almacen.setId_tido(tido);
             cl_documento_almacen.setId_almacen(idalmacen);
             cl_documento_almacen.comprobar_documento();
-            
+
             cl_venta.setAfecto_igv(0);
             cl_venta.setEstado(2);
             cl_venta.setFecha(c_varios.getFechaActual());
@@ -658,6 +672,9 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             cl_venta.setId_pedido(cl_pedido.getId_pedido());
             cl_venta.setId_tido(tido);
             cl_venta.setId_tipo_venta(1);
+            if (tido == 11) {
+                cl_venta.setId_tipo_venta(2);
+            }
             cl_venta.setId_usuario(cl_usuario.getId_usuario());
             cl_venta.setNumero(cl_documento_almacen.getNumero());
             cl_venta.setPagado(0);
@@ -665,32 +682,29 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             cl_venta.setTotal(cl_pedido.getTotal());
             cl_venta.setId_venta(cl_venta.obtener_codigo());
             cl_venta.registrar();
-            
-            
+
             cl_cobros_ventas.setFecha(c_varios.getFechaActual());
             cl_cobros_ventas.setId_venta(cl_venta.getId_venta());
-            
-            if (cnt_tarjeta>0) {
+
+            if (cnt_tarjeta > 0) {
                 cl_cobros_ventas.setId_cobro(cl_cobros_ventas.obtener_codigo());
                 cl_cobros_ventas.setMonto(cnt_tarjeta);
                 cl_cobros_ventas.setTipo_pago(2);
                 cl_cobros_ventas.registrar();
             }
-            if (cnt_efectivo>0) {
+            if (cnt_efectivo > 0) {
                 cl_cobros_ventas.setId_cobro(cl_cobros_ventas.obtener_codigo());
                 cl_cobros_ventas.setMonto(cnt_efectivo);
                 cl_cobros_ventas.setTipo_pago(1);
                 cl_cobros_ventas.registrar();
             }
-            //cl_cobros_ventas.registrar();
-            
-            
+
             Statement st = c_conectar.conexion();
             String sql;
-            sql = "SELECT p.id_producto, p.costo, dpc.cantidad,dpc.precio " +
-                    "	FROM productos_pedidos AS dpc " +
-                    "	INNER JOIN productos AS p ON dpc.id_producto = p.id_producto" +
-                    "	WHERE dpc.id_pedido= "+cl_pedido.getId_pedido();
+            sql = "SELECT p.id_producto, p.costo, dpc.cantidad,dpc.precio "
+                    + "	FROM productos_pedidos AS dpc "
+                    + "	INNER JOIN productos AS p ON dpc.id_producto = p.id_producto"
+                    + "	WHERE dpc.id_pedido= " + cl_pedido.getId_pedido();
             ResultSet rs = c_conectar.consulta(st, sql);
             try {
                 while (rs.next()) {
@@ -701,41 +715,48 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                     cl_productos_ventas.setPrecio(rs.getDouble("precio"));
                     cl_productos_ventas.registrar();
                 }
-                print_Venta_Nota.setId_venta(cl_venta.getId_venta());
-                print_Venta_Nota.setId_almacen(idalmacen);
-                print_Venta_Nota.generar_ticket();
-                
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(frm_reg_cobro_pedido.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else if (tido==9) {
-            int venta1=-1;
-            int venta2=-1;
 
-            // 0 AFECTO
-            // 1 NO AFECTO
-            
-            venta1= cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 1);
-            venta2= cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 0);
-            if (venta1>0) {
+            if (tido == 2) {
+                print_Venta_Nota.setId_venta(cl_venta.getId_venta());
+                print_Venta_Nota.setId_almacen(idalmacen);
+                print_Venta_Nota.generar_ticket();
+            }
+            if (tido == 11) {
+                Print_Separacion_Ticket print_Separacion_Ticket = new Print_Separacion_Ticket();
+                print_Separacion_Ticket.setId_venta(cl_venta.getId_venta());
+                print_Separacion_Ticket.setId_almacen(cl_venta.getId_almacen());
+                print_Separacion_Ticket.generar_ticket();
+            }
+        } else if (tido == 9) {
+            int venta1 = -1;
+            int venta2 = -1;
+
+            venta1 = cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 1);
+            venta2 = cl_venta.regirtar_venta(cl_pedido.getId_pedido(), c_cliente.getCodigo(), cl_usuario.getId_usuario(), cnt_efectivo, cnt_tarjeta, 0);
+            if (venta1 > 0) {
                 print_Venta_Ticket.setId_venta(venta1);
                 print_Venta_Ticket.setId_almacen(idalmacen);
                 print_Venta_Ticket.generar_ticket();
             }
-            if (venta2>0) {
+            if (venta2 > 0) {
                 print_Venta_Ticket.setId_almacen(idalmacen);
                 print_Venta_Ticket.setId_venta(venta2);
                 print_Venta_Ticket.generar_ticket();
             }
         }
-        
-        
-        
+
+        this.dispose();
+        frm_reg_cobro_pedido formulario = new frm_reg_cobro_pedido();
+        c_varios.llamar_ventana_normal(formulario);
     }//GEN-LAST:event_btn_finalizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_crea_cliente;
     private javax.swing.JButton btn_finalizar;
     private javax.swing.JComboBox<String> cbx_tido;
     private javax.swing.JComboBox<String> cbx_tipo_venta;

@@ -32,6 +32,9 @@ import json.cl_json_entidad;
 import models.m_mis_documentos;
 import org.json.simple.parser.ParseException;
 import casa_biblia.frm_principal;
+import clases_varios.Print_Separacion_Ticket;
+import clases_varios.Print_Venta_Nota;
+import clases_varios.Print_Venta_Ticket;
 
 /**
  *
@@ -1489,40 +1492,28 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
         c_venta.setId_almacen(id_almacen);
         c_venta.validar_venta();
 
-        leer_numeros c_letras = new leer_numeros();
-        String letras_numeros = c_letras.Convertir(c_venta.getTotal() + "", true) + " SOLES";
-        System.out.println(letras_numeros);
-
         //imprimir ticket
-        if (c_venta.getId_tido() == 12) {
-            //codigo para imprimir ticket
+        if (c_venta.getId_tido() == 9) {
+            Print_Venta_Ticket print_Venta_Ticket = new Print_Venta_Ticket();
+            print_Venta_Ticket.setId_venta(c_venta.getId_venta());
+            print_Venta_Ticket.setId_almacen(c_venta.getId_almacen());
+            print_Venta_Ticket.generar_ticket();
         }
 
-        //imprimir si es nota de ventaonota de separacion
-        if (c_venta.getId_tido() == 6 || c_venta.getId_tido() == 7) {
-
-            File miDir = new File(".");
-            try {
-                Map<String, Object> parametros = new HashMap<>();
-                String path = miDir.getCanonicalPath();
-                String direccion = path + "//reports//subreports//";
-
-                System.out.println(direccion);
-                parametros.put("SUBREPORT_DIR", direccion);
-                parametros.put("JRParameter.REPORT_LOCALE", Locale.ENGLISH);
-                parametros.put("REPORT_LOCALE", Locale.ENGLISH);
-                parametros.put("p_id_venta", c_venta.getId_venta());
-                parametros.put("p_id_almacen", c_venta.getId_almacen());
-                parametros.put("p_letras_numero", letras_numeros);
-                //   c_varios.imp_reporte("rpt_documento_venta", parametros);
-                if (id_almacen == 1) {
-                    c_varios.ver_reporte("rpt_documento_venta_nota_rodson", parametros);
-                } else {
-                    c_varios.ver_reporte("rpt_documento_venta_nota", parametros);
-                }
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
-            }
+        //imprimir si es nota de venta 
+        if (c_venta.getId_tido() == 2) {
+            Print_Venta_Nota print_Venta_Nota = new Print_Venta_Nota();
+            print_Venta_Nota.setId_venta(c_venta.getId_venta());
+            print_Venta_Nota.setId_almacen(c_venta.getId_almacen());
+            print_Venta_Nota.generar_ticket();
+        }
+        
+        //imprimir si es separacion
+        if (c_venta.getId_tido() == 11) {
+            Print_Separacion_Ticket print_Separacion_Ticket = new Print_Separacion_Ticket();
+            print_Separacion_Ticket.setId_venta(c_venta.getId_venta());
+            print_Separacion_Ticket.setId_almacen(c_venta.getId_almacen());
+            print_Separacion_Ticket.generar_ticket();
         }
     }//GEN-LAST:event_btn_imprimirActionPerformed
 

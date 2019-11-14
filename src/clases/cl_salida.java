@@ -19,18 +19,16 @@ import javax.swing.table.DefaultTableModel;
 public class cl_salida {
 
     cl_conectar c_conectar = new cl_conectar();
- cl_varios c_varios = new cl_varios();
- 
+    cl_varios c_varios = new cl_varios();
+
     private int id_salida;
     private String fecha;
     private int id_almacen;
-    private int id_tido;
-    private String serie;
-    private int numero;
+    private int id_tipo;
     private String documento;
     private String datos;
+    private String direccion;
     private int id_usuario;
-    private int estado;
 
     public cl_salida() {
 
@@ -60,28 +58,12 @@ public class cl_salida {
         this.id_almacen = id_almacen;
     }
 
-    public int getId_tido() {
-        return id_tido;
+    public int getId_tipo() {
+        return id_tipo;
     }
 
-    public void setId_tido(int id_tido) {
-        this.id_tido = id_tido;
-    }
-
-    public String getSerie() {
-        return serie;
-    }
-
-    public void setSerie(String serie) {
-        this.serie = serie;
-    }
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setId_tipo(int id_tipo) {
+        this.id_tipo = id_tipo;
     }
 
     public String getDocumento() {
@@ -100,20 +82,20 @@ public class cl_salida {
         this.datos = datos;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
     public int getId_usuario() {
         return id_usuario;
     }
 
     public void setId_usuario(int id_usuario) {
         this.id_usuario = id_usuario;
-    }
-
-    public int getEstado() {
-        return estado;
-    }
-
-    public void setEstado(int estado) {
-        this.estado = estado;
     }
 
     public void obtener_codigo() {
@@ -133,11 +115,36 @@ public class cl_salida {
         }
     }
 
+    public void obtener_datos() {
+        try {
+            Statement st = c_conectar.conexion();
+            String query = "select * "
+                    + "from salida "
+                    + "where id_salida = '" + id_salida + "'";
+            ResultSet rs = c_conectar.consulta(st, query);
+
+            while (rs.next()) {
+                fecha = rs.getString("fecha");
+                id_almacen = rs.getInt("id_almacen");
+                documento = rs.getString("doc_destinatario");
+                datos = rs.getString("nom_destinatario");
+                direccion = rs.getString("direc_destinatario");
+                id_tipo = rs.getInt("id_tipo_salida");
+                id_usuario = rs.getInt("id_usuarios");
+
+            }
+            c_conectar.cerrar(rs);
+            c_conectar.cerrar(st);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+    }
+
     public boolean registrar() {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into salida "
-                + "Values (" + id_salida + ", '" + fecha + "', " + id_almacen + ", '" + id_tido + "', '" + documento + "', '" + datos + "', '" + numero + "', '" + id_usuario + "')";
+                + "Values (" + id_salida + ", '" + fecha + "', " + id_almacen + ", '" + id_tipo + "', '" + documento + "', '" + datos + "', '" + direccion + "', '" + id_usuario + "')";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;
@@ -146,11 +153,10 @@ public class cl_salida {
         return registrado;
     }
 
-    public boolean anular() {
+    public boolean eliminar() {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
-        String query = "update salida "
-                + "set estado = '2' "
+        String query = "delete from "
                 + "where id_salida = '" + id_salida + "'";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
@@ -171,7 +177,7 @@ public class cl_salida {
 
             Statement st = c_conectar.conexion();
             ResultSet rs = c_conectar.consulta(st, query);
-           
+
             //nombre de las columnas de las tablas
             modelo.addColumn("Id");
             modelo.addColumn("Fecha");
@@ -200,12 +206,11 @@ public class cl_salida {
             tabla.getColumnModel().getColumn(2).setPreferredWidth(150);
             tabla.getColumnModel().getColumn(3).setPreferredWidth(450);
             tabla.getColumnModel().getColumn(4).setPreferredWidth(100);
-            c_varios.centrar_celda(tabla,0);
-            c_varios.centrar_celda(tabla,1);
-            c_varios.centrar_celda(tabla,2);
-            c_varios.centrar_celda(tabla,4);
-            
-            
+            c_varios.centrar_celda(tabla, 0);
+            c_varios.centrar_celda(tabla, 1);
+            c_varios.centrar_celda(tabla, 2);
+            c_varios.centrar_celda(tabla, 4);
+
         } catch (SQLException e) {
             System.out.print(e);
         }

@@ -5,7 +5,6 @@
  */
 package clases_varios;
 
-import br.com.adilson.util.Extenso;
 import br.com.adilson.util.PrinterMatrix;
 import clases.cl_almacen;
 import clases.cl_cliente;
@@ -20,9 +19,6 @@ import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
@@ -82,7 +78,7 @@ public class Print_Separacion_Ticket {
 
         c_detalle.setId_venta(id_venta);
         int contar = c_detalle.contar_lineas();
-        
+
         c_sunat.setId(c_venta.getId_tido());
         c_sunat.validar_documento();
 
@@ -103,33 +99,38 @@ public class Print_Separacion_Ticket {
         printer.setOutSize(35 + contar, 40);
 
         //imprimir cabezera
-        printer.printTextLinCol(1, 1, varios_impresion.centrar_texto(40, "** SONO MUSIC IMPORT **"));
+        printer.printTextLinCol(1, 1, varios_impresion.centrar_texto(40, "** CASA DE LA BIBLIA **"));
         printer.printTextLinCol(2, 1, varios_impresion.centrar_texto(40, "RUC: " + c_empresa.getRuc()));
         printer.printTextLinCol(3, 1, varios_impresion.centrar_texto(40, c_empresa.getRazon()));
         printer.printTextWrap(3, 4, 0, 40, c_almacen.getDireccion());
 
         printer.printTextLinCol(7, 1, varios_impresion.centrar_texto(40, "SUCURSAL: " + c_almacen.getNombre()));
+
         printer.printTextLinCol(8, 1, varios_impresion.centrar_texto(40, c_sunat.getDescripcion()));
-        printer.printTextLinCol(9, 1, varios_impresion.centrar_texto(40, serie + " - " + numero));
-        printer.printTextLinCol(10, 1, "FECHA SEPARACION: " + c_varios.fecha_usuario(c_venta.getFecha()));
-        printer.printTextLinCol(11, 1, "FECHA PAGO: " + c_varios.getFechaHora());
-        printer.printTextLinCol(12, 1, "CLIENTE DOC: " + c_cliente.getDocumento());
-        printer.printTextLinCol(13, 1, c_cliente.getNombre());
-        printer.printTextLinCol(14, 1, c_cliente.getDireccion());
+        printer.printTextLinCol(9, 1, varios_impresion.centrar_texto(40, c_almacen.getId() + " - " + numero));
+        printer.printTextLinCol(10, 1, "FECHA EMISION: " + c_varios.getFechaHora());
+        printer.printTextLinCol(11, 1, "CLIENTE DOC: " + c_cliente.getDocumento());
+        printer.printTextLinCol(12, 1, c_cliente.getNombre());
 
         //cargar detalle de productos
         int add_filas = 0;
         double suma_total = 0;
         try {
             Statement st = c_conectar.conexion();
-            String query = "select p.id_producto, p.descripcion, p.marca, p.modelo, pv.cantidad, pv.precio "
+
+            /*String query = "select p.id_producto, p.descripcion, p.marca, p.modelo, pv.cantidad, pv.precio "
                     + "from productos_ventas as pv "
                     + "inner join productos as p on p.id_producto = pv.id_producto "
-                    + "where pv.id_almacen = '" + c_venta.getId_almacen() + "' and id_ventas = '" + c_venta.getId_venta() + "'";
+                    + "where pv.id_almacen = '" + c_venta.getId_almacen() + "' and id_ventas = '" + c_venta.getId_venta() + "'";*/
+            String query = "SELECT p.id_producto, p.descripcion, pv.cantidad,"
+                    + " pv.precio FROM productos_ventas AS pv "
+                    + "INNER JOIN productos AS p ON p.id_producto = pv.id_producto "
+                    + "WHERE  pv.id_ventas = '" + c_venta.getId_venta() + "'";
+
             ResultSet rs = c_conectar.consulta(st, query);
 
             while (rs.next()) {
-                String pdescripcion = (rs.getString("descripcion").trim() + " " + rs.getString("marca").trim() + " " + rs.getString("modelo").trim()).trim();
+                String pdescripcion = (rs.getString("descripcion").trim()).trim();
                 //si cantidad de letras de descripcion es mayor a 68 , aplicar substring a 67
                 if (pdescripcion.length() > 68) {
                     pdescripcion = pdescripcion.substring(0, 66);
@@ -147,7 +148,7 @@ public class Print_Separacion_Ticket {
                 String texto_linea = pcantidad + " " + pdescripcion;
 
                 //imprimir linea producto
-                printer.printTextWrap(15 + add_filas, 16 + add_filas + 1, 0, 40, texto_linea);
+                printer.printTextWrap(13 + add_filas, 15 + add_filas + 1, 0, 40, texto_linea);
                 add_filas++;
 
                 //si cantidad de letras de descripcion es mayor a 28 saltar una linea
@@ -156,7 +157,7 @@ public class Print_Separacion_Ticket {
                 }
 
                 //imprimir linea parcial
-                printer.printTextLinCol(15 + add_filas, 29, " x " + varios_impresion.texto_derecha(9, sparcial));
+                printer.printTextLinCol(13 + add_filas, 29, " x " + varios_impresion.texto_derecha(9, sparcial));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -170,19 +171,22 @@ public class Print_Separacion_Ticket {
 
         add_filas++;
         add_filas++;
-        printer.printTextLinCol(15 + add_filas, 1, varios_impresion.texto_derecha(30, "TOTAL"));
-        printer.printTextLinCol(15 + add_filas, 31, varios_impresion.texto_derecha(10, c_varios.formato_totales(total)));
+
+        printer.printTextLinCol(13 + add_filas, 1, varios_impresion.texto_derecha(30, "TOTAL"));
+        printer.printTextLinCol(13 + add_filas, 31, varios_impresion.texto_derecha(10, c_varios.formato_totales(total)));
 
         add_filas++;
-        printer.printTextLinCol(15 + add_filas, 1, varios_impresion.texto_derecha(30, "PAGADO"));
-        printer.printTextLinCol(15 + add_filas, 31, varios_impresion.texto_derecha(10, c_varios.formato_totales(pagado)));
+
+        printer.printTextLinCol(13 + add_filas, 1, varios_impresion.texto_derecha(30, "PAGADO"));
+        printer.printTextLinCol(13 + add_filas, 31, varios_impresion.texto_derecha(10, c_varios.formato_totales(c_venta.getPagado())));
 
         add_filas++;
-        printer.printTextLinCol(15 + add_filas, 1, varios_impresion.texto_derecha(30, "PENDIENTE"));
-        printer.printTextLinCol(15 + add_filas, 31, varios_impresion.texto_derecha(10, c_varios.formato_totales(pendiente)));
+
+        printer.printTextLinCol(13 + add_filas, 1, varios_impresion.texto_derecha(30, "PENDIENTE"));
+        printer.printTextLinCol(13 + add_filas, 31, varios_impresion.texto_derecha(10, c_varios.formato_totales(pendiente)));
 
         add_filas++;
-        printer.printTextWrap(15 + add_filas, 14 + add_filas + 1, 0, 40, numeros_texto);
+        printer.printTextWrap(13 + add_filas, 14 + add_filas + 1, 0, 40, numeros_texto);
 
         //mostrar en consola
         printer.show();
@@ -208,14 +212,15 @@ public class Print_Separacion_Ticket {
 
         //inciiar servicio impresion
         PrinterService printerService = new PrinterService();
-        printerService.printString("BIXOLON SRP-270", new String(initEP));
+        PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
+
+        printerService.printBytes(defaultPrintService.getName(), initEP);
 
         DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+
         Doc document = new SimpleDoc(inputStream, docFormat, null);
 
         PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
-
-        PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
 
         if (defaultPrintService != null) {
             DocPrintJob printJob = defaultPrintService.createPrintJob();
@@ -229,9 +234,7 @@ public class Print_Separacion_Ticket {
         } else {
             System.err.println("No existen impresoras instaladas");
         }
-
         //enviar comando de corte
-        printerService.printBytes("BIXOLON SRP-270", cutP);
-
+        printerService.printBytes(defaultPrintService.getName(), cutP);
     }
 }

@@ -39,6 +39,7 @@ import vistas.frm_ver_ingresos;
 import vistas.frm_ver_inventarios;
 import vistas.frm_ver_kardex_diario;
 import vistas.frm_ver_mis_productos2;
+import vistas.frm_ver_pedidos;
 import vistas.frm_ver_productos_tiendas;
 import vistas.frm_ver_productos_todos;
 import vistas.frm_ver_proveedores;
@@ -54,15 +55,15 @@ import vistas.rpt_ventas;
  * @author luis
  */
 public class frm_principal extends javax.swing.JFrame {
-
+    
     cl_conectar c_conectar = new cl_conectar();
     cl_varios c_varios = new cl_varios();
-
+    
     public static cl_usuario c_usuario = new cl_usuario();
     public static cl_almacen c_almacen = new cl_almacen();
     public static cl_empresa c_empresa = new cl_empresa();
     public static cl_usuario_permisos c_permiso = new cl_usuario_permisos();
-
+    
     cl_caja c_caja = new cl_caja();
     cl_grafica_mensual c_grafica;
     cl_notificaciones c_notificaciones = new cl_notificaciones();
@@ -87,17 +88,18 @@ public class frm_principal extends javax.swing.JFrame {
             System.exit(0);
         }
     }
-
+    
     private void cargar_login() {
         jd_login.setSize(318, 380);
         jd_login.setModal(true);
         jd_login.setLocationRelativeTo(null);
         jd_login.setVisible(true);
     }
-
+    
     private void autoconectar() {
         try {
             Timer timer = new Timer(35000, new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     c_usuario.autoconectar();
                 }
@@ -108,7 +110,7 @@ public class frm_principal extends javax.swing.JFrame {
             System.out.println("Error grave " + e.getLocalizedMessage());
         }
     }
-
+    
     private void auto_notificar() {
         try {
             Timer timer = new Timer(60000, new ActionListener() {
@@ -124,29 +126,29 @@ public class frm_principal extends javax.swing.JFrame {
             System.out.println("Error grave " + e.getLocalizedMessage());
         }
     }
-
+    
     private void cargar_permisos() {
         c_permiso.setId_permiso(23);
         boolean permitido23 = c_permiso.validar();
-
+        
         if (!permitido23) {
             jButton12.setEnabled(false);
         }
-
+        
         c_permiso.setId_permiso(18);
         boolean permitido18 = c_permiso.validar();
-
+        
         if (!permitido18) {
             jButton4.setEnabled(false);
         }
-
+        
         c_permiso.setId_permiso(17);
         boolean permitido17 = c_permiso.validar();
-
+        
         if (!permitido17) {
             jButton16.setEnabled(false);
         }
-
+        
         c_permiso.setId_permiso(16);
         boolean permitido16 = c_permiso.validar();
 
@@ -156,21 +158,21 @@ public class frm_principal extends javax.swing.JFrame {
          */
         c_permiso.setId_permiso(15);
         boolean permitido15 = c_permiso.validar();
-
+        
         if (!permitido15) {
             jButton23.setEnabled(false);
         }
-
+        
         c_permiso.setId_permiso(9);
         boolean permitido9 = c_permiso.validar();
-
+        
         if (!permitido9) {
             jButton13.setEnabled(false);
         }
-
+        
         c_permiso.setId_permiso(4);
         boolean permitido4 = c_permiso.validar();
-
+        
         if (!permitido4) {
             jButton19.setEnabled(false);
         }
@@ -618,6 +620,11 @@ public class frm_principal extends javax.swing.JFrame {
         jButton24.setFocusable(false);
         jButton24.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton24.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton24ActionPerformed(evt);
+            }
+        });
         jToolBar4.add(jButton24);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Product-sale-report-icon.png"))); // NOI18N
@@ -1033,23 +1040,23 @@ public class frm_principal extends javax.swing.JFrame {
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         c_almacen.setId(c_usuario.getId_almacen());
         c_almacen.validar_almacen();
-
+        
         c_empresa.setId(c_almacen.getEmpresa());
         c_empresa.validar_empresa();
-
+        
         c_permiso.setId_usuario(c_usuario.getId_usuario());
         cargar_permisos();
-
+        
         lbl_nom_tienda.setText(c_almacen.getNombre());
         lbl_empresa.setText(c_empresa.getRuc() + " | " + c_empresa.getRazon());
         lbl_usuario.setText(c_usuario.getUsername());
-
+        
         jd_login.setVisible(false);
-
+        
         c_caja.setId_almacen(c_almacen.getId());
         c_caja.setFecha(c_varios.getFechaActual());
         boolean existe_caja = c_caja.validar_caja();
-
+        
         if (!existe_caja) {
             txt_tienda.setText(c_almacen.getNombre());
             txt_fecha.setText(c_varios.fecha_usuario(c_varios.getFechaActual()));
@@ -1061,7 +1068,7 @@ public class frm_principal extends javax.swing.JFrame {
 
         //mostrar notificaciones
         auto_notificar();
-
+        
         c_grafica = new cl_grafica_mensual();
         c_grafica.llenar_series_diarias(jp_dias);
         c_grafica.llenar_series_mensuales(jp_meses);
@@ -1234,6 +1241,11 @@ public class frm_principal extends javax.swing.JFrame {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         
     }//GEN-LAST:event_formKeyPressed
+
+    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+        frm_ver_pedidos formulario = new frm_ver_pedidos();
+        c_varios.llamar_ventana(formulario);
+    }//GEN-LAST:event_jButton24ActionPerformed
 
     /**
      * @param args the command line arguments

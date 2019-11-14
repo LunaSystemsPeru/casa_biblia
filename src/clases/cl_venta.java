@@ -5,6 +5,7 @@
  */
 package clases;
 
+import static clases.cl_varios.mostrar;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import render_tablas.render_ventas;
 
 /**
@@ -154,13 +156,13 @@ public class cl_venta {
         this.id_pedido = id_pedido;
     }
 
-    public int regirtar_venta(int pedido,int idcliente,int idusuario,double efectivo, double tarjeta, int afecto){
-        
+    public int regirtar_venta(int pedido, int idcliente, int idusuario, double efectivo, double tarjeta, int afecto) {
+
         int resultado = 0;
-  
+
         try {
 
-            CallableStatement  st = c_conectar.conx().prepareCall("call SP_INSERTAR_AFECTOS_NOAFECTOS(?,?,?,?,?,?,?)");
+            CallableStatement st = c_conectar.conx().prepareCall("call SP_INSERTAR_AFECTOS_NOAFECTOS(?,?,?,?,?,?,?)");
 
             st.setInt(1, pedido);
             st.setInt(2, idcliente);
@@ -168,19 +170,20 @@ public class cl_venta {
             st.setDouble(4, efectivo);
             st.setDouble(5, tarjeta);
             st.setInt(6, afecto);
-            
+
             st.registerOutParameter(7, java.sql.Types.INTEGER);
 
             st.execute();
 
-            resultado=st.getInt(7);
-            
-        }catch(Exception ex){
-             System.out.println("error: "+ex.getMessage());
-             System.out.println(ex);
+            resultado = st.getInt(7);
+
+        } catch (Exception ex) {
+            System.out.println("error: " + ex.getMessage());
+            System.out.println(ex);
         }
         return resultado;
     }
+
     public boolean validar_venta() {
         boolean existe = false;
         try {
@@ -254,7 +257,7 @@ public class cl_venta {
         Statement st = c_conectar.conexion();
         String query = "insert into ventas "
                 + "values ('" + id_venta + "', '" + id_almacen + "', '" + fecha + "', '" + id_tido + "', '" + serie + "', '" + numero + "', "
-                + "'" + id_cliente + "', '" + id_usuario + "', '" + total + "', '0', '" + afecto_igv + "', '" + id_tipo_venta + "', '"+estado+"', '" + id_pedido + "')";
+                + "'" + id_cliente + "', '" + id_usuario + "', '" + total + "', '0', '" + afecto_igv + "', '" + id_tipo_venta + "', '" + estado + "', '" + id_pedido + "')";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;
@@ -298,7 +301,7 @@ public class cl_venta {
                     return false;
                 }
             };
-            //    TableRowSorter sorter = new TableRowSorter(mostrar);
+            TableRowSorter sorter = new TableRowSorter(tmodelo);
             Statement st = c_conectar.conexion();
             ResultSet rs = c_conectar.consulta(st, query);
 
@@ -371,7 +374,7 @@ public class cl_venta {
             tabla.getColumnModel().getColumn(7).setPreferredWidth(80);
             tabla.getColumnModel().getColumn(8).setPreferredWidth(0);
             tabla.setDefaultRenderer(Object.class, new render_ventas());
-            //   t_productos.setRowSorter(sorter);
+            tabla.setRowSorter(sorter);
 
         } catch (SQLException e) {
             System.out.print(e);

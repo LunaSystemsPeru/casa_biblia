@@ -10,6 +10,7 @@ import clases.cl_conectar;
 import clases.cl_pedido;
 import clases.cl_producto;
 import clases.cl_productos_almacen;
+import clases.cl_productos_pedido;
 import clases.cl_varios;
 import clases_autocomplete.cla_producto;
 import com.mxrck.autocompleter.AutoCompleterCallback;
@@ -36,6 +37,7 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
     cl_producto c_producto = new cl_producto();
     cl_productos_almacen c_producto_almacen = new cl_productos_almacen();
     cl_pedido c_pedido = new cl_pedido();
+    cl_productos_pedido c_productos_pedido = new cl_productos_pedido();
 
     static DefaultTableModel detalle;
     int fila_seleccionada;
@@ -432,7 +434,7 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_buscar_producto))
+                        .addComponent(txt_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -445,7 +447,7 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_ver_tiendas)))
                 .addContainerGap())
         );
@@ -820,9 +822,20 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
         llenar();
 
         if (c_pedido.registrar()) {
+            //recorrer tabla 
+            int nro_filas = t_detalle.getRowCount();
+            c_productos_pedido.setId_pedido(c_pedido.getId_pedido());
+
+            for (int i = 0; i < nro_filas; i++) {
+                c_productos_pedido.setId_producto(Integer.parseInt(t_detalle.getValueAt(i, 0).toString()));
+                c_productos_pedido.setCantidad(Integer.parseInt(t_detalle.getValueAt(i, 2).toString()));
+                c_productos_pedido.setPrecio(Double.parseDouble(t_detalle.getValueAt(i, 3).toString()));
+                c_productos_pedido.registrar();
+            }
+
             Notification.show("Pedido", "Nro de Pedido: " + c_pedido.getId_pedido(), Notification.NICON_LIGHT_THEME);
             JOptionPane.showMessageDialog(null, "<html><h1>NRO. DE PEDIDO: " + c_pedido.getId_pedido() + "</h1></html>");
-            
+
             this.dispose();
             frm_reg_pedido formulario = new frm_reg_pedido();
             c_varios.llamar_ventana_normal(formulario);
@@ -921,4 +934,3 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_precio;
     // End of variables declaration//GEN-END:variables
 }
-
