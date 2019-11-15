@@ -53,11 +53,14 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
      */
     public frm_reg_pedido() {
         initComponents();
-
+        
+        txt_fecha.setText(c_varios.fecha_usuario(c_varios.getFechaActual()));
+        System.out.println(c_varios.getFechaActual());
         c_producto_almacen.setAlmacen(id_almacen);
 
         cargar_productos();
         modelo_pedido();
+       
     }
 
     private void modelo_pedido() {
@@ -181,7 +184,7 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
 
     private void llenar() {
         c_pedido.setId_almacen(id_almacen);
-        c_pedido.setFecha(c_varios.fecha_myql(txt_fecha.getText()));
+        c_pedido.setFecha(c_varios.fecha_myql(txt_fecha.getText())); 
         c_pedido.setId_usuario(id_usuario);
         c_pedido.setId_cajero(id_usuario);
         c_pedido.obtener_codigo();

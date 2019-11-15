@@ -530,6 +530,7 @@
         <Component class="javax.swing.JTextField" name="jTextField8">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="text" type="java.lang.String" value="0"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -541,6 +542,7 @@
         <Component class="javax.swing.JTextField" name="txt_efectivo">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="text" type="java.lang.String" value="0"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -550,9 +552,11 @@
         <Component class="javax.swing.JTextField" name="txt_tarjeta">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="text" type="java.lang.String" value="0"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_tarjetaActionPerformed"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_tarjetaKeyPressed"/>
           </Events>
         </Component>
