@@ -233,6 +233,20 @@ public class cl_producto {
         return registrado;
     }
 
+    public boolean eliminar() {
+        boolean registrado = false;
+        Statement st = c_conectar.conexion();
+        String query = "update productos "
+                + "set estado = 2, ctotal = 0 "
+                + "where id_producto = '" + id + "'";
+        System.out.println(query);
+        int resultado = c_conectar.actualiza(st, query);
+        if (resultado > -1) {
+            registrado = true;
+        }
+        return registrado;
+    }
+
     public boolean modificar() {
         boolean registrado = false;
         Statement st = c_conectar.conexion();

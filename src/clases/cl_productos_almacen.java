@@ -276,6 +276,34 @@ public class cl_productos_almacen {
         c_conectar.cerrar(st);
         return registrado;
     }
+    
+    public boolean eliminar_producto() {
+        boolean registrado = false;
+        Statement st = c_conectar.conexion();
+        String query = "delete from productos_almacen "
+                + "where id_producto = '" + producto + "' and id_almacen = '" + almacen + "'";
+        //System.out.println(query);
+        int resultado = c_conectar.actualiza(st, query);
+        if (resultado > -1) {
+            registrado = true;
+        }
+        c_conectar.cerrar(st);
+        return registrado;
+    }
+    
+    public boolean EliminardeTiendas() {
+        boolean registrado = false;
+        Statement st = c_conectar.conexion();
+        String query = "delete from productos_almacen "
+                + "where id_producto = '" + producto + "' ";
+        //System.out.println(query);
+        int resultado = c_conectar.actualiza(st, query);
+        if (resultado > -1) {
+            registrado = true;
+        }
+        c_conectar.cerrar(st);
+        return registrado;
+    }
 
     public boolean actualizar_cantidad_producto() {
         boolean registrado = false;

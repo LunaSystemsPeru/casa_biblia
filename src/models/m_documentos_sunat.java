@@ -76,7 +76,7 @@ public class m_documentos_sunat {
 
             String query = "select id_tido, descripcion "
                     + "from documentos_sunat  "
-                    + "where id_tido in (1,2,10) "
+                    + "where id_tido in (3,4,5,8) "
                     + "order by descripcion ";
             ResultSet rs = c_conectar.consulta(st, query);
 

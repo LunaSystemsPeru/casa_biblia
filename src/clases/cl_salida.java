@@ -11,6 +11,7 @@ import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -140,6 +141,34 @@ public class cl_salida {
         }
     }
 
+    public Object[] obtener_persona(String ruc) {
+        Object[] texto = new Object[3];
+
+        texto[0] = 0;
+        texto[1] = "";
+        texto[1] = "";
+
+        try {
+            Statement st = c_conectar.conexion();
+            String query = "select doc_destinatario, nom_destinatario, direc_destinatario "
+                    + "from salida "
+                    + "where doc_destinatario = '" + ruc + "' "
+                    + "limit 1";
+            ResultSet rs = c_conectar.consulta(st, query);
+
+            if (rs.next()) {
+                texto[0] = 1;
+                texto[1] = rs.getString("nom_destinatario");
+                texto[2] = rs.getString("direc_destinatario");
+            }
+            c_conectar.cerrar(rs);
+            c_conectar.cerrar(st);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+        return texto;
+    }
+
     public boolean registrar() {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
@@ -174,6 +203,8 @@ public class cl_salida {
                     return false;
                 }
             };
+
+            TableRowSorter sorter = new TableRowSorter(modelo);
 
             Statement st = c_conectar.conexion();
             ResultSet rs = c_conectar.consulta(st, query);
@@ -210,6 +241,7 @@ public class cl_salida {
             c_varios.centrar_celda(tabla, 1);
             c_varios.centrar_celda(tabla, 2);
             c_varios.centrar_celda(tabla, 4);
+            tabla.setRowSorter(sorter);
 
         } catch (SQLException e) {
             System.out.print(e);

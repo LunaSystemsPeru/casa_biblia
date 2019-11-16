@@ -34,11 +34,11 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
     public frm_ver_salidas() {
         initComponents();
         String periodo = c_varios.obtener_periodo();
-        query = "SELECT s.id_salida, s.fecha, "
-                + "s.id_almacen, s.id_salida, s.doc_destinatario,s.nom_destinatario, us.username AS nomusuario "
+        query = "SELECT s.id_salida, s.fecha, s.id_almacen, s.id_salida, s.doc_destinatario, s.nom_destinatario, us.username AS nomusuario "
                 + "FROM salida AS s "
                 + "INNER JOIN usuarios AS us ON us.id_usuarios=s.id_usuarios "
-                + "where concat(year(s.fecha), LPAD(month(s.fecha), 2, 0)) = '" + periodo + "'";
+                + "where concat(year(s.fecha), LPAD(month(s.fecha), 2, 0)) = '" + periodo + "' "
+                + "order by s.fecha desc ";
         c_salida.mostrar(t_salidas, query);
     }
 
@@ -329,43 +329,35 @@ public class frm_ver_salidas extends javax.swing.JInternalFrame {
             int tipo_busqueda = cbx_buscar.getSelectedIndex();
 
             if (tipo_busqueda == 0) {
-                query = "select i.id_ingreso, i.fecha, p.nro_documento, p.razon_social, ds.abreviado, i.serie, i.numero, i.total, u.username "
-                        + "from ingresos as i "
-                        + "inner join proveedor as p on p.id_proveedor = i.id_proveedor "
-                        + "inner join documentos_sunat as ds on ds.id_tido = i.id_tido "
-                        + "inner join usuarios as u on u.id_usuarios = i.id_usuarios "
-                        + "where concat(year(i.fecha), LPAD(month(i.fecha), 2, 0)) = '" + buscar + "' "
-                        + "order by i.fecha asc, i.numero asc";
+                query = "SELECT s.id_salida, s.fecha, s.id_almacen, s.id_salida, s.doc_destinatario, s.nom_destinatario, us.username AS nomusuario "
+                        + "FROM salida AS s "
+                        + "INNER JOIN usuarios AS us ON us.id_usuarios=s.id_usuarios "
+                        + "where concat(year(s.fecha), LPAD(month(s.fecha), 2, 0)) = '" + buscar + "' "
+                        + "order by s.fecha desc ";
             }
 
             if (tipo_busqueda == 1) {
                 buscar = c_varios.fecha_myql(buscar);
-                query = "select i.id_ingreso, i.fecha, p.nro_documento, p.razon_social, ds.abreviado, i.serie, i.numero, i.total, u.username "
-                        + "from ingresos as i "
-                        + "inner join proveedor as p on p.id_proveedor = i.id_proveedor "
-                        + "inner join documentos_sunat as ds on ds.id_tido = i.id_tido "
-                        + "inner join usuarios as u on u.id_usuarios = i.id_usuarios "
-                        + "where i.fecha = '" + buscar + "' "
-                        + "order by i.numero asc";
+                query = "SELECT s.id_salida, s.fecha, s.id_almacen, s.id_salida, s.doc_destinatario, s.nom_destinatario, us.username AS nomusuario "
+                        + "FROM salida AS s "
+                        + "INNER JOIN usuarios AS us ON us.id_usuarios=s.id_usuarios "
+                        + "where s.fecha = '" + buscar + "' "
+                        + "order by s.fecha desc ";
             }
 
             if (tipo_busqueda == 2) {
-                query = "select i.id_ingreso, i.fecha, p.nro_documento, p.razon_social, ds.abreviado, i.serie, i.numero, i.total, u.username "
-                        + "from ingresos as i "
-                        + "inner join proveedor as p on p.id_proveedor = i.id_proveedor "
-                        + "inner join documentos_sunat as ds on ds.id_tido = i.id_tido "
-                        + "inner join usuarios as u on u.id_usuarios = i.id_usuarios "
-                        + "where p.nro_documento = '" + buscar + "' or p.razon_social like '%" + buscar + "%' "
-                        + "order by i.fecha asc";
+                query = "SELECT s.id_salida, s.fecha, s.id_almacen, s.id_salida, s.doc_destinatario, s.nom_destinatario, us.username AS nomusuario "
+                        + "FROM salida AS s "
+                        + "INNER JOIN usuarios AS us ON us.id_usuarios=s.id_usuarios "
+                        + "where s.doc_destinatario = '" + buscar + "' or s.nom_destinatario like '%" + buscar + "%' "
+                        + "order by s.fecha desc ";
             }
             if (tipo_busqueda == 3) {
-                query = "select i.id_ingreso, i.fecha, p.nro_documento, p.razon_social, ds.abreviado, i.serie, i.numero, i.total, u.username "
-                        + "from ingresos as i "
-                        + "inner join proveedor as p on p.id_proveedor = i.id_proveedor "
-                        + "inner join documentos_sunat as ds on ds.id_tido = i.id_tido "
-                        + "inner join usuarios as u on u.id_usuarios = i.id_usuarios "
-                        + "where i.numero = '" + buscar + "' "
-                        + "order by i.fecha asc";
+                query = "SELECT s.id_salida, s.fecha, s.id_almacen, s.id_salida, s.doc_destinatario, s.nom_destinatario, us.username AS nomusuario "
+                        + "FROM salida AS s "
+                        + "INNER JOIN usuarios AS us ON us.id_usuarios=s.id_usuarios "
+                        + "where s.id_salida  = '" + buscar + "' "
+                        + "order by s.fecha desc ";
             }
             c_salida.mostrar(t_salidas, query);
         }

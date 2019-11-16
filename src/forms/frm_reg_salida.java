@@ -53,6 +53,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
 
     DefaultTableModel detalle;
     TextAutoCompleter tac_productos = null;
+    TextAutoCompleter tac_proveedores = null;
 
     int fila_seleccionada;
     int id_almacen = frm_principal.c_almacen.getId();
@@ -88,8 +89,8 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         detalle.addColumn("Precio");
         detalle.addColumn("Parcial");
         t_detalle.setModel(detalle);
-        t_detalle.getColumnModel().getColumn(0).setPreferredWidth(20);
-        t_detalle.getColumnModel().getColumn(1).setPreferredWidth(400);
+        t_detalle.getColumnModel().getColumn(0).setPreferredWidth(60);
+        t_detalle.getColumnModel().getColumn(1).setPreferredWidth(450);
         t_detalle.getColumnModel().getColumn(2).setPreferredWidth(100);
         t_detalle.getColumnModel().getColumn(3).setPreferredWidth(50);
         t_detalle.getColumnModel().getColumn(4).setPreferredWidth(50);
@@ -101,6 +102,47 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         c_varios.derecha_celda(t_detalle, 4);
         c_varios.derecha_celda(t_detalle, 5);
         c_varios.derecha_celda(t_detalle, 6);
+    }
+
+    private void cargar_proveedores() {
+        try {
+            if (tac_proveedores != null) {
+                tac_proveedores.removeAllItems();
+            }
+            tac_proveedores = new TextAutoCompleter(txt_ruc);
+            /* 
+            tac_proveedores = new TextAutoCompleter(txt_ruc_proveedor, new AutoCompleterCallback() {
+                @Override
+                public void callback(Object selectedItem) {
+                    Object itemSelected = selectedItem;
+                    if (itemSelected instanceof cla_producto) {
+                        int pcodigo = ((cla_producto) itemSelected).getId_producto();
+                        String pnombre = ((cla_producto) itemSelected).getDescripcion();
+                        System.out.println("producto seleccionado " + pnombre);
+                        c_producto.setId(pcodigo);
+                    } else {
+                        System.out.println("El item es de un tipo desconocido");
+                    }
+                }
+                
+            });
+             */
+            tac_proveedores.setMode(0);
+            tac_proveedores.setCaseSensitive(false);
+            Statement st = c_conectar.conexion();
+            String sql = "select distinct(nro_documento) as nro_documento "
+                    + "from proveedor "
+                    + "order by nro_documento asc";
+            ResultSet rs = c_conectar.consulta(st, sql);
+            while (rs.next()) {
+                tac_proveedores.addItem(rs.getObject("nro_documento"));
+            }
+            c_conectar.cerrar(rs);
+            c_conectar.cerrar(st);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error " + e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
+        }
     }
 
     private void cargar_productos() {
@@ -222,14 +264,11 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txt_buscar_productos = new javax.swing.JTextField();
-        btn_add_producto = new javax.swing.JButton();
-        btn_buscar_producto = new javax.swing.JButton();
         txt_cactual = new javax.swing.JTextField();
         txt_cingreso = new javax.swing.JTextField();
         txt_precio = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         btn_agregar_producto = new javax.swing.JButton();
-        btn_recargar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_detalle = new javax.swing.JTable();
@@ -287,11 +326,11 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
             }
         });
         txt_ruc.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_rucKeyTyped(evt);
-            }
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_rucKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_rucKeyTyped(evt);
             }
         });
 
@@ -375,18 +414,6 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_add_producto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add.png"))); // NOI18N
-        btn_add_producto.setToolTipText("agregar Producto");
-        btn_add_producto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_add_productoActionPerformed(evt);
-            }
-        });
-
-        btn_buscar_producto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/find.png"))); // NOI18N
-        btn_buscar_producto.setToolTipText("Buscar Producto");
-        btn_buscar_producto.setEnabled(false);
-
         txt_cactual.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_cactual.setEnabled(false);
 
@@ -418,14 +445,6 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_recargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/currency.png"))); // NOI18N
-        btn_recargar.setEnabled(false);
-        btn_recargar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_recargarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -447,24 +466,12 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                         .addComponent(jLabel12)
                         .addGap(28, 28, 28)
                         .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(194, 194, 194))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                        .addComponent(btn_agregar_producto))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_buscar_productos, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(11, 11, 11)
-                            .addComponent(btn_recargar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_add_producto))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_buscar_producto)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_agregar_producto)))
+                        .addComponent(txt_buscar_productos)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -473,12 +480,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_add_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_recargar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_buscar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(73, 73, 73)
                         .addComponent(btn_agregar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -510,6 +512,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                 "ID.", "Producto", "Marca", "Cant.", "Costo", "Precio", "Parcial"
             }
         ));
+        t_detalle.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         t_detalle.setShowVerticalLines(false);
         t_detalle.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -640,7 +643,8 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         this.dispose();
-
+        frm_ver_salidas formulario = new frm_ver_salidas();
+        c_varios.llamar_ventana(formulario);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void txt_fechaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fechaKeyPressed
@@ -660,14 +664,9 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
             c_doc_tienda.setId_tido(tipo_salida.getId_tipo_salida());
             c_doc_tienda.setId_almacen(id_almacen);
             c_doc_tienda.comprobar_documento();
-//            txt_serie.setText(c_doc_tienda.getSerie());
-//            txt_numero.setText(c_doc_tienda.getNumero() + "");
-//            txt_serie.setEnabled(false);
-//            txt_numero.setEnabled(false);
+            cargar_proveedores();
             txt_ruc.setEnabled(true);
-//                btn_add_proveedor.setEnabled(true);
             txt_ruc.requestFocus();
-
         }
     }//GEN-LAST:event_cbx_tidoKeyPressed
 
@@ -678,16 +677,26 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
             if (documento.length() > 0) {
                 if (documento.length() == 8) {
                     JOptionPane.showMessageDialog(null, "BUSCANDO DATOS DEL DOCUMENTO INGRESADO, POR FAVOR ESPERE");
-                    //buscar dni en reniec
-                    try {
-                        String json = cl_json_entidad.getJSONDNI_LUNASYSTEMS(documento);
-                        //Lo mostramos
-                        String datos = cl_json_entidad.showJSONDNIL(json);
-                        txt_razon_social.setText(datos);
-                        txt_direccion.setText("");
-                    } catch (ParseException e) {
-                        JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR  " + e.getLocalizedMessage());
 
+                    Object[] resultado = c_salida.obtener_persona(documento);
+                    int respuesta = Integer.parseInt(resultado[0].toString());
+
+                    if (respuesta == 1) {
+                        txt_razon_social.setText(resultado[1].toString());
+                        txt_direccion.setText(resultado[2].toString());
+                    } else {
+
+                        //buscar dni en reniec
+                        try {
+                            String json = cl_json_entidad.getJSONDNI_LUNASYSTEMS(documento);
+                            //Lo mostramos
+                            String datos = cl_json_entidad.showJSONDNIL(json);
+                            txt_razon_social.setText(datos);
+                            txt_direccion.setText("");
+                        } catch (ParseException e) {
+                            JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR  " + e.getLocalizedMessage());
+
+                        }
                     }
                     txt_direccion.setEnabled(true);
                     txt_direccion.requestFocus();
@@ -695,21 +704,32 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                 }
                 if (documento.length() == 11) {
                     JOptionPane.showMessageDialog(null, "BUSCANDO DATOS DEL DOCUMENTO INGRESADO, POR FAVOR ESPERE");
-                    //buscar ruc en sunat
-                    try {
-                        String json = cl_json_entidad.getJSONRUC_LUNASYSTEMS(documento);
-                        //Lo mostramos
-                        String[] datos = cl_json_entidad.showJSONRUC_JMP(json);
-                        txt_razon_social.setText(datos[0]);
-                        txt_direccion.setText(datos[1]);
-                    } catch (ParseException e) {
-                        JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR RUC " + e.getLocalizedMessage());
-                    }
-                    txt_buscar_productos.setEnabled(true);
-                    txt_buscar_productos.requestFocus();
 
+                    Object[] resultado = c_salida.obtener_persona(documento);
+                    int respuesta = Integer.parseInt(resultado[0].toString());
+
+                    if (respuesta == 1) {
+                        txt_razon_social.setText(resultado[1].toString());
+                        txt_direccion.setText(resultado[2].toString());
+                    } else {
+                        //buscar ruc en sunat
+                        try {
+                            String json = cl_json_entidad.getJSONRUC_LUNASYSTEMS(documento);
+                            //Lo mostramos
+                            String[] datos = cl_json_entidad.showJSONRUC_JMP(json);
+                            txt_razon_social.setText(datos[0]);
+                            txt_direccion.setText(datos[1]);
+                        } catch (ParseException e) {
+                            JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR RUC " + e.getLocalizedMessage());
+                        }
+
+                    }
+                    txt_direccion.setEnabled(true);
+                    txt_direccion.requestFocus();
                 }
-                cargar_productos();
+                if (documento.length() == 8 || documento.length() == 11) {
+                    cargar_productos();
+                }
 
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese numero de documento");
@@ -844,19 +864,6 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btn_guardarActionPerformed
 
-    private void btn_add_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_productoActionPerformed
-        Frame f = JOptionPane.getRootFrame();
-        frm_reg_producto.registrar = true;
-        frm_reg_producto dialog = new frm_reg_producto(f, true);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_btn_add_productoActionPerformed
-
-    private void btn_recargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_recargarActionPerformed
-        cargar_productos();
-        txt_buscar_productos.requestFocus();
-    }//GEN-LAST:event_btn_recargarActionPerformed
-
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         detalle.removeRow(fila_seleccionada);
         calcular_total();
@@ -910,11 +917,8 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_add_producto;
     private javax.swing.JButton btn_agregar_producto;
-    private javax.swing.JButton btn_buscar_producto;
     private javax.swing.JButton btn_guardar;
-    private javax.swing.JButton btn_recargar;
     private javax.swing.JButton btn_salir;
     private javax.swing.JComboBox<String> cbx_tido;
     private javax.swing.JButton jButton7;

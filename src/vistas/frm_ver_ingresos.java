@@ -34,7 +34,8 @@ public class frm_ver_ingresos extends javax.swing.JInternalFrame {
                 + "inner join proveedor as p on p.id_proveedor = i.id_proveedor "
                 + "inner join documentos_sunat as ds on ds.id_tido = i.id_tido "
                 + "inner join usuarios as u on u.id_usuarios = i.id_usuarios "
-                + "where concat(year(i.fecha), LPAD(month(i.fecha),2,0)) = '" + periodo + "'";
+                + "where concat(year(i.fecha), LPAD(month(i.fecha),2,0)) = '" + periodo + "' "
+                + "order by i.fecha desc";
         c_ingreso.mostrar(t_ingresos, query);
     }
 

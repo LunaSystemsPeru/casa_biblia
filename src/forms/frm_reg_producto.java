@@ -42,9 +42,12 @@ public class frm_reg_producto extends javax.swing.JDialog {
     //variables publicas    
     static DefaultTableModel detalle;
     static int fila_seleccionada;
-    public static boolean registrar;
-    boolean modificar_presentacion = false;
 
+    public static boolean registrar;
+    public static int frm_origen = 1;
+
+    //1 frm ver prodcutos
+    //2 frm_reg_ingreso
     /**
      * Creates new form frm_reg_producto
      */
@@ -306,6 +309,10 @@ public class frm_reg_producto extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (frm_origen == 2) {
+            frm_reg_ingreso.btn_recargar.doClick();
+        }
+        frm_origen = 1;
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -334,8 +341,15 @@ public class frm_reg_producto extends javax.swing.JDialog {
         }
 
         if (realizado) {
+            if (frm_origen == 2) {
+                frm_reg_ingreso.txt_buscar_productos.setText(c_producto.getDescripcion() + " - " + c_producto.getCod_externo());
+                frm_reg_ingreso.c_producto.setId(c_producto.getId());
+                frm_reg_ingreso.btn_recargar.doClick();
+                frm_reg_ingreso.txt_buscar_productos.requestFocus();
+            }
             this.dispose();
         }
+        frm_origen = 0;
     }//GEN-LAST:event_btn_guardarActionPerformed
 
     private void txt_descripcionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_descripcionKeyPressed
@@ -386,6 +400,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
             String texto = txt_precio_minimo.getText();
             if (c_varios.esDecimal(texto)) {
                 btn_guardar.setEnabled(true);
+                btn_guardar.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_precio_minimoKeyPressed

@@ -11,6 +11,7 @@ import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import casa_biblia.frm_principal;
+import clases.cl_productos_almacen;
 
 /**
  *
@@ -19,15 +20,17 @@ import casa_biblia.frm_principal;
 public class frm_ver_productos_todos extends javax.swing.JInternalFrame {
 
     cl_producto c_producto = new cl_producto();
+    cl_productos_almacen c_mis_productos = new cl_productos_almacen();
 
     int fila_seleccionada;
+    String query;
 
     /**
      * Creates new form frm_ver_productos_todos
      */
     public frm_ver_productos_todos() {
         initComponents();
-        String query = "select * from productos "
+        query = "select * from productos "
                 + "order by descripcion asc, cod_externo asc "
                 + "limit 0";
         c_producto.mostrar(t_productos, query);
@@ -246,7 +249,6 @@ public class frm_ver_productos_todos extends javax.swing.JInternalFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String texto = txt_buscar.getText().trim();
             int tipo_busqueda = cbx_buscar.getSelectedIndex();
-            String query = "";
 
             if (tipo_busqueda == 0) {
                 query = "select * from productos "
@@ -300,6 +302,17 @@ public class frm_ver_productos_todos extends javax.swing.JInternalFrame {
         boolean permitido = frm_principal.c_permiso.validar();
 
         if (permitido) {
+            //eliminar prodycto de tienda
+            int confirmado = JOptionPane.showConfirmDialog(null, "¿Esta Seguro de Eliminar este producto todas las tiendas?");
+
+            if (JOptionPane.OK_OPTION == confirmado) {
+                c_mis_productos.setProducto(c_producto.getId());
+                if (c_mis_productos.EliminardeTiendas()) {
+                    c_producto.eliminar();
+                    c_producto.mostrar(t_productos, query);
+                    JOptionPane.showMessageDialog(null, "Producto eliminado de todas las tiendas");
+                }
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Usted no tiene permiso para realizar esta operacion!!");
         }
