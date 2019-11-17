@@ -556,6 +556,8 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             tido = cla_tido.getId_tido();
             if (tido == 2) {
                 c_cliente.setCodigo(2);
+                txt_doc_cliente.setEnabled(false);
+                txt_nom_cliente.setEnabled(false);
                 txt_efectivo.setEnabled(true);
                 txt_efectivo.requestFocus();
             } else if (tido == 9) {
@@ -614,7 +616,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             }
             if (largo == 0) {
                 SecureRandom sr = new SecureRandom();
-                String codigo = "SD" + (sr.nextInt(99999) + 1000);
+                String codigo = "SD" + (sr.nextInt(999999) + 10000);
                 txt_doc_cliente.setText(codigo);
                 txt_nom_cliente.setEnabled(true);
                 txt_nom_cliente.requestFocus();
@@ -624,7 +626,8 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
 
     private void txt_nom_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nom_clienteKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (txt_nom_cliente.getText().length() > 15) {
+            if (txt_nom_cliente.getText().length() > 3) {
+                llenar_guardar();
                 txt_efectivo.setEnabled(true);
                 txt_efectivo.requestFocus();
             }

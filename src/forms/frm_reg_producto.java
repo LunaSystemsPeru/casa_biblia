@@ -13,6 +13,7 @@ import clases.cl_varios;
 import clases_autocomplete.cla_producto_clasificacion;
 import clases_autocomplete.cla_unidad_medida;
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.m_empresas;
 import models.m_producto_clasificacion;
@@ -341,6 +342,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
         }
 
         if (realizado) {
+            JOptionPane.showMessageDialog(null, "<html>Codigo del Producto: <h1> " + c_producto.getId() + " </h1></html>");
             if (frm_origen == 2) {
                 frm_reg_ingreso.txt_buscar_productos.setText(c_producto.getDescripcion() + " - " + c_producto.getCod_externo());
                 frm_reg_ingreso.c_producto.setId(c_producto.getId());

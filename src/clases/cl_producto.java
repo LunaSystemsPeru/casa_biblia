@@ -252,7 +252,7 @@ public class cl_producto {
         Statement st = c_conectar.conexion();
         String query = "update productos "
                 + "set descripcion = '" + descripcion + "', cod_externo = '" + cod_externo + "', precio = '" + precio + "', costo = '" + costo + "', "
-                + "id_sub_clasificacion = '" + id_sub_clasificacion + "', afecto_igv = '" + afecto_igv + "' "
+                + "id_subclasificacion = '" + id_sub_clasificacion + "', afecto_igv = '" + afecto_igv + "' "
                 + "where id_producto = '" + id + "'";
         System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);

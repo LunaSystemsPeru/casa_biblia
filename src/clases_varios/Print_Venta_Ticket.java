@@ -108,7 +108,7 @@ public class Print_Venta_Ticket {
         /*dni  ticket boleta, ruc ticket factura*/
         String documentocliente = "";
         System.out.println(c_cliente.getCodigo());
-        if (c_cliente.getDocumento().length() == 8) {
+        if (c_cliente.getDocumento().length() < 10) {
             documentocliente = "TICKET BOLETA";
         } else {
             documentocliente = "TICKET FACTURA";
