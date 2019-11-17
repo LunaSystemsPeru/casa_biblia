@@ -677,7 +677,7 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
         cla_almacen o_almacen = (cla_almacen) cbx_tiendas.getSelectedItem();
         c_usuario.setId_almacen(o_almacen.getId_almacen());
 
-        if (c_usuario.getId_usuario() > 1) {
+        if (c_usuario.getId_usuario() > 0) {
             if (chx_estado.isSelected()) {
                 c_usuario.setEstado(2);
             } else {
@@ -688,6 +688,7 @@ public class frm_ver_usuarios extends javax.swing.JInternalFrame {
             c_usuario.obtener_codigo();
             c_usuario.registrar();
         }
+        c_usuario.setId_usuario(0);
         mostrar_tablar();
         jd_reg_usuario.dispose();
     }//GEN-LAST:event_btn_j_grabarActionPerformed
