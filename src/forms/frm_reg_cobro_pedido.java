@@ -516,13 +516,18 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             cl_pedido.setId_pedido(Integer.parseInt(tex_cod_pedido.getText()));
             cl_pedido.setId_almacen(idalmacen);
             if (cl_pedido.validar_pedido()) {
-                cl_usuario.setId_usuario(cl_pedido.getId_usuario());
-                cl_usuario.validar_usuario();
-                tex_vendedor.setText(cl_usuario.getNombre());
-                txt_fecha_pedido.setText(cl_pedido.getFecha());
-                lbl_total.setText("S/ " + c_varios.formato_totales(cl_pedido.getTotal()));
-                cbx_tipo_venta.setEnabled(true);
-                cbx_tipo_venta.requestFocus();
+                if (cl_pedido.getEstado() == 1) {
+                    cl_usuario.setId_usuario(cl_pedido.getId_usuario());
+                    cl_usuario.validar_usuario();
+                    tex_vendedor.setText(cl_usuario.getNombre());
+                    txt_fecha_pedido.setText(cl_pedido.getFecha());
+                    lbl_total.setText("S/ " + c_varios.formato_totales(cl_pedido.getTotal()));
+                    cbx_tipo_venta.setEnabled(true);
+                    cbx_tipo_venta.requestFocus();
+                } else {
+                    JOptionPane.showMessageDialog(this, "ESTE PEDIDO NO SE PUEDE COBRAR", "Alerta", JOptionPane.WARNING_MESSAGE);
+                }
+
             } else {
                 JOptionPane.showMessageDialog(this, "Codigo no encontrado", "Alerta", JOptionPane.WARNING_MESSAGE);
             }
