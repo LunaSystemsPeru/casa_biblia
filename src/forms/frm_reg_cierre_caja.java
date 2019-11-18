@@ -53,7 +53,7 @@ public class frm_reg_cierre_caja extends javax.swing.JDialog {
         txt_devoluciones.setText(c_varios.formato_totales(c_caja.getDevolucion_ventas()));
         txt_osalidas.setText(c_varios.formato_totales(c_caja.getGastos_varios()));
         txt_fecha.setText(c_varios.fecha_usuario(c_caja.getFecha()));
-        t_ingresos = c_caja.getM_apertura() + c_caja.getIng_venta() + c_caja.getCobro_venta() + c_caja.getUso_cupon() + c_caja.getO_ingresos();
+        t_ingresos = c_caja.getIng_venta() + c_caja.getCobro_venta() + c_caja.getUso_cupon() + c_caja.getO_ingresos();
         t_egresos = c_caja.getDevolucion_ventas() + c_caja.getGastos_varios();
         t_sistema = t_ingresos - t_egresos;
         txt_sistema.setText(c_varios.formato_totales(t_sistema));
@@ -532,7 +532,7 @@ public class frm_reg_cierre_caja extends javax.swing.JDialog {
         //if (frm_menu.usu.getPve_eli().equals("1")) {
         int confirmado = JOptionPane.showConfirmDialog(null, "¿Desea cerrar caja con ese monto?");
         if (JOptionPane.OK_OPTION == confirmado) {
-            c_caja.setM_cierre(defectivo);
+            c_caja.setM_cierre(defectivo + c_caja.getM_apertura());
             if (c_caja.cerrar_caja()) {
                 this.dispose();
                 JOptionPane.showMessageDialog(null, "CAJA CERRADA CORRECTAMENTE.\nHASTA MAÑANA!!");

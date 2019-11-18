@@ -128,7 +128,7 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
             sql = "select p.descripcion, pa.cactual, p.precio, p.id_producto, p.cod_externo "
                     + "from productos as p "
                     + "inner join productos_almacen as pa on pa.id_producto = p.id_producto "
-                    + "where pa.id_almacen = '" + id_almacen + "' and pa.cactual > 0";
+                    + "where pa.id_almacen = '" + id_almacen + "' ";
             ResultSet rs = c_conectar.consulta(st, sql);
             while (rs.next()) {
                 int id_producto = rs.getInt("id_producto");
