@@ -55,6 +55,7 @@ public class frm_ver_traslados extends javax.swing.JInternalFrame {
         btn_recibir.setEnabled(false);
         btn_ver_pdf.setEnabled(true);
         btn_eliminar.setEnabled(false);
+        btn_detalle.setEnabled(true);
         if (estado.equals("PENDIENTE")) {
             btn_eliminar.setEnabled(true);
             btn_recibir.setEnabled(true);
@@ -72,6 +73,7 @@ public class frm_ver_traslados extends javax.swing.JInternalFrame {
         btn_recibir.setEnabled(false);
         btn_ver_pdf.setEnabled(false);
         btn_eliminar.setEnabled(false);
+        btn_detalle.setEnabled(false);
     }
 
     /**
@@ -83,6 +85,13 @@ public class frm_ver_traslados extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jd_detalle = new javax.swing.JDialog();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        t_detalle = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txt_proveedor = new javax.swing.JTextField();
+        txt_fecha = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_traslados = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -94,9 +103,64 @@ public class frm_ver_traslados extends javax.swing.JInternalFrame {
         jSeparator2 = new javax.swing.JToolBar.Separator();
         btn_modificar = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
+        btn_detalle = new javax.swing.JButton();
         btn_ver_pdf = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btn_cerrar = new javax.swing.JButton();
+
+        jd_detalle.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jd_detalle.setTitle("Ver Detalle de Traslado");
+
+        t_detalle.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(t_detalle);
+
+        jLabel2.setText("Origen:");
+
+        jLabel4.setText("Fecha:");
+
+        javax.swing.GroupLayout jd_detalleLayout = new javax.swing.GroupLayout(jd_detalle.getContentPane());
+        jd_detalle.getContentPane().setLayout(jd_detalleLayout);
+        jd_detalleLayout.setHorizontalGroup(
+            jd_detalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_detalleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_detalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
+                    .addGroup(jd_detalleLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(26, 26, 26)
+                        .addComponent(txt_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jd_detalleLayout.setVerticalGroup(
+            jd_detalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_detalleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_detalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jd_detalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         setTitle("Ver Traslados");
 
@@ -198,6 +262,20 @@ public class frm_ver_traslados extends javax.swing.JInternalFrame {
             }
         });
         jToolBar1.add(btn_eliminar);
+        jToolBar1.add(jSeparator3);
+
+        btn_detalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/clipboard_text.png"))); // NOI18N
+        btn_detalle.setText("ver Detalle");
+        btn_detalle.setEnabled(false);
+        btn_detalle.setFocusable(false);
+        btn_detalle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_detalle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_detalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_detalleActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_detalle);
 
         btn_ver_pdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/exportar.png"))); // NOI18N
         btn_ver_pdf.setText("ver PDF");
@@ -275,6 +353,9 @@ public class frm_ver_traslados extends javax.swing.JInternalFrame {
         int contar_filas = t_traslados.getRowCount();
         if (contar_filas > -1) {
             fila_seleccionada = t_traslados.getSelectedRow();
+            int id_traslado = Integer.parseInt(t_traslados.getValueAt(fila_seleccionada, 8).toString());
+            c_traslado.setId_traslado(id_traslado);
+            c_detalle.setId_traslado(id_traslado);
             activar_botones();
         }
     }//GEN-LAST:event_t_trasladosMouseClicked
@@ -405,6 +486,7 @@ public class frm_ver_traslados extends javax.swing.JInternalFrame {
 
     private void btn_ver_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ver_pdfActionPerformed
         int id_traslado = Integer.parseInt(t_traslados.getValueAt(fila_seleccionada, 0).toString());
+        desactivar_botones();
         // TODO add your handling code here:
         File miDir = new File(".");
         try {
@@ -423,21 +505,41 @@ public class frm_ver_traslados extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btn_ver_pdfActionPerformed
 
+    private void btn_detalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_detalleActionPerformed
+        desactivar_botones();
+        jd_detalle.setModal(true);
+        jd_detalle.setSize(900, 600);
+        jd_detalle.setLocationRelativeTo(null);
+        txt_proveedor.setText(t_traslados.getValueAt(fila_seleccionada, 2).toString());
+        txt_fecha.setText(t_traslados.getValueAt(fila_seleccionada, 1).toString());
+        c_detalle.mostrar(t_detalle);
+        jd_detalle.setVisible(true);
+    }//GEN-LAST:event_btn_detalleActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
     private javax.swing.JButton btn_cerrar;
+    private javax.swing.JButton btn_detalle;
     private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_modificar;
     private javax.swing.JButton btn_recibir;
     private javax.swing.JButton btn_ver_pdf;
     private javax.swing.JComboBox<String> cbx_busqueda;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JDialog jd_detalle;
+    private javax.swing.JTable t_detalle;
     private javax.swing.JTable t_traslados;
     private javax.swing.JTextField txt_buscar;
+    private javax.swing.JTextField txt_fecha;
+    private javax.swing.JTextField txt_proveedor;
     // End of variables declaration//GEN-END:variables
 }
