@@ -234,6 +234,8 @@ public class frm_principal extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jSeparator14 = new javax.swing.JToolBar.Separator();
         jButton9 = new javax.swing.JButton();
+        jSeparator18 = new javax.swing.JToolBar.Separator();
+        jButton26 = new javax.swing.JButton();
         jToolBar5 = new javax.swing.JToolBar();
         jButton18 = new javax.swing.JButton();
         jSeparator8 = new javax.swing.JToolBar.Separator();
@@ -677,6 +679,19 @@ public class frm_principal extends javax.swing.JFrame {
             }
         });
         jToolBar4.add(jButton9);
+        jToolBar4.add(jSeparator18);
+
+        jButton26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/close_delete-512_1.png"))); // NOI18N
+        jButton26.setText("Salir");
+        jButton26.setFocusable(false);
+        jButton26.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton26.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton26ActionPerformed(evt);
+            }
+        });
+        jToolBar4.add(jButton26);
 
         jTabbedPane1.addTab("Facturacion", jToolBar4);
 
@@ -1247,6 +1262,10 @@ public class frm_principal extends javax.swing.JFrame {
         c_varios.llamar_ventana(formulario);
     }//GEN-LAST:event_jButton24ActionPerformed
 
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton26ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1304,6 +1323,7 @@ public class frm_principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton24;
     private javax.swing.JButton jButton25;
+    private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -1337,6 +1357,7 @@ public class frm_principal extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator15;
     private javax.swing.JSeparator jSeparator16;
     private javax.swing.JToolBar.Separator jSeparator17;
+    private javax.swing.JToolBar.Separator jSeparator18;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;

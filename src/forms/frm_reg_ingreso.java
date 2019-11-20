@@ -36,24 +36,24 @@ import vistas.frm_ver_ingresos;
  * @author luis
  */
 public class frm_reg_ingreso extends javax.swing.JInternalFrame {
-
+    
     cl_conectar c_conectar = new cl_conectar();
     cl_varios c_varios = new cl_varios();
-
+    
     cl_ingresos c_ingreso = new cl_ingresos();
     cl_productos_ingresos c_detalle = new cl_productos_ingresos();
     cl_proveedor c_proveedor = new cl_proveedor();
     public static cl_producto c_producto = new cl_producto();
     cl_productos_almacen c_producto_almacen = new cl_productos_almacen();
     cl_documento_almacen c_doc_tienda = new cl_documento_almacen();
-
+    
     m_documentos_sunat m_documentos = new m_documentos_sunat();
     m_almacen m_almacen = new m_almacen();
-
+    
     DefaultTableModel detalle;
     TextAutoCompleter tac_productos = null;
     TextAutoCompleter tac_proveedores = null;
-
+    
     int fila_seleccionada;
     int id_almacen = frm_principal.c_almacen.getId();
 
@@ -67,7 +67,12 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         txt_nom_tienda.setText(frm_principal.c_almacen.getNombre());
         modelo_ingreso();
     }
-
+    
+    private void contar_filas() {
+        int nrofilas = t_detalle.getRowCount();
+        txt_contar_filas.setText(nrofilas + "");
+    }
+    
     private void modelo_ingreso() {
         //formato de tabla detalle de venta
         detalle = new DefaultTableModel() {
@@ -98,7 +103,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         c_varios.derecha_celda(t_detalle, 5);
         c_varios.derecha_celda(t_detalle, 6);
     }
-
+    
     private void cargar_proveedores() {
         try {
             if (tac_proveedores != null) {
@@ -139,7 +144,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             System.out.println(e.getLocalizedMessage());
         }
     }
-
+    
     private void cargar_productos() {
         try {
             if (tac_productos != null) {
@@ -160,7 +165,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                     }
                 }
             });
-
+            
             tac_productos.setMode(0);
             tac_productos.setCaseSensitive(false);
             Statement st = c_conectar.conexion();
@@ -181,7 +186,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             System.out.println(e.getLocalizedMessage());
         }
     }
-
+    
     private boolean valida_tabla(int producto) {
         //estado de ingreso
         boolean ingresar = false;
@@ -192,7 +197,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         if (contar_filas == 0) {
             ingresar = true;
         }
-
+        
         if (contar_filas > 0) {
             for (int j = 0; j < contar_filas; j++) {
                 int id_producto_fila = Integer.parseInt(t_detalle.getValueAt(j, 0).toString());
@@ -205,13 +210,13 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                 }
             }
         }
-
+        
         if (cuenta_iguales == 0) {
             ingresar = true;
         }
         return ingresar;
     }
-
+    
     private void limpiar_buscar() {
         txt_buscar_productos.setText("");
         txt_cingreso.setText("");
@@ -226,8 +231,9 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         btn_agregar_producto.setEnabled(true);
         txt_buscar_productos.requestFocus();
     }
-
+    
     private double calcular_total() {
+        contar_filas();
         double total = 0;
         int contar_filas = t_detalle.getRowCount();
         for (int i = 0; i < contar_filas; i++) {
@@ -288,7 +294,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         txt_total = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
+        txt_contar_filas = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         btn_guardar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
@@ -695,8 +701,8 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         txt_total.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_total.setText("0.00");
 
-        jTextField12.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField12.setText("0");
+        txt_contar_filas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_contar_filas.setText("0");
 
         jToolBar1.setFloatable(false);
 
@@ -740,7 +746,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_contar_filas, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -766,7 +772,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txt_contar_filas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -863,7 +869,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                     dialog.setLocationRelativeTo(null);
                     dialog.setVisible(true);
                 }
-
+                
             }
         }
     }//GEN-LAST:event_txt_ruc_proveedorKeyPressed
@@ -930,7 +936,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "ERROR AL SELECCIONAR PRODUCTO");
                 }
             }
-
+            
             if (txt_buscar_productos.getText().length() == 0) {
                 //si nro de filas es mayor a 0 entonces ir a datos generales
                 int contar_filas = t_detalle.getRowCount();
@@ -940,7 +946,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                 }
             }
         }
-
+        
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             limpiar_buscar();
         }
@@ -1017,7 +1023,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
         fila[4] = c_varios.formato_numero(costo);
         fila[5] = c_varios.formato_numero(precio);
         fila[6] = c_varios.formato_numero(parcial);
-
+        
         detalle.addRow(fila);
         calcular_total();
         limpiar_buscar();
@@ -1026,7 +1032,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         int confirmado = JOptionPane.showConfirmDialog(null, "¿Esta Seguro de Guardar el ingreso de Mercaderia?");
-
+        
         if (JOptionPane.OK_OPTION == confirmado) {
             c_ingreso.setFecha(c_varios.fecha_myql(txt_fecha.getText()));
             c_ingreso.setId_almacen(id_almacen);
@@ -1037,9 +1043,9 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
             c_ingreso.setNumero(Integer.parseInt(txt_numero.getText()));
             c_ingreso.setTc(Double.parseDouble(txt_tc.getText()));
             c_ingreso.obtener_codigo();
-
+            
             boolean registrado = c_ingreso.registrar();
-
+            
             c_detalle.setId_ingreso(c_ingreso.getId_ingreso());
             if (registrado) {
                 int nro_filas = t_detalle.getRowCount();
@@ -1048,10 +1054,10 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
                     c_detalle.setCantidad(Integer.parseInt(t_detalle.getValueAt(i, 3).toString()));
                     c_detalle.setCosto(Double.parseDouble(t_detalle.getValueAt(i, 4).toString()));
                     c_detalle.setPrecio(Double.parseDouble(t_detalle.getValueAt(i, 5).toString()));
-
+                    
                     c_detalle.registrar();
                 }
-
+                
                 Notification.show("Ingreso de Mercaderia", "se guardo correctamente");
                 frm_ver_ingresos formulario = new frm_ver_ingresos();
                 c_varios.llamar_ventana(formulario);
@@ -1128,12 +1134,12 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
-    private javax.swing.JTextField jTextField12;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable t_detalle;
     public static javax.swing.JTextField txt_buscar_productos;
     private javax.swing.JTextField txt_cactual;
     private javax.swing.JTextField txt_cingreso;
+    private javax.swing.JTextField txt_contar_filas;
     private javax.swing.JTextField txt_costo;
     private javax.swing.JFormattedTextField txt_fecha;
     private javax.swing.JTextField txt_nom_tienda;
