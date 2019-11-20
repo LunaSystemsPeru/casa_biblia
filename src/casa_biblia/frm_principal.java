@@ -1010,7 +1010,7 @@ public class frm_principal extends javax.swing.JFrame {
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
         frm_ver_almacenes formulario = new frm_ver_almacenes();
-        c_varios.llamar_ventana(formulario);
+        c_varios.llamar_ventana_normal(formulario);
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void txt_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyPressed

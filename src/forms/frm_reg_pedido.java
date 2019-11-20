@@ -755,8 +755,9 @@ public class frm_reg_pedido extends javax.swing.JInternalFrame {
 
             int cactual = Integer.parseInt(txt_cactual.getText());
             if (cactual <= 0) {
-                JOptionPane.showMessageDialog(null, "ERROR NO HAY STOCK PARA ESTE PRODUCTO");
-                error = true;
+                Notification.show("Pedido", "Advertencia, No hay cantidad para este producto",Notification.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(null, "ERROR NO HAY STOCK PARA ESTE PRODUCTO");
+                error = false;
             }
 
             double parcial = precio * cantidad;

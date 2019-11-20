@@ -156,7 +156,7 @@ public class cl_pedido {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "update pedidos "
-                + "set estado = '2' "
+                + "set estado = '3' "
                 + "where id_pedido = '" + id_pedido + "'";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {

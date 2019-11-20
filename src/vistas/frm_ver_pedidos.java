@@ -7,8 +7,10 @@ package vistas;
 
 import casa_biblia.frm_principal;
 import clases.cl_pedido;
+import clases.cl_productos_pedido;
 import clases.cl_varios;
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,9 +21,12 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
     cl_pedido c_pedido = new cl_pedido();
     cl_varios c_varios = new cl_varios();
 
+    cl_productos_pedido c_detalle = new cl_productos_pedido();
+
     String query = "";
 
     int id_almacen = frm_principal.c_almacen.getId();
+    int fila_seleccionada;
 
     /**
      * Creates new form frm_ver_pedidos
@@ -30,9 +35,19 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
         initComponents();
         query = "select * "
                 + "from pedidos "
-                + "where id_almacen = '" + id_almacen + "' and fecha = '"+c_varios.getFechaActual()+"'";
+                + "where id_almacen = '" + id_almacen + "' and fecha = '" + c_varios.getFechaActual() + "'";
         System.out.println(query);
         c_pedido.mostrar(t_pedidos, query);
+    }
+
+    private void activarBotones() {
+        btn_anular.setEnabled(true);
+        btn_ver_detalle.setEnabled(true);
+    }
+
+    private void desactivarBotones() {
+        btn_anular.setEnabled(false);
+        btn_ver_detalle.setEnabled(false);
     }
 
     /**
@@ -44,9 +59,14 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jd_detalle = new javax.swing.JDialog();
+        jLabel8 = new javax.swing.JLabel();
+        txt_detalle = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        t_detalle = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btn_ver_detalle = new javax.swing.JButton();
+        btn_anular = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_pedidos = new javax.swing.JTable();
@@ -54,25 +74,81 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
         cbx_tipo_busqueda = new javax.swing.JComboBox<>();
         txt_buscar = new javax.swing.JTextField();
 
+        jd_detalle.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jd_detalle.setTitle("Ver Productos del Pedido");
+
+        jLabel8.setText("Pedido:");
+
+        txt_detalle.setEditable(false);
+
+        t_detalle.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(t_detalle);
+
+        javax.swing.GroupLayout jd_detalleLayout = new javax.swing.GroupLayout(jd_detalle.getContentPane());
+        jd_detalle.getContentPane().setLayout(jd_detalleLayout);
+        jd_detalleLayout.setHorizontalGroup(
+            jd_detalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_detalleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_detalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jd_detalleLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_detalle, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(110, Short.MAX_VALUE))
+        );
+        jd_detalleLayout.setVerticalGroup(
+            jd_detalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_detalleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_detalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_detalle, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         setTitle("Ver Pedidos");
 
         jToolBar1.setFloatable(false);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/clipboard_text.png"))); // NOI18N
-        jButton2.setText("ver Detalle");
-        jButton2.setEnabled(false);
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
+        btn_ver_detalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/clipboard_text.png"))); // NOI18N
+        btn_ver_detalle.setText("ver Detalle");
+        btn_ver_detalle.setEnabled(false);
+        btn_ver_detalle.setFocusable(false);
+        btn_ver_detalle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_ver_detalle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_ver_detalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ver_detalleActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_ver_detalle);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
-        jButton1.setText("Anular");
-        jButton1.setEnabled(false);
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
+        btn_anular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
+        btn_anular.setText("Anular");
+        btn_anular.setEnabled(false);
+        btn_anular.setFocusable(false);
+        btn_anular.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_anular.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btn_anular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_anularActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btn_anular);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cross.png"))); // NOI18N
         jButton3.setText("Salir");
@@ -97,6 +173,11 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        t_pedidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                t_pedidosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(t_pedidos);
 
         jLabel1.setText("Buscar:");
@@ -174,16 +255,60 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txt_buscarKeyPressed
 
+    private void btn_anularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anularActionPerformed
+        desactivarBotones();
+
+        String estado = t_pedidos.getValueAt(fila_seleccionada, 4).toString();
+
+        if (estado.equals("PENDIENTE")) {
+            int confirmado = JOptionPane.showConfirmDialog(null, "¿Esta Seguro de Anular el Pedido?");
+            if (JOptionPane.OK_OPTION == confirmado) {
+                c_pedido.anular();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "NO SE PUEDE ANULAR");
+        }
+    }//GEN-LAST:event_btn_anularActionPerformed
+
+    private void t_pedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_t_pedidosMouseClicked
+        if (evt.getClickCount() == 2) {
+            fila_seleccionada = t_pedidos.getSelectedRow();
+            if (fila_seleccionada > -1) {
+                c_pedido.setId_pedido(Integer.parseInt(t_pedidos.getValueAt(fila_seleccionada, 0).toString()));
+                activarBotones();
+            }
+        }
+    }//GEN-LAST:event_t_pedidosMouseClicked
+
+    private void btn_ver_detalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ver_detalleActionPerformed
+        desactivarBotones();
+        String venta = t_pedidos.getValueAt(fila_seleccionada, 1).toString() + " | " + t_pedidos.getValueAt(fila_seleccionada, 3).toString();
+
+        c_detalle.setId_pedido(c_pedido.getId_pedido());
+        c_detalle.mostrar(t_detalle);
+
+        jd_detalle.setModal(true);
+        jd_detalle.setSize(685, 387);
+        jd_detalle.setLocationRelativeTo(null);
+        txt_detalle.setText(venta);
+        jd_detalle.setVisible(true);
+    }//GEN-LAST:event_btn_ver_detalleActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_anular;
+    private javax.swing.JButton btn_ver_detalle;
     private javax.swing.JComboBox<String> cbx_tipo_busqueda;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JDialog jd_detalle;
+    private javax.swing.JTable t_detalle;
     private javax.swing.JTable t_pedidos;
     private javax.swing.JTextField txt_buscar;
+    private javax.swing.JTextField txt_detalle;
     // End of variables declaration//GEN-END:variables
 }
