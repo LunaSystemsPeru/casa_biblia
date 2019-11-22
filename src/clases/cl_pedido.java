@@ -156,7 +156,7 @@ public class cl_pedido {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "update pedidos "
-                + "set estado = '2' "
+                + "set estado = '3' "
                 + "where id_pedido = '" + id_pedido + "'";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
@@ -188,13 +188,13 @@ public class cl_pedido {
             while (rs.next()) {
                 int iestado = rs.getInt("estado");
                 String sestado = "";
-                if (iestado == 0) {
+                if (iestado == 1) {
                     sestado = "PENDIENTE";
                 }
-                if (iestado == 1) {
+                if (iestado == 2) {
                     sestado = "VENDIDO";
                 }
-                if (iestado == 2) {
+                if (iestado == 3) {
                     sestado = "ANULADO";
                 }
                 Object[] fila = new Object[5];

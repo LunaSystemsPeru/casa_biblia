@@ -10,6 +10,7 @@ import clases.cl_varios;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import json.cl_json_entidad;
+import nicon.notify.core.Notification;
 
 /**
  *
@@ -246,7 +247,7 @@ public class frm_reg_proveedor extends javax.swing.JDialog {
                     }
                 }
                 if (documento.length() == 11) {
-                    JOptionPane.showMessageDialog(null, "Espere, se esta buscando los datos en la base de datos de SUNAT");
+                    Notification.show("Proveedor", "Espere, se esta buscando los datos en la base de datos de SUNAT");
                     System.out.println("buscar ruc");
                     try {
                         String json = cl_json_entidad.getJSONRUC_LUNASYSTEMS(documento);
@@ -258,12 +259,10 @@ public class frm_reg_proveedor extends javax.swing.JDialog {
                         txt_estado.setText(datos[3]);
                         btn_guardar.setEnabled(true);
                         btn_guardar.requestFocus();
-
                     } catch (org.json.simple.parser.ParseException ex) {
                         JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR RUC " + ex.getLocalizedMessage());
                     }
                 }
-
             } else {
                 JOptionPane.showMessageDialog(null, "INGRESE DOCUMENTO DEL PROVEEDOR");
             }

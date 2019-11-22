@@ -942,7 +942,7 @@ public class frm_ver_mis_productos2 extends javax.swing.JInternalFrame {
             query = "select pa.id_producto, p.descripcion, p.cod_externo, p.precio, pa.cactual, pa.f_infreso, pa.f_salida "
                     + "from productos_almacen as pa "
                     + "inner join productos as p on p.id_producto = pa.id_producto "
-                    + "where pa.id_almacen = '" + id_almacen + "' and p.descripcion like '%" + buscar + "%' "
+                    + "where pa.id_almacen = '" + id_almacen + "' and (p.descripcion like '%" + buscar + "%' or p.cod_externo like '%" + buscar + "%' or pa.id_producto = '" + buscar + "' )"
                     + "order by p.descripcion asc , p.cod_externo asc ";
             c_mis_productos.mis_productos(query, jTable1);
         }
@@ -1206,7 +1206,15 @@ public class frm_ver_mis_productos2 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        // TODO add your handling code here:
+        //eliminar prodycto de tienda
+        int id_producto = Integer.parseInt(jTable1.getValueAt(fila_seleccionada, 0).toString());
+        int confirmado = JOptionPane.showConfirmDialog(null, "¿Esta Seguro de Eliminar este producto de esta tienda?");
+
+        if (JOptionPane.OK_OPTION == confirmado) {
+            c_mis_productos.setProducto(id_producto);
+            c_mis_productos.eliminar_producto();
+            c_mis_productos.mostrar(jTable1, query);
+        }
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
 

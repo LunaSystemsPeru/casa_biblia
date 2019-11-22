@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_traslado" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e17e3ec4-e316-4b52-a836-a641e00a1ad1">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW-SONOMUSIC-LOCAL"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="lsp_casa_biblia"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="id_traslado" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -23,11 +23,10 @@
      destino.nombre as nombre_destino, 
      destino.`direccion` AS direccion_llegada,
      almacen.`direccion` AS direccion_origen,
-     productos.`marca` AS productos_marca,
+     productos.cod_externo AS productos_cod_externo,
      productos_traslados.`c_enviado` AS productos_traslados_c_enviado,
      productos_traslados.`c_recibido` AS productos_traslados_c_recibido,
-     productos.`id_producto` AS productos_id_producto,
-     productos.`modelo` AS productos_modelo
+     productos.`id_producto` AS productos_id_producto
 FROM
      `empresa` empresa 
      INNER JOIN `almacen` almacen ON empresa.`id_empresa` = almacen.`id_empresa`
@@ -37,7 +36,7 @@ FROM
      INNER JOIN `productos` productos ON productos_traslados.`id_producto` = productos.`id_producto`
 WHERE
      traslados.id_traslado = $P{id_traslado}
-     order by productos.descripcion, productos.marca, productos.modelo asc]]>
+     order by productos.descripcion asc]]>
 	</queryString>
 	<field name="empresa_ruc" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="empresa_ruc"/>
@@ -87,24 +86,20 @@ WHERE
 		<property name="com.jaspersoft.studio.field.label" value="direccion_origen"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="almacen"/>
 	</field>
-	<field name="productos_marca" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="productos_marca"/>
+	<field name="productos_cod_externo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="productos_cod_externo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
 	</field>
-	<field name="productos_traslados_c_enviado" class="java.lang.Double">
+	<field name="productos_traslados_c_enviado" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="productos_traslados_c_enviado"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="productos_traslados"/>
 	</field>
-	<field name="productos_traslados_c_recibido" class="java.lang.Double">
+	<field name="productos_traslados_c_recibido" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="productos_traslados_c_recibido"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="productos_traslados"/>
 	</field>
 	<field name="productos_id_producto" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="productos_id_producto"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
-	</field>
-	<field name="productos_modelo" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="productos_modelo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
 	</field>
 	<background>
@@ -113,7 +108,7 @@ WHERE
 	<title>
 		<band height="125" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="410" y="0" width="145" height="16" forecolor="#FFFFFF" backcolor="#F80000" uuid="d84695a7-7fed-4abc-8f70-269599b2b6ca">
+				<reportElement mode="Opaque" x="410" y="0" width="145" height="16" forecolor="#FFFFFF" backcolor="#D12026" uuid="d84695a7-7fed-4abc-8f70-269599b2b6ca">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -122,7 +117,7 @@ WHERE
 				<text><![CDATA[NOTA DE TRASLADO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="410" y="16" width="70" height="16" forecolor="#FFFFFF" backcolor="#F80000" uuid="b198a85a-32d6-4f6b-aa9e-9aa8aeb3bb84">
+				<reportElement mode="Opaque" x="410" y="16" width="70" height="16" forecolor="#FFFFFF" backcolor="#D12026" uuid="b198a85a-32d6-4f6b-aa9e-9aa8aeb3bb84">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -230,7 +225,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{nombre_destino} + " | " + $F{direccion_llegada}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="410" y="32" width="70" height="16" forecolor="#FFFFFF" backcolor="#F80000" uuid="182969c2-4290-4f76-9965-b7291f9f7b78">
+				<reportElement mode="Opaque" x="410" y="32" width="70" height="16" forecolor="#FFFFFF" backcolor="#D12026" uuid="182969c2-4290-4f76-9965-b7291f9f7b78">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -249,42 +244,42 @@ WHERE
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="85" height="67" uuid="f0fd7757-43b4-4049-8d3e-8e2283066da8"/>
-				<imageExpression><![CDATA["http://lunasystemsperu.com/clientes/sonomusic/images/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["http://lunasystemsperu.com/clientes/casa_biblia/images/logo.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
 	<columnHeader>
 		<band height="26" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="51" height="20" forecolor="#FFFFFF" backcolor="#F80000" uuid="e0dc50f1-1f46-47d1-a8c1-7c8442e53726"/>
+				<reportElement mode="Opaque" x="0" y="0" width="51" height="20" forecolor="#FFFFFF" backcolor="#D12026" uuid="e0dc50f1-1f46-47d1-a8c1-7c8442e53726"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="51" y="0" width="275" height="20" forecolor="#FFFFFF" backcolor="#F80000" uuid="ba89d1b2-de9c-451b-9699-1dbb81429d1b"/>
+				<reportElement mode="Opaque" x="51" y="0" width="275" height="20" forecolor="#FFFFFF" backcolor="#D12026" uuid="ba89d1b2-de9c-451b-9699-1dbb81429d1b"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRE / MODELO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="326" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#F80000" uuid="d344218e-b425-4088-8f58-8776be1d3044"/>
+				<reportElement mode="Opaque" x="326" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#D12026" uuid="d344218e-b425-4088-8f58-8776be1d3044"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Marca]]></text>
+				<text><![CDATA[Cod. Externo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="426" y="0" width="62" height="20" forecolor="#FFFFFF" backcolor="#F80000" uuid="1e6129d6-e0e1-4dce-b52e-8ee4737351d5"/>
+				<reportElement mode="Opaque" x="426" y="0" width="62" height="20" forecolor="#FFFFFF" backcolor="#D12026" uuid="1e6129d6-e0e1-4dce-b52e-8ee4737351d5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[C.Enviado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="488" y="0" width="67" height="20" forecolor="#FFFFFF" backcolor="#F80000" uuid="9add59c8-bff5-40b1-bf4f-d5564ba813bd"/>
+				<reportElement mode="Opaque" x="488" y="0" width="67" height="20" forecolor="#FFFFFF" backcolor="#D12026" uuid="9add59c8-bff5-40b1-bf4f-d5564ba813bd"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9" isBold="true"/>
 				</textElement>
@@ -310,7 +305,7 @@ WHERE
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{productos_descripcion}+ " | "+$F{productos_modelo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{productos_descripcion}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement stretchType="RelativeToBandHeight" x="326" y="0" width="100" height="14" uuid="24c38980-c4e0-40f7-acce-c1f4c5b8b8e6">
@@ -319,7 +314,7 @@ WHERE
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{productos_marca}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{productos_cod_externo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="###0">
 				<reportElement stretchType="RelativeToBandHeight" x="426" y="0" width="62" height="14" uuid="987d048f-37cb-4119-8bc8-3ac29e38a5cf">
