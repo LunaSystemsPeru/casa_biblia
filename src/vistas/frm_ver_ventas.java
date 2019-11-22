@@ -1486,6 +1486,7 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_doc_ventaInputMethodTextChanged
 
     private void btn_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_imprimirActionPerformed
+        desactivar_botones();
         //cargar datos venta
         int id_venta = Integer.parseInt(t_ventas.getValueAt(fila_seleccionada, 8).toString());
         c_venta.setId_venta(id_venta);

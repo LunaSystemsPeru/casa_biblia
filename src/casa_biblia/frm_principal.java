@@ -9,6 +9,7 @@ import clases.cl_almacen;
 import clases.cl_caja;
 import clases.cl_conectar;
 import clases.cl_empresa;
+import clases.cl_pedido;
 import clases.cl_usuario;
 import clases.cl_usuario_permisos;
 import clases.cl_varios;
@@ -55,16 +56,17 @@ import vistas.rpt_ventas;
  * @author luis
  */
 public class frm_principal extends javax.swing.JFrame {
-    
+
     cl_conectar c_conectar = new cl_conectar();
     cl_varios c_varios = new cl_varios();
-    
+
     public static cl_usuario c_usuario = new cl_usuario();
     public static cl_almacen c_almacen = new cl_almacen();
     public static cl_empresa c_empresa = new cl_empresa();
     public static cl_usuario_permisos c_permiso = new cl_usuario_permisos();
-    
+
     cl_caja c_caja = new cl_caja();
+    cl_pedido c_pedido = new cl_pedido();
     cl_grafica_mensual c_grafica;
     cl_notificaciones c_notificaciones = new cl_notificaciones();
 
@@ -88,14 +90,14 @@ public class frm_principal extends javax.swing.JFrame {
             System.exit(0);
         }
     }
-    
+
     private void cargar_login() {
         jd_login.setSize(318, 380);
         jd_login.setModal(true);
         jd_login.setLocationRelativeTo(null);
         jd_login.setVisible(true);
     }
-    
+
     private void autoconectar() {
         try {
             Timer timer = new Timer(35000, new ActionListener() {
@@ -110,14 +112,13 @@ public class frm_principal extends javax.swing.JFrame {
             System.out.println("Error grave " + e.getLocalizedMessage());
         }
     }
-    
+
     private void auto_notificar() {
         try {
             Timer timer = new Timer(60000, new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     //System.out.println("mostrando id almacen " + c_almacen.getId());
-                    c_notificaciones.setId_almacen(c_almacen.getId());
-                    c_notificaciones.mostrar();
+                    cargar_notificaciones();
                 }
             });
             timer.start();
@@ -126,29 +127,37 @@ public class frm_principal extends javax.swing.JFrame {
             System.out.println("Error grave " + e.getLocalizedMessage());
         }
     }
-    
+
+    private void cargar_notificaciones() {
+        c_notificaciones.setId_almacen(c_almacen.getId());
+        c_notificaciones.mostrar();
+
+        c_pedido.setId_almacen(c_almacen.getId());
+        c_pedido.mostrarPedidoPendientes(jTable1);
+    }
+
     private void cargar_permisos() {
         c_permiso.setId_permiso(23);
         boolean permitido23 = c_permiso.validar();
-        
+
         if (!permitido23) {
             jButton12.setEnabled(false);
         }
-        
+
         c_permiso.setId_permiso(18);
         boolean permitido18 = c_permiso.validar();
-        
+
         if (!permitido18) {
             jButton4.setEnabled(false);
         }
-        
+
         c_permiso.setId_permiso(17);
         boolean permitido17 = c_permiso.validar();
-        
+
         if (!permitido17) {
             jButton16.setEnabled(false);
         }
-        
+
         c_permiso.setId_permiso(16);
         boolean permitido16 = c_permiso.validar();
 
@@ -158,21 +167,21 @@ public class frm_principal extends javax.swing.JFrame {
          */
         c_permiso.setId_permiso(15);
         boolean permitido15 = c_permiso.validar();
-        
+
         if (!permitido15) {
             jButton23.setEnabled(false);
         }
-        
+
         c_permiso.setId_permiso(9);
         boolean permitido9 = c_permiso.validar();
-        
+
         if (!permitido9) {
             jButton13.setEnabled(false);
         }
-        
+
         c_permiso.setId_permiso(4);
         boolean permitido4 = c_permiso.validar();
-        
+
         if (!permitido4) {
             jButton19.setEnabled(false);
         }
@@ -264,6 +273,9 @@ public class frm_principal extends javax.swing.JFrame {
         jSeparator13 = new javax.swing.JToolBar.Separator();
         jButton21 = new javax.swing.JButton();
         jButton22 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jToolBar3 = new javax.swing.JToolBar();
         jLabel13 = new javax.swing.JLabel();
         lbl_traslados_encontrados = new javax.swing.JLabel();
@@ -915,9 +927,41 @@ public class frm_principal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Configuracion", jToolBar6);
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.setPreferredSize(new java.awt.Dimension(150, 200));
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         jDesktopPane1.setLayer(jp_meses, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jp_dias, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jTabbedPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -927,18 +971,25 @@ public class frm_principal extends javax.swing.JFrame {
                 .addComponent(jp_meses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jp_dias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1324, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jp_dias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jp_meses, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 198, Short.MAX_VALUE)
+                        .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jp_dias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jp_meses, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jToolBar3.setFloatable(false);
@@ -1040,23 +1091,23 @@ public class frm_principal extends javax.swing.JFrame {
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         c_almacen.setId(c_usuario.getId_almacen());
         c_almacen.validar_almacen();
-        
+
         c_empresa.setId(c_almacen.getEmpresa());
         c_empresa.validar_empresa();
-        
+
         c_permiso.setId_usuario(c_usuario.getId_usuario());
         cargar_permisos();
-        
+
         lbl_nom_tienda.setText(c_almacen.getNombre());
         lbl_empresa.setText(c_empresa.getRuc() + " | " + c_empresa.getRazon());
         lbl_usuario.setText(c_usuario.getUsername());
-        
+
         jd_login.setVisible(false);
-        
+
         c_caja.setId_almacen(c_almacen.getId());
         c_caja.setFecha(c_varios.getFechaActual());
         boolean existe_caja = c_caja.validar_caja();
-        
+
         if (!existe_caja) {
             txt_tienda.setText(c_almacen.getNombre());
             txt_fecha.setText(c_varios.fecha_usuario(c_varios.getFechaActual()));
@@ -1067,8 +1118,9 @@ public class frm_principal extends javax.swing.JFrame {
         }
 
         //mostrar notificaciones
+        cargar_notificaciones();
         auto_notificar();
-        
+
         c_grafica = new cl_grafica_mensual();
         c_grafica.llenar_series_diarias(jp_dias);
         c_grafica.llenar_series_mensuales(jp_meses);
@@ -1239,7 +1291,7 @@ public class frm_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton25ActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        
+
     }//GEN-LAST:event_formKeyPressed
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
@@ -1327,7 +1379,9 @@ public class frm_principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator10;
     private javax.swing.JToolBar.Separator jSeparator11;
@@ -1346,6 +1400,7 @@ public class frm_principal extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;

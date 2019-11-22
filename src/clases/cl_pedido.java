@@ -143,7 +143,7 @@ public class cl_pedido {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into pedidos "
-                + "Values ('" + id_pedido + "', '" + fecha + "', '1000-01-01', '" + id_usuario + "', '" + id_cajero + "', '" + total + "', '" + id_almacen + "', '1')";
+                + "Values ('" + id_pedido + "', '" + fecha + "', '1000-01-01', '" + id_usuario + "', '" + id_cajero + "', '" + total + "', '" + id_almacen + "', '0')";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;
@@ -217,6 +217,48 @@ public class cl_pedido {
             tabla.getColumnModel().getColumn(3).setPreferredWidth(80);
             tabla.getColumnModel().getColumn(4).setPreferredWidth(80);
             tabla.setDefaultRenderer(Object.class, new render_pedidos());
+        } catch (SQLException e) {
+            System.out.print(e);
+        }
+
+    }
+
+    public void mostrarPedidoPendientes(JTable tabla) {
+        try {
+            DefaultTableModel modelo = new DefaultTableModel() {
+                @Override
+                public boolean isCellEditable(int fila, int columna) {
+                    return false;
+                }
+            };
+
+            Statement st = c_conectar.conexion();
+            String query = "select fecha, id_pedido, total "
+                    + "from pedidos "
+                    + "where estado = 0 and id_almacen = '" + id_almacen + "' "
+                    + "order by id_pedido asc";
+            ResultSet rs = c_conectar.consulta(st, query);
+
+            modelo.addColumn("Fecha");
+            modelo.addColumn("Id");
+            modelo.addColumn("Total");
+
+            //Creando las filas para el JTable
+            while (rs.next()) {
+                Object[] fila = new Object[3];
+                fila[0] = rs.getString("fecha");
+                fila[1] = rs.getInt("id_pedido");
+                fila[2] = rs.getDouble("total");
+                modelo.addRow(fila);
+            }
+
+            c_conectar.cerrar(st);
+            c_conectar.cerrar(rs);
+
+            tabla.setModel(modelo);
+            tabla.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(50);
         } catch (SQLException e) {
             System.out.print(e);
         }

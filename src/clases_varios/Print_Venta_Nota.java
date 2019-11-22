@@ -130,7 +130,7 @@ public class Print_Venta_Nota {
                 if (pdescripcion.length() > 68) {
                     pdescripcion = pdescripcion.substring(0, 66);
                 }
-                if (pdescripcion.length() < 29) {
+                if (pdescripcion.length() > 26 & pdescripcion.length() < 29) {
                     pdescripcion = pdescripcion.substring(0, 26);
                 }
 

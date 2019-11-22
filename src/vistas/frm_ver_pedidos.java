@@ -31,6 +31,10 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
         query = "select * "
                 + "from pedidos "
                 + "where id_almacen = '" + id_almacen + "' and concat(year(fecha), lpad(month(fecha), 2, 0)) = '201910'";
+        query = "select * "
+                + "from pedidos "
+                + "where id_almacen = '" + id_almacen + "' and fecha = CURRENT_DATE()";
+        System.out.println(query);
         c_pedido.mostrar(t_pedidos, query);
     }
 

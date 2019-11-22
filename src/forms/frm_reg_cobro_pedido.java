@@ -659,6 +659,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
         double cnt_tarjeta = Double.parseDouble(txt_tarjeta.getText());
         double cnt_efectivo = Double.parseDouble(txt_efectivo.getText());
 
+        //SI ES NOTA DE VENTA O NOTA DE SEPARACION NO PROCESA AL SP 
         if (tido == 2 || tido == 11) {
             cl_documento_almacen.setId_tido(tido);
             cl_documento_almacen.setId_almacen(idalmacen);
@@ -721,9 +722,12 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
             }
 
             if (tido == 2) {
-                print_Venta_Nota.setId_venta(cl_venta.getId_venta());
-                print_Venta_Nota.setId_almacen(idalmacen);
-                print_Venta_Nota.generar_ticket();
+                //cliente no desea imprimir la nota de venta
+                /*
+                    print_Venta_Nota.setId_venta(cl_venta.getId_venta());
+                    print_Venta_Nota.setId_almacen(idalmacen);
+                    print_Venta_Nota.generar_ticket();
+                */
             }
             if (tido == 11) {
                 Print_Separacion_Ticket print_Separacion_Ticket = new Print_Separacion_Ticket();
@@ -731,6 +735,8 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                 print_Separacion_Ticket.setId_almacen(cl_venta.getId_almacen());
                 print_Separacion_Ticket.generar_ticket();
             }
+            
+            //SI ES TICKET
         } else if (tido == 9) {
             int venta1 = -1;
             int venta2 = -1;
