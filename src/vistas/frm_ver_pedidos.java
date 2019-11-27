@@ -33,10 +33,11 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
      */
     public frm_ver_pedidos() {
         initComponents();
-        query = "select * "
-                + "from pedidos "
-                + "where id_almacen = '" + id_almacen + "' and fecha = '" + c_varios.getFechaActual() + "'";
-        System.out.println(query);
+        query = "select p.id_pedido, p.fecha, u.datos, p.total, p.estado "
+                + "from pedidos as p "
+                + "inner join usuarios u on p.id_usuarios = u.id_usuarios "
+                + "where p.fecha = CURRENT_DATE() and p.id_almacen = '" + id_almacen + "'";
+//        System.out.println(query);
         c_pedido.mostrar(t_pedidos, query);
     }
 
@@ -236,18 +237,19 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
             if (tipo == 0) {
                 if (texto.length() == 10) {
                     texto = c_varios.fecha_myql(texto);
-                    query = "select * "
-                            + "from pedidos "
-                            + "where id_almacen = '" + id_almacen + "' and fecha = '" + texto + "'";
+                    query = "select p.id_pedido, p.fecha, u.datos, p.total, p.estado "
+                            + "from pedidos as p "
+                            + "inner join usuarios u on p.id_usuarios = u.id_usuarios "
+                            + "where p.fecha = " + texto + "' and p.id_almacen = '" + id_almacen + "'";
                 }
             }
 
             if (tipo == 1) {
                 if (texto.length() == 6) {
-                    query = "select * "
-                            + "from pedidos "
-                            + "where id_almacen = '" + id_almacen + "' and concat(year(fecha), lpad(month(fecha), 2, 0)) = '" + texto + "'";
-
+                    query = "select p.id_pedido, p.fecha, u.datos, p.total, p.estado "
+                            + "from pedidos as p "
+                            + "inner join usuarios u on p.id_usuarios = u.id_usuarios "
+                            + "where and concat(year(p.fecha), lpad(month(p.fecha), 2, 0)) = '" + texto + "' and p.id_almacen = '" + id_almacen + "'";
                 }
             }
 

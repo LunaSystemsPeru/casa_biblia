@@ -143,7 +143,7 @@ public class cl_pedido {
         boolean registrado = false;
         Statement st = c_conectar.conexion();
         String query = "insert into pedidos "
-                + "Values ('" + id_pedido + "', '" + fecha + "', '1000-01-01', '" + id_usuario + "', '" + id_cajero + "', '" + total + "', '" + id_almacen + "', '0')";
+                + "Values ('" + id_pedido + "', '" + fecha + "', '1000-01-01', '" + id_usuario + "', '" + id_cajero + "', '" + total + "', '" + id_almacen + "', '1')";
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;

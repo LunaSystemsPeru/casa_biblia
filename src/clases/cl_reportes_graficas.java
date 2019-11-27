@@ -75,7 +75,7 @@ public class cl_reportes_graficas {
         Statement st = c_conectar.conexion();
         String query = "select date_format(v.fecha, '%m-%d') as dia, sum(v.total) as total_venta, sum(vc.monto) as total_ingreso "
                 + "from ventas as v "
-                + "inner join ventas_cobros as vc on vc.id_ventas = v.id_ventas and vc.id_almacen = v.id_almacen and vc.fecha = v.fecha "
+                + "inner join ventas_cobros as vc on vc.id_ventas = v.id_ventas and vc.fecha = v.fecha "
                 + "where v.id_almacen = '" + this.id_almacen + "' and v.fecha <= CURRENT_DATE() "
                 + "group by v.fecha "
                 + "order by v.fecha desc "
@@ -89,7 +89,8 @@ public class cl_reportes_graficas {
     public ResultSet ver_cobros_mensuales() {
         Statement st = c_conectar.conexion();
         String query = "select m.nombre, ifnull(sum(vc.monto), 0) as monto "
-                + "from mes as m left join ventas_cobros as vc on month(vc.fecha) = m.id and "
+                + "from mes as m "
+                + "left join ventas_cobros as vc on month(vc.fecha) = m.id and "
                 + "year(vc.fecha) = year(CURRENT_DATE()) and vc.id_almacen = '" + this.id_almacen + "'  "
                 + "group by m.id "
                 + "order by m.id asc";
