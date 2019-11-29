@@ -70,7 +70,7 @@ public class cl_grafica_mensual {
 
         ChartPanel chartPanel = new ChartPanel((JFreeChart) null);
         chartPanel.setChart(chart);
-        chartPanel.setBounds(0, 0, 419, 309);
+        chartPanel.setBounds(0, 0, 350, 309);
         panel.add(chartPanel);
         panel.repaint();
     }
@@ -109,7 +109,7 @@ public class cl_grafica_mensual {
 
         ChartPanel chartPanel = new ChartPanel((JFreeChart) null);
         chartPanel.setChart(chart);
-        chartPanel.setBounds(0, 0, 419, 309);
+        chartPanel.setBounds(0, 0, 350, 309);
         panel.add(chartPanel);
         panel.repaint();
     }

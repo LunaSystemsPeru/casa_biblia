@@ -37,7 +37,6 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
                 + "from pedidos as p "
                 + "inner join usuarios u on p.id_usuarios = u.id_usuarios "
                 + "where p.fecha = CURRENT_DATE() and p.id_almacen = '" + id_almacen + "'";
-//        System.out.println(query);
         c_pedido.mostrar(t_pedidos, query);
     }
 
@@ -240,7 +239,7 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
                     query = "select p.id_pedido, p.fecha, u.datos, p.total, p.estado "
                             + "from pedidos as p "
                             + "inner join usuarios u on p.id_usuarios = u.id_usuarios "
-                            + "where p.fecha = " + texto + "' and p.id_almacen = '" + id_almacen + "'";
+                            + "where p.fecha = '" + texto + "' and p.id_almacen = '" + id_almacen + "'";
                 }
             }
 
@@ -252,7 +251,6 @@ public class frm_ver_pedidos extends javax.swing.JInternalFrame {
                             + "where and concat(year(p.fecha), lpad(month(p.fecha), 2, 0)) = '" + texto + "' and p.id_almacen = '" + id_almacen + "'";
                 }
             }
-
             c_pedido.mostrar(t_pedidos, query);
         }
     }//GEN-LAST:event_txt_buscarKeyPressed

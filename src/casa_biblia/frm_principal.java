@@ -560,24 +560,26 @@ public class frm_principal extends javax.swing.JFrame {
 
         jDesktopPane1.setBackground(new java.awt.Color(204, 204, 204));
 
-        jp_meses.setPreferredSize(new java.awt.Dimension(419, 309));
+        jp_meses.setPreferredSize(new java.awt.Dimension(350, 309));
 
         javax.swing.GroupLayout jp_mesesLayout = new javax.swing.GroupLayout(jp_meses);
         jp_meses.setLayout(jp_mesesLayout);
         jp_mesesLayout.setHorizontalGroup(
             jp_mesesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 419, Short.MAX_VALUE)
+            .addGap(0, 350, Short.MAX_VALUE)
         );
         jp_mesesLayout.setVerticalGroup(
             jp_mesesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        jp_dias.setPreferredSize(new java.awt.Dimension(350, 309));
+
         javax.swing.GroupLayout jp_diasLayout = new javax.swing.GroupLayout(jp_dias);
         jp_dias.setLayout(jp_diasLayout);
         jp_diasLayout.setHorizontalGroup(
             jp_diasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 419, Short.MAX_VALUE)
+            .addGap(0, 350, Short.MAX_VALUE)
         );
         jp_diasLayout.setVerticalGroup(
             jp_diasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -986,9 +988,9 @@ public class frm_principal extends javax.swing.JFrame {
                 .addComponent(jp_meses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jp_dias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1324, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -184,8 +184,10 @@ public class cl_pedido {
             modelo.addColumn("Total");
             modelo.addColumn("Estado");
 
+            int contar = 0;
             //Creando las filas para el JTable
             while (rs.next()) {
+                contar++;
                 int iestado = rs.getInt("estado");
                 String sestado = "";
                 if (iestado == 1) {
@@ -200,7 +202,7 @@ public class cl_pedido {
                 Object[] fila = new Object[5];
                 fila[0] = rs.getInt("id_pedido");
                 fila[1] = rs.getString("fecha");
-                fila[2] = rs.getString("id_usuarios");
+                fila[2] = rs.getString("datos");
                 fila[3] = rs.getDouble("total");
                 fila[4] = sestado;
 
@@ -210,6 +212,9 @@ public class cl_pedido {
             c_conectar.cerrar(st);
             c_conectar.cerrar(rs);
 
+            if (contar == 0) {
+                JOptionPane.showMessageDialog(null, "NO HAY DATOS QUE MOSTRAR");
+            }
             tabla.setModel(modelo);
             tabla.getColumnModel().getColumn(0).setPreferredWidth(30);
             tabla.getColumnModel().getColumn(1).setPreferredWidth(100);

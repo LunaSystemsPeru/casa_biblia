@@ -5,6 +5,7 @@
  */
 package render_tablas;
 
+import casa_biblia.frm_principal;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JTable;
@@ -19,27 +20,32 @@ public class render_traslados extends DefaultTableCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
-        switch (String.valueOf(table.getValueAt(row, 7))) {
-            case "CON OBSERVACIONES":
-                setBackground(Color.green);
-                setForeground(Color.black);
-                break;
-            case "ANULADO":
-                setBackground(Color.black);
-                setForeground(Color.white);
-                break;
-            case "PENDIENTE":
-                setBackground(Color.yellow);
-                setForeground(Color.black);
-                break;
-            case "BORRADOR":
-                setBackground(Color.pink);
-                setForeground(Color.black);
-                break;
-            default:
-                setBackground(Color.white);
-                setForeground(Color.black);
-                break;
+        if (String.valueOf(table.getValueAt(row, 3)).equals(frm_principal.c_almacen.getNombre())) {
+            switch (String.valueOf(table.getValueAt(row, 7))) {
+                case "CON OBSERVACIONES":
+                    setBackground(Color.green);
+                    setForeground(Color.black);
+                    break;
+                case "ANULADO":
+                    setBackground(Color.black);
+                    setForeground(Color.white);
+                    break;
+                case "PENDIENTE":
+                    setBackground(Color.yellow);
+                    setForeground(Color.black);
+                    break;
+                case "BORRADOR":
+                    setBackground(Color.pink);
+                    setForeground(Color.black);
+                    break;
+                default:
+                    setBackground(Color.white);
+                    setForeground(Color.black);
+                    break;
+            }
+        } else {
+            setBackground(Color.white);
+            setForeground(Color.black);
         }
 
         if (column == 0) {

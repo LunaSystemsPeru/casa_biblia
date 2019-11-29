@@ -75,6 +75,11 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
         }
 
         double total = cl_pedido.getTotal();
+
+        if (efectivo > total) {
+            efectivo = total;
+        }
+
         double suma = efectivo + tarjeta;
 
         double faltante = 0;
@@ -748,7 +753,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                 print_Separacion_Ticket.setId_almacen(cl_venta.getId_almacen());
                 print_Separacion_Ticket.generar_ticket();
             }
-            
+
             //SI ES TICKET
         } else if (tido == 9) {
             int venta1 = -1;
