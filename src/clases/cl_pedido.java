@@ -235,8 +235,8 @@ public class cl_pedido {
             Statement st = c_conectar.conexion();
             String query = "select fecha, id_pedido, total "
                     + "from pedidos "
-                    + "where estado = 0 and id_almacen = '" + id_almacen + "' "
-                    + "order by id_pedido asc";
+                    + "where estado = 1 and id_almacen = '" + id_almacen + "' "
+                    + "order by id_pedido desc";
             ResultSet rs = c_conectar.consulta(st, query);
 
             modelo.addColumn("Fecha");
