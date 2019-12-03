@@ -115,6 +115,7 @@ public class Print_Venta_Ticket {
         }
         printer.printTextLinCol(8, 1, varios_impresion.centrar_texto(40, documentocliente));
         printer.printTextLinCol(9, 1, varios_impresion.centrar_texto(40, c_almacen.getTicketera() + " - " + numero));
+        //printer.printTextLinCol(10, 1, "FECHA EMISION: " + c_varios.fecha_usuario(c_venta.getFecha()));
         printer.printTextLinCol(10, 1, "FECHA EMISION: " + c_varios.getFechaHora());
         printer.printTextLinCol(11, 1, "CLIENTE DOC: " + c_cliente.getDocumento());
         printer.printTextLinCol(12, 1, c_cliente.getNombre());

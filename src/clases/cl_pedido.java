@@ -242,6 +242,7 @@ public class cl_pedido {
                     + "from pedidos "
                     + "where estado = 1 and id_almacen = '" + id_almacen + "' "
                     + "order by id_pedido desc";
+            System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
 
             modelo.addColumn("Fecha");
