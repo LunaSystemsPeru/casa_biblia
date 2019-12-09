@@ -34,6 +34,7 @@ import java.util.Locale;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import casa_biblia.frm_principal;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -45,6 +46,7 @@ public class rpt_ventas extends javax.swing.JDialog {
     cl_varios c_varios = new cl_varios();
 
     int id_almacen = frm_principal.c_almacen.getId();
+    int id_empresa = frm_principal.c_almacen.getEmpresa();
 
     /**
      * Creates new form rpt_reportes
@@ -65,11 +67,11 @@ public class rpt_ventas extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         cbx_pdf = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btn_rpt_pdf = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        txt_fec_inicio_pdf = new javax.swing.JFormattedTextField();
+        txt_fec_fin_pdf = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         cbx_graficas = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
@@ -90,27 +92,47 @@ public class rpt_ventas extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Reportes en PDF"));
 
-        cbx_pdf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbx_pdf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rpt. Ventas SUNAT" }));
+        cbx_pdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_pdfActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("Generar");
+        btn_rpt_pdf.setText("Generar");
+        btn_rpt_pdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_rpt_pdfActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Fecha de Inicio:");
 
         jLabel2.setText("Fecha de fin:");
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            txt_fec_inicio_pdf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFormattedTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fec_inicio_pdf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fec_inicio_pdf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_fec_inicio_pdfKeyPressed(evt);
+            }
+        });
 
         try {
-            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            txt_fec_fin_pdf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFormattedTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fec_fin_pdf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_fec_fin_pdf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_fec_fin_pdfKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -125,13 +147,13 @@ public class rpt_ventas extends javax.swing.JDialog {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_fec_fin_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_fec_inicio_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(cbx_pdf, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(btn_rpt_pdf)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -142,13 +164,13 @@ public class rpt_ventas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_fec_inicio_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_fec_fin_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_rpt_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -352,6 +374,58 @@ public class rpt_ventas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void cbx_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_pdfActionPerformed
+        txt_fec_inicio_pdf.setText("");
+        txt_fec_fin_pdf.setText("");
+        txt_fec_inicio_pdf.requestFocus();
+    }//GEN-LAST:event_cbx_pdfActionPerformed
+
+    private void txt_fec_inicio_pdfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_inicio_pdfKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_fec_inicio_pdf.getText().length()==10) {
+                txt_fec_fin_pdf.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_fec_inicio_pdfKeyPressed
+
+    private void txt_fec_fin_pdfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fec_fin_pdfKeyPressed
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txt_fec_fin_pdf.getText().length()==10) {
+                btn_rpt_pdf.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_fec_fin_pdfKeyPressed
+
+    private void btn_rpt_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rpt_pdfActionPerformed
+        int reporte = cbx_pdf.getSelectedIndex();
+        String nombre_reporte = "";
+        if (reporte == 0) {
+            nombre_reporte = "rpt_ventas_sunat";
+        }
+
+        String fecha_inicio = c_varios.fecha_myql(txt_fec_inicio_pdf.getText());
+        String fecha_fin = c_varios.fecha_myql(txt_fec_fin_pdf.getText());
+
+        //ver reporte en excel;        
+        File miDir = new File(".");
+        try {
+            Map<String, Object> parametros = new HashMap<>();
+            String path = miDir.getCanonicalPath();
+            String direccion = path + File.separator + "reports" + File.separator + "subreports" + File.separator;
+
+            System.out.println(direccion);
+            parametros.put("SUBREPORT_DIR", direccion);
+            parametros.put("JRParameter.REPORT_LOCALE", Locale.ENGLISH);
+            parametros.put("REPORT_LOCALE", Locale.ENGLISH);
+            parametros.put("p_id_empresa", id_empresa);
+            parametros.put("p_fecha_inicio", fecha_inicio);
+            parametros.put("p_fecha_fin", fecha_fin);
+            c_varios.ver_reporte(nombre_reporte, parametros);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
+    }//GEN-LAST:event_btn_rpt_pdfActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -396,14 +470,12 @@ public class rpt_ventas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_rpt_pdf;
     private javax.swing.JComboBox<String> cbx_excel;
     private javax.swing.JComboBox<String> cbx_graficas;
     private javax.swing.JComboBox<String> cbx_pdf;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -412,6 +484,8 @@ public class rpt_ventas extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel panel_graficas;
+    private javax.swing.JFormattedTextField txt_fec_fin_pdf;
+    private javax.swing.JFormattedTextField txt_fec_inicio_pdf;
     private javax.swing.JFormattedTextField txt_fin_excel;
     private javax.swing.JFormattedTextField txt_inicio_excel;
     // End of variables declaration//GEN-END:variables
