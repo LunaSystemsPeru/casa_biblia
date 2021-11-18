@@ -594,7 +594,7 @@ public class frm_reg_cobro_pedido extends javax.swing.JInternalFrame {
                             Notification.show("Validar Cliente", "Se esta validando el DNI en RENIEC", Notification.NICON_LIGHT_THEME);
                             String json = cl_json_entidad.getJSONDNI_LUNASYSTEMS(c_cliente.getDocumento());
                             //Lo mostramos
-                            String datos = cl_json_entidad.showJSONDNIL(json);
+                            String datos = cl_json_entidad.showJSONDNI(json);
                             txt_nom_cliente.setText(datos);
                             llenar_guardar();
                         } catch (ParseException e) {

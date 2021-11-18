@@ -690,7 +690,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                         try {
                             String json = cl_json_entidad.getJSONDNI_LUNASYSTEMS(documento);
                             //Lo mostramos
-                            String datos = cl_json_entidad.showJSONDNIL(json);
+                            String datos = cl_json_entidad.showJSONDNI(json);
                             txt_razon_social.setText(datos);
                             txt_direccion.setText("");
                         } catch (ParseException e) {

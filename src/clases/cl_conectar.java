@@ -16,10 +16,10 @@ import javax.swing.JOptionPane;
 public class cl_conectar {
 
     private static Connection conexion = null;
-    private static String bd = "casabiblia_new"; // Nombre de BD.
-    private static String user = "lsp_biblia"; // Usuario de BD.
-    private static String password = "rjtXWPojnz9YnU7b"; // Password de BD.
-    private static String url = "lunasystemsperu.com";
+    private static String bd = "brunoasc_casabiblia_new"; // Nombre de BD.
+    private static String user = "brunoasc_luis_bd"; // Usuario de BD.
+    private static String password = "C]6&TN4Bt@&I"; // Password de BD.
+    private static String url = "artemisa.servidoresph.com";
     //private static String url = "192.168.1.6";
 
     // Driver para MySQL en este caso.
