@@ -197,7 +197,7 @@ public class cl_producto {
             String query = "select * "
                     + "from productos "
                     + "where id_producto = '" + id + "'";
-            System.out.println(query);
+            //System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 descripcion = rs.getString("descripcion");
@@ -225,7 +225,7 @@ public class cl_producto {
         String query = "insert into productos "
                 + "values ('" + id + "', '" + descripcion + "', '" + cod_externo + "', '" + costo + "', '" + precio + "', '0', "
                 + "'" + tipo_producto + "', '" + afecto_igv + "','" + id_sub_clasificacion + "', '', '1', '1')";
-        System.out.println(query);
+        //System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;
@@ -239,7 +239,7 @@ public class cl_producto {
         String query = "update productos "
                 + "set estado = 2, ctotal = 0 "
                 + "where id_producto = '" + id + "'";
-        System.out.println(query);
+        //System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;
@@ -254,7 +254,7 @@ public class cl_producto {
                 + "set descripcion = '" + descripcion + "', cod_externo = '" + cod_externo + "', precio = '" + precio + "', costo = '" + costo + "', "
                 + "id_subclasificacion = '" + id_sub_clasificacion + "', afecto_igv = '" + afecto_igv + "' "
                 + "where id_producto = '" + id + "'";
-        System.out.println(query);
+        //System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;

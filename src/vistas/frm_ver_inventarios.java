@@ -250,7 +250,7 @@ public class frm_ver_inventarios extends javax.swing.JInternalFrame {
                         + "inner join usuarios as u on u.id_usuarios = i.id_usuarios "
                         + "where u.username = '" + texto + "' and i.id_almacen = '" + id_almacen + "'";
             }
-            System.out.println(query);
+            //System.out.println(query);
             c_inventario.mostrar(t_inventarios, query);
 
         }

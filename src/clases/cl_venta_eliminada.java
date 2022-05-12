@@ -142,8 +142,8 @@ public class cl_venta_eliminada {
                     + "from ventas_eliminadas as vc "
                     + "inner join ventas as v on v.id_ventas = vc.id_ventas and v.id_almacen = vc.id_almacen "
                     + "where v.id_cliente = '" + id_cliente + "' ";
-            System.out.println(query);
-            System.out.println(query);
+            //System.out.println(query);
+            //System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 registrado = true;

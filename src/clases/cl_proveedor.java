@@ -118,7 +118,7 @@ public class cl_proveedor {
         Statement st = c_conectar.conexion();
         String query = "insert into proveedor "
                 + "Values ('" + id_proveedor + "', '" + ruc + "', '" + razon_social + "', '" + direccion + "', '" + condicion + "', '" + estado + "', '0', '0')";
-        System.out.println(query);
+       // System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;
@@ -133,7 +133,7 @@ public class cl_proveedor {
         String query = "update proveedor "
                 + "set razon_social = '" + razon_social + "', direccion ='" + direccion + "',condicion= '" + condicion + "',estado= '" + estado + "' "
                 + "where id_proveedor= '"+id_proveedor+"'";
-        System.out.println(query);
+        //System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;

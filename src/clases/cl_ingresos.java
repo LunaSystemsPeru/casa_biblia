@@ -132,7 +132,7 @@ public class cl_ingresos {
             String query = "select * "
                     + "from ingresos "
                     + "where id_ingreso = '" + id_ingreso + "'";
-            System.out.println(query);
+            //System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 existe = true;
@@ -160,7 +160,7 @@ public class cl_ingresos {
             String query = "select * "
                     + "from ingresos "
                     + "where id_proveedor = '" + id_proveedor + "' and id_tido = '" + id_tido + "' and serie = '" + serie + "' and numero = '" + numero + "'";
-            System.out.println(query);
+            //System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 existe = true;
@@ -178,7 +178,7 @@ public class cl_ingresos {
             String query = "select id_ingreso, periodo "
                     + "from ingresos "
                     + "where id_almacen = '" + id_almacen + "' and id_tido = '" + id_tido + "' and serie = '" + serie + "' and numero = '" + numero + "' and fecha = '"+fecha+"'";
-            System.out.println(query);
+            //System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 existe = true;
@@ -259,7 +259,7 @@ public class cl_ingresos {
         String query = "insert into ingresos "
                 + "values ('" + id_ingreso + "', '" + fecha + "', '" + id_almacen + "', '" + id_proveedor + "', '" + id_tido + "', '" + serie + "', '" + numero + "', "
                 + "'" + total + "', '" + id_moneda + "', '" + tc + "', '" + id_usuario + "')";
-        System.out.println(query);
+       // System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;

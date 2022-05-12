@@ -78,7 +78,7 @@ public class cl_productos_salida {
         Statement st = c_conectar.conexion();
         String query = "delete from productos_salida "
                 + "where id_salida = '" + id_salida + "'";
-        System.out.println(query);
+        //System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;
@@ -101,7 +101,7 @@ public class cl_productos_salida {
                     + "from productos_salida as ps "
                     + "inner join productos as p on p.id_producto = ps.id_producto "
                     + "where ps.id_salida = '" + id_salida + "'";
-            System.out.println(query);
+            //System.out.println(query);
             Statement st = c_conectar.conexion();
             ResultSet rs = c_conectar.consulta(st, query);
 

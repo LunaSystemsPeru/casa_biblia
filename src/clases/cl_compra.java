@@ -216,7 +216,7 @@ public class cl_compra {
             String query = "select * "
                     + "from compras "
                     + "where id_proveedor = '" + id_proveedor + "' and id_tido = '" + id_tido + "' and serie = '" + serie + "' and numero = '" + numero + "'";
-            System.out.println(query);
+            //System.out.println(query);
             ResultSet rs = c_conectar.consulta(st, query);
             if (rs.next()) {
                 existe = true;

@@ -301,7 +301,6 @@ public class cl_venta {
                     return false;
                 }
             };
-            TableRowSorter sorter = new TableRowSorter(tmodelo);
             Statement st = c_conectar.conexion();
             ResultSet rs = c_conectar.consulta(st, query);
 
@@ -374,6 +373,7 @@ public class cl_venta {
             tabla.getColumnModel().getColumn(7).setPreferredWidth(80);
             tabla.getColumnModel().getColumn(8).setPreferredWidth(0);
             tabla.setDefaultRenderer(Object.class, new render_ventas());
+             TableRowSorter sorter = new TableRowSorter(tmodelo);
             tabla.setRowSorter(sorter);
 
         } catch (SQLException e) {

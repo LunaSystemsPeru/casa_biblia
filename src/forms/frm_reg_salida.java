@@ -30,6 +30,7 @@ import casa_biblia.frm_principal;
 import clases.cl_tipo_salida;
 import json.cl_json_entidad;
 import org.json.simple.parser.ParseException;
+import vistas.frm_buscar_mis_productos;
 import vistas.frm_ver_salidas;
 
 /**
@@ -37,27 +38,28 @@ import vistas.frm_ver_salidas;
  * @author luis
  */
 public class frm_reg_salida extends javax.swing.JInternalFrame {
-
+    
     cl_conectar c_conectar = new cl_conectar();
     cl_varios c_varios = new cl_varios();
-
+    
     cl_salida c_salida = new cl_salida();
     cl_productos_salida c_detalle = new cl_productos_salida();
     cl_producto c_producto = new cl_producto();
     cl_productos_almacen c_producto_almacen = new cl_productos_almacen();
     cl_documento_almacen c_doc_tienda = new cl_documento_almacen();
     cl_tipo_salida c_tipo_salida = new cl_tipo_salida();
-
+    
     m_documentos_sunat m_documentos = new m_documentos_sunat();
     m_almacen m_almacen = new m_almacen();
-
+    
     DefaultTableModel detalle;
     TextAutoCompleter tac_productos = null;
     TextAutoCompleter tac_proveedores = null;
-
+    
     int fila_seleccionada;
     int id_almacen = frm_principal.c_almacen.getId();
-
+    public static int productoid = 0;
+    
     String query;
 
     /**
@@ -70,9 +72,9 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         txt_nom_tienda.setText(frm_principal.c_almacen.getNombre());
         modelo_ingreso();
         c_tipo_salida.cbx_tipo_salida(cbx_tido);
-
+        
     }
-
+    
     private void modelo_ingreso() {
         //formato de tabla detalle de venta
         detalle = new DefaultTableModel() {
@@ -103,7 +105,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         c_varios.derecha_celda(t_detalle, 5);
         c_varios.derecha_celda(t_detalle, 6);
     }
-
+    
     private void cargar_proveedores() {
         try {
             if (tac_proveedores != null) {
@@ -144,8 +146,14 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
             System.out.println(e.getLocalizedMessage());
         }
     }
-
+    
     private void cargar_productos() {
+        Frame f = JOptionPane.getRootFrame();
+        frm_buscar_mis_productos formulario = new frm_buscar_mis_productos(f, true);
+        frm_buscar_mis_productos.tipoform = 2;
+        formulario.setLocationRelativeTo(null);
+        formulario.setVisible(true);
+        /*
         try {
             if (tac_productos != null) {
                 tac_productos.removeAllItems();
@@ -184,8 +192,9 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error " + e.getLocalizedMessage());
             System.out.println(e.getLocalizedMessage());
         }
+         */
     }
-
+    
     private boolean valida_tabla(int producto) {
         //estado de ingreso
         boolean ingresar = false;
@@ -196,7 +205,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         if (contar_filas == 0) {
             ingresar = true;
         }
-
+        
         if (contar_filas > 0) {
             for (int j = 0; j < contar_filas; j++) {
                 int id_producto_fila = Integer.parseInt(t_detalle.getValueAt(j, 0).toString());
@@ -209,13 +218,13 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                 }
             }
         }
-
+        
         if (cuenta_iguales == 0) {
             ingresar = true;
         }
         return ingresar;
     }
-
+    
     private void limpiar_buscar() {
         txt_buscar_productos.setText("");
         txt_cingreso.setText("");
@@ -227,15 +236,20 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         btn_agregar_producto.setEnabled(true);
         txt_buscar_productos.requestFocus();
     }
-
+    
     private double calcular_total() {
         double total = 0;
         int contar_filas = t_detalle.getRowCount();
         for (int i = 0; i < contar_filas; i++) {
             total = total + Double.parseDouble(t_detalle.getValueAt(i, 6).toString());
         }
-
+        
+        if (contar_filas == 0) {
+            btn_guardar.setEnabled(false);
+        }
+        
         txt_total.setText("S/ " + c_varios.formato_totales(total));
+        jTextField12.setText(contar_filas + "");
         return total;
     }
 
@@ -269,6 +283,8 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
         txt_precio = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         btn_agregar_producto = new javax.swing.JButton();
+        btn_recargar = new javax.swing.JButton();
+        btn_buscar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         t_detalle = new javax.swing.JTable();
@@ -445,6 +461,20 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_recargar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/currency.png"))); // NOI18N
+        btn_recargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_recargarActionPerformed(evt);
+            }
+        });
+
+        btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/find.png"))); // NOI18N
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -466,12 +496,17 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                         .addComponent(jLabel12)
                         .addGap(28, 28, 28)
                         .addComponent(txt_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_agregar_producto))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_buscar_productos)))
+                        .addComponent(txt_buscar_productos, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_buscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_recargar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -480,7 +515,10 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_recargar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43)
                         .addComponent(btn_agregar_producto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -650,7 +688,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
     private void txt_fechaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fechaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txt_fecha.getText().length() == 10) {
-
+                
                 cbx_tido.setEnabled(true);
                 cbx_tido.requestFocus();
             }
@@ -673,14 +711,14 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
     private void txt_rucKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rucKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String documento = txt_ruc.getText();
-
+            
             if (documento.length() > 0) {
                 if (documento.length() == 8) {
                     JOptionPane.showMessageDialog(null, "BUSCANDO DATOS DEL DOCUMENTO INGRESADO, POR FAVOR ESPERE");
-
+                    
                     Object[] resultado = c_salida.obtener_persona(documento);
                     int respuesta = Integer.parseInt(resultado[0].toString());
-
+                    
                     if (respuesta == 1) {
                         txt_razon_social.setText(resultado[1].toString());
                         txt_direccion.setText(resultado[2].toString());
@@ -695,19 +733,19 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                             txt_direccion.setText("");
                         } catch (ParseException e) {
                             JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR  " + e.getLocalizedMessage());
-
+                            
                         }
                     }
                     txt_direccion.setEnabled(true);
                     txt_direccion.requestFocus();
-
+                    
                 }
                 if (documento.length() == 11) {
                     JOptionPane.showMessageDialog(null, "BUSCANDO DATOS DEL DOCUMENTO INGRESADO, POR FAVOR ESPERE");
-
+                    
                     Object[] resultado = c_salida.obtener_persona(documento);
                     int respuesta = Integer.parseInt(resultado[0].toString());
-
+                    
                     if (respuesta == 1) {
                         txt_razon_social.setText(resultado[1].toString());
                         txt_direccion.setText(resultado[2].toString());
@@ -722,7 +760,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                         } catch (ParseException e) {
                             JOptionPane.showMessageDialog(null, "ERROR EN BUSCAR RUC " + e.getLocalizedMessage());
                         }
-
+                        
                     }
                     txt_direccion.setEnabled(true);
                     txt_direccion.requestFocus();
@@ -730,13 +768,13 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                 if (documento.length() == 8 || documento.length() == 11) {
                     cargar_productos();
                 }
-
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese numero de documento");
                 txt_ruc.requestFocus();
             }
         }
-
+        
 
     }//GEN-LAST:event_txt_rucKeyPressed
 
@@ -752,7 +790,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                 if (c_producto.validar_id()) {
                     //validar que no existe en la tabla
                     if (valida_tabla(c_producto.getId())) {
-
+                        
                         c_producto_almacen.setProducto(c_producto.getId());
                         c_producto_almacen.validar_id();
                         txt_precio.setText(c_varios.formato_numero(c_producto.getPrecio()));
@@ -773,7 +811,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "ERROR AL SELECCIONAR PRODUCTO");
                 }
             }
-
+            
             if (txt_buscar_productos.getText().length() == 0) {
                 //si nro de filas es mayor a 0 entonces ir a datos generales
                 int contar_filas = t_detalle.getRowCount();
@@ -783,7 +821,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                 }
             }
         }
-
+        
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             limpiar_buscar();
         }
@@ -807,28 +845,40 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_precioKeyPressed
 
     private void btn_agregar_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_productoActionPerformed
-        double costo = 1;
-        int cantidad = Integer.parseInt(txt_cingreso.getText());
-        double precio = Double.parseDouble(txt_precio.getText());
-        double parcial = costo * cantidad;
-        Object fila[] = new Object[7];
-        fila[0] = c_producto.getId();
-        fila[1] = c_producto.getDescripcion();
-        fila[2] = c_producto.getCod_externo();
-        fila[3] = cantidad;
-        fila[4] = c_varios.formato_numero(costo);
-        fila[5] = c_varios.formato_numero(precio);
-        fila[6] = c_varios.formato_numero(parcial);
-
-        detalle.addRow(fila);
-        calcular_total();
-        limpiar_buscar();
-        // btn_guardar.setEnabled(true);
+        if (valida_tabla(c_producto.getId())) {
+            double costo = 1;
+            int cantidad = Integer.parseInt(txt_cingreso.getText());
+            double precio = Double.parseDouble(txt_precio.getText());
+            double parcial = costo * cantidad;
+            Object fila[] = new Object[7];
+            fila[0] = c_producto.getId();
+            fila[1] = c_producto.getDescripcion();
+            fila[2] = c_producto.getCod_externo();
+            fila[3] = cantidad;
+            fila[4] = c_varios.formato_numero(costo);
+            fila[5] = c_varios.formato_numero(precio);
+            fila[6] = c_varios.formato_numero(parcial);
+            
+            detalle.addRow(fila);
+            calcular_total();
+            limpiar_buscar();
+            btn_buscar.doClick();
+            
+            int contar_filas = t_detalle.getRowCount();
+            if (contar_filas > 0) {
+                btn_guardar.setEnabled(true);
+            }
+        } else {
+            c_producto.setId(0);
+            c_producto_almacen.setProducto(0);
+            limpiar_buscar();
+            JOptionPane.showMessageDialog(null, "ESTE PRODUCTO YA ESTA SELECCIONADO");
+        }
     }//GEN-LAST:event_btn_agregar_productoActionPerformed
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         int confirmado = JOptionPane.showConfirmDialog(null, "¿Esta Seguro de Guardar el ingreso de Mercaderia?");
-
+        
         if (JOptionPane.OK_OPTION == confirmado) {
             c_salida.setFecha(c_varios.fecha_myql(txt_fecha.getText()));
             c_salida.setId_almacen(id_almacen);
@@ -842,9 +892,9 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
             c_salida.setDatos(txt_razon_social.getText());
             c_salida.setDireccion(txt_direccion.getText());
             c_salida.obtener_codigo();
-
+            
             boolean registrado = c_salida.registrar();
-
+            
             c_detalle.setId_salida(c_salida.getId_salida());
             if (registrado) {
                 int nro_filas = t_detalle.getRowCount();
@@ -854,9 +904,9 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
                     c_detalle.setPrecio(Double.parseDouble(t_detalle.getValueAt(i, 5).toString()));
                     c_detalle.registrar();
                 }
-
+                
                 Notification.show("La Salida de Mercaderia", "se guardo correctamente");
-
+                
                 frm_ver_salidas formulario = new frm_ver_salidas();
                 c_varios.llamar_ventana(formulario);
                 this.dispose();
@@ -878,7 +928,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_t_detalleMouseClicked
 
     private void cbx_tidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_tidoActionPerformed
-
+        
         int tipo_cliente = cbx_tido.getSelectedIndex();
         if (tipo_cliente == 0) {
             query = "select * "
@@ -887,7 +937,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
 //            txt_serie.setEnabled(false);
 //            txt_numero.setEnabled(false);
             txt_ruc.setEnabled(true);
-
+            
         }
         if (tipo_cliente == 1) {
             query = "select * "
@@ -898,7 +948,7 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
 //            txt_numero.setEnabled(false);
             txt_ruc.setEnabled(true);
         }
-
+        
 
     }//GEN-LAST:event_cbx_tidoActionPerformed
 
@@ -908,17 +958,37 @@ public class frm_reg_salida extends javax.swing.JInternalFrame {
 
     private void txt_direccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_direccionKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (txt_direccion.getText().length() > 10) {
+            if (txt_direccion.getText().length() > 5) {
                 txt_buscar_productos.setEnabled(true);
                 txt_buscar_productos.requestFocus();
             }
         }
     }//GEN-LAST:event_txt_direccionKeyPressed
 
+    private void btn_recargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_recargarActionPerformed
+        //        cargar_productos();
+        //        txt_buscar_productos.requestFocus();
+
+        c_producto.setId(productoid);
+        c_producto.validar_id();
+        txt_buscar_productos.setText(c_producto.getDescripcion());
+        txt_precio.setText(c_producto.getPrecio() + "");
+        txt_cingreso.setText("1");
+        txt_buscar_productos.setEnabled(false);
+        txt_cingreso.setEnabled(true);
+        txt_cingreso.requestFocus();
+    }//GEN-LAST:event_btn_recargarActionPerformed
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        this.cargar_productos();
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar_producto;
+    public static javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_guardar;
+    public static javax.swing.JButton btn_recargar;
     private javax.swing.JButton btn_salir;
     private javax.swing.JComboBox<String> cbx_tido;
     private javax.swing.JButton jButton7;

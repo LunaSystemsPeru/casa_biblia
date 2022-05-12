@@ -23,6 +23,7 @@ public class Casa_Biblia {
         JFrame.setDefaultLookAndFeelDecorated(true);
         SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.BusinessBlackSteelSkin");
         frm_principal menu = new frm_principal();
+        //frm_login menu = new frm_login(null, true);
         menu.setVisible(true);
     }
     

@@ -16,14 +16,14 @@ import javax.swing.JOptionPane;
 public class cl_conectar {
 
     private static Connection conexion = null;
-    private static String bd = "brunoasc_casabiblia_new"; // Nombre de BD.
-    private static String user = "brunoasc_luis_bd"; // Usuario de BD.
-    private static String password = "C]6&TN4Bt@&I"; // Password de BD.
-    private static String url = "artemisa.servidoresph.com";
+    private static String bd = "casabiblia"; // Nombre de BD.
+    private static String user = "lspadmin"; // Usuario de BD.
+    private static String password = ":18;t4BC9ZfjcF"; // Password de BD. //C]6&TN4Bt@&I
+    private static String url = "174.138.2.254";// artemisa.servidoresph.com
     //private static String url = "192.168.1.6";
 
     // Driver para MySQL en este caso.
-    private static String driver = "com.mysql.jdbc.Driver";
+    private static String driver = "com.mysql.cj.jdbc.Driver";
     String server = "jdbc:mysql://" + url + ":3306/" + bd;
 
     /**

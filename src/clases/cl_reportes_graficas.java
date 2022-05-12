@@ -52,7 +52,7 @@ public class cl_reportes_graficas {
                 + "LEFT join ventas_cobros as vc on vc.id_almacen = a.id_almacen and vc.fecha = (select max(vc.fecha) from ventas_cobros as vc where vc.fecha != CURRENT_DATE()) "
                 + "where a.id_almacen != 1 "
                 + "group by a.id_almacen ";
-        System.out.println(query);
+        //System.out.println(query);
         ResultSet rs = c_conectar.consulta(st, query);
         return rs;
     }
@@ -64,7 +64,7 @@ public class cl_reportes_graficas {
                 + "LEFT join ventas_cobros as vc on vc.id_almacen = a.id_almacen and vc.fecha = CURRENT_DATE() "
                 + "where a.id_almacen != 1 "
                 + "group by a.id_almacen";
-        System.out.println(query);
+       // System.out.println(query);
         ResultSet rs = c_conectar.consulta(st, query);
        // c_conectar.cerrar(rs);
       //  c_conectar.cerrar(st);

@@ -77,7 +77,7 @@ public class frm_principal extends javax.swing.JFrame {
         initComponents();
         if (c_conectar.verificar_conexion()) {
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            System.out.println(c_varios.getHoraActual());
+            //System.out.println(c_varios.getHoraActual());
             if (c_conectar.conectar()) {
                 autoconectar();
                 cargar_login();
@@ -92,10 +92,17 @@ public class frm_principal extends javax.swing.JFrame {
     }
 
     private void cargar_login() {
+       /* frm_login form = new frm_login(null, true);
+        form.setLocationRelativeTo(null);
+        form.setVisible(true);
+        */
+       
+       
         jd_login.setSize(318, 380);
         jd_login.setModal(true);
         jd_login.setLocationRelativeTo(null);
         jd_login.setVisible(true);
+       
     }
 
     private void autoconectar() {
@@ -115,7 +122,7 @@ public class frm_principal extends javax.swing.JFrame {
 
     private void auto_notificar() {
         try {
-            Timer timer = new Timer(60000, new ActionListener() {
+            Timer timer = new Timer(500000, new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     //System.out.println("mostrando id almacen " + c_almacen.getId());
                     cargar_notificaciones();
@@ -130,7 +137,7 @@ public class frm_principal extends javax.swing.JFrame {
 
     private void cargar_notificaciones() {
         c_notificaciones.setId_almacen(c_almacen.getId());
-        c_notificaciones.mostrar();
+       // c_notificaciones.mostrar();
 
         c_pedido.setId_almacen(c_almacen.getId());
         c_pedido.mostrarPedidoPendientes(jTable1);
@@ -1136,7 +1143,7 @@ public class frm_principal extends javax.swing.JFrame {
 
         //mostrar notificaciones
         cargar_notificaciones();
-        auto_notificar();
+        //auto_notificar();
 
         c_grafica = new cl_grafica_mensual();
         c_grafica.llenar_series_diarias(jp_dias);
@@ -1146,7 +1153,7 @@ public class frm_principal extends javax.swing.JFrame {
     private void txt_contrasenaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_contrasenaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String contrasena = txt_contrasena.getText();
-            System.out.println(contrasena);
+            //System.out.println(contrasena);
             if (contrasena.equals(c_usuario.getPassword())) {
                 c_usuario.validar_usuario();
                 btn_ingresar.setEnabled(true);

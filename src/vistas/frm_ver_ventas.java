@@ -1175,7 +1175,7 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
                             + "inner join usuarios as u on u.id_usuarios = v.id_usuarios "
                             + "where v.fecha = '" + texto + "' and v.id_almacen = '" + id_almacen + "' "
                             + "order by v.id_ventas asc";
-                    System.out.println(query);
+                    //System.out.println(query);
                 }
                 if (tipo_buscar == 1) {
                     query = "select v.id_ventas, v.fecha, c.documento, c.nombre, ds.abreviado, v.serie, v.numero, v.total, v.pagado, u.username, v.estado, v.tipo_venta "
@@ -1195,7 +1195,7 @@ public class frm_ver_ventas extends javax.swing.JInternalFrame {
                             + "inner join usuarios as u on u.id_usuarios = v.id_usuarios "
                             + "where v.numero = '" + texto + "' and v.id_almacen = '" + id_almacen + "' "
                             + "order by v.id_ventas asc";
-                    System.out.println(query);
+                    //System.out.println(query);
                 }
                 c_venta.mostrar(t_ventas, query);
                 sumar_totales();

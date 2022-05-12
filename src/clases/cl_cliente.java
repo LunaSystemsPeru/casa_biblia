@@ -196,7 +196,7 @@ public class cl_cliente {
         String query = "update clientes "
                 + "set nombre = '" + nombre + "', direccion = '" + direccion + "', telefono = '" + telefono + "', celular = '" + celular + "' "
                 + "where id_cliente = '" + codigo + "' ";
-        System.out.println(query);
+        //System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);
         if (resultado > -1) {
             registrado = true;

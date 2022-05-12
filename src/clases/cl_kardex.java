@@ -164,7 +164,7 @@ public class cl_kardex {
                     + "where k.id_almacen = '" + id_almacen + "' and k.fecha_registro like '" + fecha + "%' "
                     + "order by k.fecha_registro asc, k.id_kardex asc ";
 
-            System.out.println(query);
+           // System.out.println(query);
 
             Statement st = c_conectar.conexion();
             ResultSet rs = c_conectar.consulta(st, query);
