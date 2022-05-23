@@ -130,6 +130,10 @@ public class frm_buscar_mis_productos extends javax.swing.JDialog {
                 c_mis_productos.mis_productos(query, jTable1);
             }
         }
+        
+        if  (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            this.dispose();
+        }
     }//GEN-LAST:event_txt_buscarKeyPressed
 
     private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased

@@ -247,9 +247,14 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     private double calcular_total() {
         contar_filas();
         double total = 0;
-        int contar_filas = t_detalle.getRowCount();
-        for (int i = 0; i < contar_filas; i++) {
+        int nrofilas = t_detalle.getRowCount();
+        for (int i = 0; i < nrofilas; i++) {
             total = total + Double.parseDouble(t_detalle.getValueAt(i, 6).toString());
+        }
+        if (nrofilas > 0) {
+            btn_guardar.setEnabled(true);
+        } else {
+            btn_guardar.setEnabled(false);
         }
         c_ingreso.setTotal(total);
         txt_total.setText("S/ " + c_varios.formato_totales(total));
