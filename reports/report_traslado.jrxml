@@ -244,7 +244,7 @@ WHERE
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="85" height="67" uuid="f0fd7757-43b4-4049-8d3e-8e2283066da8"/>
-				<imageExpression><![CDATA["http://lunasystemsperu.com/clientes/casa_biblia/images/logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["https://lunasystemsperu.com/clientes/casa_biblia/images/logo.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
