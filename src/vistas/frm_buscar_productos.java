@@ -6,6 +6,7 @@ package vistas;
 
 import casa_biblia.frm_principal;
 import clases.cl_movimiento_caja;
+import clases.cl_producto;
 import clases.cl_productos_almacen;
 import forms.frm_reg_ingreso;
 import forms.frm_reg_salida;
@@ -15,26 +16,25 @@ import java.awt.event.KeyEvent;
  *
  * @author Luis
  */
-public class frm_buscar_mis_productos extends javax.swing.JDialog {
+public class frm_buscar_productos extends javax.swing.JDialog {
 
-    cl_productos_almacen c_mis_productos = new cl_productos_almacen();
+    cl_producto c_producto = new cl_producto();
     String query = "";
-    int almacenid = frm_principal.c_almacen.getId();
     public static int tipoform = 0;
 
     /**
      * Creates new form frm_buscar_mis_productos
      */
-    public frm_buscar_mis_productos(java.awt.Frame parent, boolean modal) {
+    public frm_buscar_productos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        query = "select pa.id_producto, p.descripcion, p.cod_externo, p.precio, pa.cactual, pa.f_infreso, pa.f_salida "
-                + "from productos_almacen as pa "
-                + "inner join productos as p on p.id_producto = pa.id_producto "
-                + "where pa.id_almacen = '" + almacenid + "'  "
-                + "order by p.descripcion asc , p.cod_externo asc "
+        query = "select p.id_producto, p.descripcion, p.cod_externo, p.costo, p.precio, p.afecto_igv, p.estado, psc.nombre as subclasificacion "
+                + "from productos as p "
+                + "inner join productos_sub_clasificacion as psc on psc.id_subclasificacion = p.id_subclasificacion "
+                + "where concat(p.descripcion, ' ', p.cod_externo) like '%88888%' "
+                + "order by p.descripcion asc,  p.cod_externo asc "
                 + "limit 0";
-        c_mis_productos.mis_productos(query, jTable1);
+        c_producto.mostrar(jTable1, query);
     }
 
     /**
@@ -136,17 +136,17 @@ public class frm_buscar_mis_productos extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String buscar = txt_buscar.getText().trim();
             if (txt_buscar.getText().length() > 3) {
-                query = "select pa.id_producto, p.descripcion, p.cod_externo, p.precio, pa.cactual, pa.f_infreso, pa.f_salida "
-                        + "from productos_almacen as pa "
-                        + "inner join productos as p on p.id_producto = pa.id_producto "
-                        + "where pa.id_almacen = '" + almacenid + "' and (p.descripcion like '%" + buscar + "%' or p.cod_externo like '%" + buscar + "%' or pa.id_producto = '" + buscar + "' )"
-                        + "order by p.descripcion asc , p.cod_externo asc ";
+                query = "select p.id_producto, p.descripcion, p.cod_externo, p.costo, p.precio, p.afecto_igv, p.estado, psc.nombre as subclasificacion "
+                        + "from productos as p "
+                        + "inner join productos_sub_clasificacion as psc on psc.id_subclasificacion = p.id_subclasificacion "
+                        + "where concat(p.descripcion, ' ', p.cod_externo) like '%" + buscar + "%' or p.id_producto = '" + buscar + "' "
+                        + "order by p.descripcion asc,  p.cod_externo asc";
                 //System.out.println(query);
-                c_mis_productos.mis_productos(query, jTable1);
+                c_producto.mostrar(jTable1, query);
             }
         }
-        
-        if  (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             this.dispose();
         }
     }//GEN-LAST:event_txt_buscarKeyPressed
@@ -204,20 +204,21 @@ public class frm_buscar_mis_productos extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frm_buscar_mis_productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_buscar_productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frm_buscar_mis_productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_buscar_productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frm_buscar_mis_productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_buscar_productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frm_buscar_mis_productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frm_buscar_productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                frm_buscar_mis_productos dialog = new frm_buscar_mis_productos(new javax.swing.JFrame(), true);
+                frm_buscar_productos dialog = new frm_buscar_productos(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

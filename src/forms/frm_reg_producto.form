@@ -26,9 +26,10 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel9" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -50,6 +51,7 @@
                           <Component id="txt_cod_barra" min="-2" pref="233" max="-2" attributes="0"/>
                           <Component id="cbx_afecto" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
                           <Component id="txt_precio_minimo" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
+                          <Component id="jcb_estado" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="168" max="32767" attributes="0"/>
                   </Group>
@@ -103,6 +105,11 @@
                   <Component id="txt_proveedor" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="jcb_estado" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -286,6 +293,16 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Estado."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jcb_estado">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ocultar Producto"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

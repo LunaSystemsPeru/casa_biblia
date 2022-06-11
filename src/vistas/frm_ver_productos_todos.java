@@ -105,6 +105,7 @@ public class frm_ver_productos_todos extends javax.swing.JInternalFrame {
                 "ID.", "Descripcion", "Marca", "P. Venta.", "P. Costo", "Comision"
             }
         ));
+        t_productos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         t_productos.setShowVerticalLines(false);
         t_productos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -251,26 +252,34 @@ public class frm_ver_productos_todos extends javax.swing.JInternalFrame {
             int tipo_busqueda = cbx_buscar.getSelectedIndex();
 
             if (tipo_busqueda == 0) {
-                query = "select * from productos "
-                        + "where concat (descripcion, ' ', cod_externo) like '%" + texto + "%' "
-                        + "order by descripcion asc,  cod_externo asc";
+                query = "select p.id_producto, p.descripcion, p.cod_externo, p.costo, p.precio, p.afecto_igv, p.estado, psc.nombre as subclasificacion "
+                        + "from productos as p "
+                        + "inner join productos_sub_clasificacion as psc on psc.id_subclasificacion = p.id_subclasificacion "
+                        + "where concat(p.descripcion, ' ', p.cod_externo) like '%" + texto + "%' "
+                        + "order by p.descripcion asc,  p.cod_externo asc";
             }
 
             if (tipo_busqueda == 1) {
-                query = "select * from productos "
+                query = "select p.id_producto, p.descripcion, p.cod_externo, p.costo, p.precio, p.afecto_igv, p.estado, psc.nombre as subclasificacion "
+                        + "from productos as p "
+                        + "inner join productos_sub_clasificacion as psc on psc.id_subclasificacion = p.id_subclasificacion "
                         + "where id_producto =  '" + texto + "' "
-                        + "order by descripcion asc,  cod_externo asc";
+                        + "order by p.descripcion asc,  p.cod_externo asc";
             }
 
             if (tipo_busqueda == 2) {
-                query = "select * from productos "
+                query = "select p.id_producto, p.descripcion, p.cod_externo, p.costo, p.precio, p.afecto_igv, p.estado, psc.nombre as subclasificacion "
+                        + "from productos as p "
+                        + "inner join productos_sub_clasificacion as psc on psc.id_subclasificacion = p.id_subclasificacion "
                         + "where cod_externo like  '%" + texto + "%' "
-                        + "order by descripcion asc, cod_externo asc";
+                        + "order by p.descripcion asc,  p.cod_externo asc";
             }
             if (tipo_busqueda == 3) {
-                query = "select * from productos "
+                query = "select p.id_producto, p.descripcion, p.cod_externo, p.costo, p.precio, p.afecto_igv, p.estado, psc.nombre as subclasificacion "
+                        + "from productos as p "
+                        + "inner join productos_sub_clasificacion as psc on psc.id_subclasificacion = p.id_subclasificacion "
                         + "where precio = '" + texto + "' "
-                        + "order by descripcion asc, cod_externo asc";
+                        + "order by p.descripcion asc,  p.cod_externo asc";
             }
 
             c_producto.mostrar(t_productos, query);

@@ -142,31 +142,45 @@ public class cl_producto {
             tmodelo.addColumn("Id");
             tmodelo.addColumn("Descripcion");//descripcion modelo serie
             tmodelo.addColumn("Cod Externo");
-            tmodelo.addColumn("Precio");
+            tmodelo.addColumn("Costo");
+            tmodelo.addColumn("Precio Venta");
+            tmodelo.addColumn("Afecto IGV");
             tmodelo.addColumn("Clasificacion");
-            tmodelo.addColumn("Cant. Actual");
+            tmodelo.addColumn("Estado");
 
             //Creando las filas para el JTable
             while (rs.next()) {
-                Object[] fila = new Object[6];
+                Object[] fila = new Object[8];
                 fila[0] = rs.getObject("id_producto");
                 fila[1] = rs.getString("descripcion").trim();
                 fila[2] = rs.getString("cod_externo");
-                fila[3] = c_varios.formato_numero(rs.getDouble("precio"));
-                fila[4] = rs.getString("id_subclasificacion");
-                fila[5] = rs.getInt("ctotal");
+                fila[3] = c_varios.formato_numero(rs.getDouble("costo"));
+                fila[4] = c_varios.formato_numero(rs.getDouble("precio"));
+                if (rs.getInt("afecto_igv") == 0) {
+                    fila[5] = "CON IGV";
+                } else {
+                    fila[5] = "NO";
+                }
+                fila[6] = rs.getString("subclasificacion");
+                //validar estado 
+                fila[7] = "ACTIVO";
+                if (rs.getInt("estado") == 2) {
+                    fila[7] = "INACTIVO";
+                }
 
                 tmodelo.addRow(fila);
             }
             c_conectar.cerrar(st);
             c_conectar.cerrar(rs);
             tabla.setModel(tmodelo);
-            tabla.getColumnModel().getColumn(0).setPreferredWidth(10);
-            tabla.getColumnModel().getColumn(1).setPreferredWidth(450);
-            tabla.getColumnModel().getColumn(2).setPreferredWidth(50);
-            tabla.getColumnModel().getColumn(3).setPreferredWidth(20);
-            tabla.getColumnModel().getColumn(4).setPreferredWidth(100);
-            tabla.getColumnModel().getColumn(5).setPreferredWidth(30);
+            tabla.getColumnModel().getColumn(0).setPreferredWidth(40);
+            tabla.getColumnModel().getColumn(1).setPreferredWidth(500);
+            tabla.getColumnModel().getColumn(2).setPreferredWidth(150);
+            tabla.getColumnModel().getColumn(3).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(5).setPreferredWidth(100);
+            tabla.getColumnModel().getColumn(6).setPreferredWidth(200);
+            tabla.getColumnModel().getColumn(7).setPreferredWidth(80);
             tabla.setDefaultRenderer(Object.class, new render_productos_todos());
             tabla.setRowSorter(sorter);
 
@@ -252,7 +266,7 @@ public class cl_producto {
         Statement st = c_conectar.conexion();
         String query = "update productos "
                 + "set descripcion = '" + descripcion + "', cod_externo = '" + cod_externo + "', precio = '" + precio + "', costo = '" + costo + "', "
-                + "id_subclasificacion = '" + id_sub_clasificacion + "', afecto_igv = '" + afecto_igv + "' "
+                + "id_subclasificacion = '" + id_sub_clasificacion + "', afecto_igv = '" + afecto_igv + "', estado = '" + estado + "' "
                 + "where id_producto = '" + id + "'";
         //System.out.println(query);
         int resultado = c_conectar.actualiza(st, query);

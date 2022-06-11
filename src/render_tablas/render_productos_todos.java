@@ -18,17 +18,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 public class render_productos_todos extends DefaultTableCellRenderer {
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
-        if (Integer.parseInt(table.getValueAt(row, 5).toString()) <= 0) {
-            setBackground(Color.red);
+        if ((table.getValueAt(row, 7).toString()).equals("INACTIVO")) {
+            setBackground(Color.black);
             setForeground(Color.white);
         } else {
-            if (Double.parseDouble(table.getValueAt(row, 3).toString()) <= 0) {
-                setBackground(Color.LIGHT_GRAY);
-                setForeground(Color.black);
-            } else {
-                setBackground(Color.white);
-                setForeground(Color.black);
-            }
+            setBackground(Color.white);
+            setForeground(Color.black);
+
         }
 
         if (column == 0) {
@@ -44,13 +40,16 @@ public class render_productos_todos extends DefaultTableCellRenderer {
             setHorizontalAlignment(SwingConstants.RIGHT);
         }
         if (column == 4) {
-            setHorizontalAlignment(SwingConstants.CENTER);
+            setHorizontalAlignment(SwingConstants.RIGHT);
         }
         if (column == 5) {
-            setHorizontalAlignment(SwingConstants.RIGHT);
+            setHorizontalAlignment(SwingConstants.CENTER);
         }
         if (column == 6) {
-            setHorizontalAlignment(SwingConstants.RIGHT);
+            setHorizontalAlignment(SwingConstants.CENTER);
+        }
+        if (column == 7) {
+            setHorizontalAlignment(SwingConstants.CENTER);
         }
 
         super.getTableCellRendererComponent(table, value, selected, focused, row, column);

@@ -90,6 +90,15 @@ public class frm_reg_producto extends javax.swing.JDialog {
             cbx_sub_clasificacion.setEnabled(true);
             cbx_sub_clasificacion.getModel().setSelectedItem(new cla_producto_clasificacion(c_subclasificacion.getId_subclasificacion(), c_subclasificacion.getNombre()));
 
+            //verificar estado producto
+            //1 es activo
+            //2 es oculto
+            if (c_producto.getEstado().equals("2")) {
+                jcb_estado.setSelected(true);
+            } else {
+                jcb_estado.setSelected(false);
+            }
+
             txt_descripcion.setEnabled(true);
             txt_cod_barra.setEnabled(true);
             cbx_afecto.setEnabled(true);
@@ -126,6 +135,8 @@ public class frm_reg_producto extends javax.swing.JDialog {
         cbx_sub_clasificacion = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         cbx_afecto = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jcb_estado = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Registrar Producto");
@@ -236,6 +247,10 @@ public class frm_reg_producto extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setText("Estado.");
+
+        jcb_estado.setText("Ocultar Producto");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -244,6 +259,7 @@ public class frm_reg_producto extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4)
                     .addComponent(jLabel9)
@@ -263,7 +279,8 @@ public class frm_reg_producto extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_cod_barra, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbx_afecto, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_precio_minimo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_precio_minimo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcb_estado))
                         .addGap(0, 168, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -303,6 +320,10 @@ public class frm_reg_producto extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcb_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -332,6 +353,13 @@ public class frm_reg_producto extends javax.swing.JDialog {
         cla_producto_clasificacion cla_clasificacion = (cla_producto_clasificacion) cbx_clasificacion.getSelectedItem();
         c_producto.setId_sub_clasificacion(cla_clasificacion.getId_clasificacion());
 
+        //verificar si esta seleccionado check estado
+        if (jcb_estado.isSelected()) {
+            c_producto.setEstado("2");
+        } else {
+            c_producto.setEstado("1");
+        }
+
         boolean realizado = false;
 
         if (registrar) {
@@ -345,9 +373,10 @@ public class frm_reg_producto extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "<html>Codigo del Producto: <h1> " + c_producto.getId() + " </h1></html>");
             if (frm_origen == 2) {
                 frm_reg_ingreso.txt_buscar_productos.setText(c_producto.getDescripcion() + " - " + c_producto.getCod_externo());
+                frm_reg_ingreso.productoid = c_producto.getId();
                 frm_reg_ingreso.c_producto.setId(c_producto.getId());
                 frm_reg_ingreso.btn_recargar.doClick();
-                frm_reg_ingreso.txt_buscar_productos.requestFocus();
+                frm_reg_ingreso.txt_cingreso.requestFocus();
             }
             this.dispose();
         }
@@ -478,11 +507,13 @@ public class frm_reg_producto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JCheckBox jcb_estado;
     private javax.swing.JTextField txt_cod_barra;
     private javax.swing.JTextField txt_descripcion;
     private javax.swing.JTextField txt_precio_minimo;

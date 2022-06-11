@@ -30,6 +30,7 @@ import models.m_documentos_sunat;
 import nicon.notify.core.Notification;
 import casa_biblia.frm_principal;
 import vistas.frm_buscar_mis_productos;
+import vistas.frm_buscar_productos;
 import vistas.frm_ver_ingresos;
 
 /**
@@ -150,8 +151,8 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
 
     private void cargar_productos() {
         Frame f = JOptionPane.getRootFrame();
-        frm_buscar_mis_productos formulario = new frm_buscar_mis_productos(f, true);
-        frm_buscar_mis_productos.tipoform = 1;
+        frm_buscar_productos formulario = new frm_buscar_productos(f, true);
+        frm_buscar_productos.tipoform = 1;
         formulario.setLocationRelativeTo(null);
         formulario.setVisible(true);
 
@@ -1409,7 +1410,7 @@ public class frm_reg_ingreso extends javax.swing.JInternalFrame {
     private javax.swing.JTable t_detalle;
     public static javax.swing.JTextField txt_buscar_productos;
     private javax.swing.JTextField txt_cactual;
-    private javax.swing.JTextField txt_cingreso;
+    public static javax.swing.JTextField txt_cingreso;
     private javax.swing.JTextField txt_contar_filas;
     private javax.swing.JTextField txt_costo;
     private javax.swing.JFormattedTextField txt_fecha;
